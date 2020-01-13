@@ -1,0 +1,8 @@
+---
+  - name: Create project directory structure
+    file:
+        path: "../environments/{{ project_name }}"
+        state: directory
+        mode: 0755
+        owner: "{{ lookup('env', 'USER') }}"
+#        group: "{{ lookup('env', 'GROUP') }}"

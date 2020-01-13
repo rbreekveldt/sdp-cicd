@@ -1,0 +1,8 @@
+- name: Create new environment
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  
+  roles:
+    - create-jenkins-project
+    #- create-environment-configuration
