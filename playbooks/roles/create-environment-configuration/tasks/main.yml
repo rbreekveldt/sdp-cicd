@@ -1,2 +1,9 @@
 ---
-# tasks file for create-new-environment
+- name: Create project all
+  template:
+    dest: "../environments/{{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}/all"
+    src: all.j2
+    force: yes 
+    owner: "{{ lookup('env', 'USER') }}"
+    output_encoding: utf-8
+    mode: 0644

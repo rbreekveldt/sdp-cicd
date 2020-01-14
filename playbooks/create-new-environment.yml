@@ -5,4 +5,4 @@
   
   roles:
     - create-jenkins-project
-    #- create-environment-configuration
+    - create-environment-configuration
