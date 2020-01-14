@@ -1,0 +1,11 @@
+---
+  - name: Create Jenkins job
+    jenkins_job:
+      #config: "/var/lib/jenkins/ansible-scripts/sdp-cicd-tools/environments/remco-jeeeee/config.xml" 
+      config: "{{ lookup('template', 'templates/config.j2') }}"
+      # config: "../environments/{{ project_name }}/config.xml"
+      name: "{{ project_name }}"
+      token: "{{ jenkins_token }}" 
+      #url: "{{ jenkins_api }}/createItem?name={{ project_name }}"
+      url: "{{ jenkins_api }}/job/CICD%20Automation"
+      user: "{{ jenkins_user }}"
