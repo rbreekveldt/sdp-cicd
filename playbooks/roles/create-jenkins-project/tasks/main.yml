@@ -1,8 +1,8 @@
 - name: Create Project directory structuur
   import_tasks: create-project-directory.yml
 
-#- name: Create Jenkins config 
-#  import_tasks: create-config.yml
+- name: Create Jenkins config 
+  import_tasks: create-config.yml
 
-#- name: Create Jenkins job
-#  import_tasks: create-job.yml
+- name: Create Jenkins job
+  import_tasks: create-job.yml

@@ -1,7 +1,7 @@
 <?xml version='1.1'?>
 <com.cloudbees.hudson.plugins.folder.Folder plugin="cloudbees-folder@6.9">
-  <description>{{ project_name }}</description>
-  <displayName>{{ project_name }}</displayName>
+  <description>remco-jeeeee</description>
+  <displayName>remco-jeeeee</displayName>
   <properties/>
   <folderViews class="com.cloudbees.hudson.plugins.folder.views.DefaultFolderViewHolder">
     <views>
