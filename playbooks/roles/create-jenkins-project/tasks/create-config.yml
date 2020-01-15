@@ -1,8 +1,0 @@
----
-# - name: Create project config.xml
-#   template:
-#       dest: "../environments/{{ project_name }}/all.yml"
-#       src: all.j2
-#       force: yes 
-#       output_encoding: utf-8
-#       mode: 0644

@@ -1,25 +1,30 @@
 <?xml version='1.1'?>
-<com.cloudbees.hudson.plugins.folder.Folder plugin="cloudbees-folder@6.9">
-  <description>{{ project_name }}</description>
-  <displayName>{{ project_name }}</displayName>
+<flow-definition plugin="workflow-job@2.35">
+  <description>{{ project_description }}</description>
+  <displayName>{{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}</displayName>
+  <keepDependencies>false</keepDependencies>
   <properties/>
-  <folderViews class="com.cloudbees.hudson.plugins.folder.views.DefaultFolderViewHolder">
-    <views>
-      <hudson.model.AllView>
-        <owner class="com.cloudbees.hudson.plugins.folder.Folder" reference="../../../.."/>
-        <name>All</name>
-        <filterExecutors>false</filterExecutors>
-        <filterQueue>false</filterQueue>
-        <properties class="hudson.model.View$PropertyList"/>
-      </hudson.model.AllView>
-    </views>
-    <tabBar class="hudson.views.DefaultViewsTabBar"/>
-  </folderViews>
-  <healthMetrics>
-    <com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric>
-      <nonRecursive>false</nonRecursive>
-    </com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric>
-  </healthMetrics>
-  <icon class="com.cloudbees.hudson.plugins.folder.icons.StockFolderIcon"/>
-</com.cloudbees.hudson.plugins.folder.Folder>
-
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.74">
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0-beta12">
+      <configVersion>1</configVersion>
+      <userRemoteConfigs>
+        <hudson.plugins.git.UserRemoteConfig>
+          <url>ssh://git@bitbucket.prod.sdp.aa.liberty.biz/ca/sdp-cicd-tools.git</url>
+          <credentialsId>b9eb99ba-a7af-43f5-8a13-2cd952e93396</credentialsId>
+        </hudson.plugins.git.UserRemoteConfig>
+      </userRemoteConfigs>
+      <branches>
+        <hudson.plugins.git.BranchSpec>
+          <name>*/master</name>
+        </hudson.plugins.git.BranchSpec>
+      </branches>
+      <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+      <submoduleCfg class="list"/>
+      <extensions/>
+    </scm>
+    <scriptPath>{{ jenkins_job_directory }}/{{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}/Jenkinsfile</scriptPath>
+    <lightweight>true</lightweight>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
