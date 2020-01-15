@@ -1,10 +1,9 @@
 ---
 - name: Push generated file to git repo
-  shell:
-    free_form: |
+  shell: |
       git add . 
       git commit -am "Create environment {{ jenkins_job_directory }}/{{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}"
       git push -u origin master
-    warn: yes 
-    chdir: "{{ jenkins_job_directory }}/{{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}"
-    #stdin: undefined # not required. Set the stdin of the command directly to the specified value.
+  #args:
+   # chdir: "."
+    #chdir: "{{ jenkins_job_directory }}/{{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}"
