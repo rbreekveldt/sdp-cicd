@@ -2,4 +2,4 @@ jenkins_token: 11a3395c5b38bcf13ec6e914a575bd7792
 jenkins_api: http://localhost:8080
 jenkins_user: jenkins
 jenkins_job_directory: '/var/lib/jenkins/jobs/CICD Automation'
-jenkins_ansible_path: '/var/lib/jenkins/ansible-scripts/sdp-cicd-tools' 
+jenkins_ansible_path: '/var/lib/jenkins/ansible-scripts/sdp-cicd-tools/environments' 
