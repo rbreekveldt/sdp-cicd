@@ -1,7 +1,7 @@
 ---
   - name: Create project directory structure
     file:
-        path: "{{ jenkins_ansible_path }}/{{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}"
+        path: "{{ jenkins_ansible_path }}/environments/{{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}"
         state: directory
         mode: 0755
         owner: "{{ lookup('env', 'USER') }}"

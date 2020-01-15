@@ -1,7 +1,7 @@
 ---
 - name: Create project all
   template:
-    dest: "{{ jenkins_ansible_path }}/{{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}/all"
+    dest: "{{ jenkins_ansible_path }}/environments/{{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}/all"
     src: all.j2
     force: yes 
     owner: "{{ lookup('env', 'USER') }}"
