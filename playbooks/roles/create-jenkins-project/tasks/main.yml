@@ -7,6 +7,3 @@
 - name: Create Jenkins config 
   import_tasks: create-jenkinsfile.yml
 
-- name: Push files to Git
-  import_tasks: push-files-to-repo.yml
-

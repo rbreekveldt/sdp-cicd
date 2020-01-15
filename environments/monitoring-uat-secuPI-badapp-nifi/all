@@ -1,0 +1,37 @@
+---
+cloud_config:
+  project_name: secuPI
+  env_type: nifi
+  resource_group_phase: uat
+  application_name: badapp
+  data_domain: monitoring
+
+  resource_group: monitoring-uat-secuPI-badapp-nifi-rg
+  location: "westeurope"
+  admin_username: "sdp-admin"
+
+  ssh:
+    publickey: ~/.ssh/sdp_pub
+        
+  storage_account:
+    name: sasecuPIbadappnifi
+    type: "Standard_LRS"
+      
+  network:
+    name: vnet-secuPI-nifi
+    address_prefix: "10.105.0.0/24"
+      
+  subnet:
+    name: subnet-secuPI-nifi
+    address_prefix: "10.105.0.0/26"
+      
+  security_groups:
+    name: nsg-secuPI-nifi
+    port: 22
+      
+  peering:
+    initial_peering_name: vnet-secuPI-nifi-to-vnet-sdp-internal
+    virtual_network: vnet-secuPI-nifi
+    remote_virtual_network: 'vnet-sdp-internal'
+    remote_resource_group: 'access-sdp-jumpbox-rg'
+    connect_peering_name: vnet-sdp-internal-to-vnet-secuPI-nifi
