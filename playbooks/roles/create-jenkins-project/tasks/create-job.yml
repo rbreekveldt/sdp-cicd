@@ -6,4 +6,4 @@
       token: "{{ jenkins_token }}" 
       url: "{{ jenkins_api }}/job/CICD%20Automation"
       user: "{{ jenkins_user }}"
-      owner: "{{ lookup('env', 'USER') }}"
+#      owner: "{{ lookup('env', 'USER') }}"
