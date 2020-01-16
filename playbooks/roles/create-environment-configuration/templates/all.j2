@@ -10,8 +10,8 @@ cloud_config:
   location: "westeurope"
   admin_username: "sdp-admin"
 
-  #ssh:
-  #  publickey: {{ sdp_admin_public }}
+  ssh:
+    publickey: {{ sdp_admin_public }}
         
   storage_account:
     name: sa{{ lookup('env', 'project_name') }}{{ lookup('env', 'application_name') }}{{ lookup('env', 'env_type') }}
