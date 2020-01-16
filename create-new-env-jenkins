@@ -3,7 +3,7 @@ def azureSubscription = ""
 def inputSubscription = ""
 def skipRemainingStages = "true"
 
-data_domain=monitoring resource_group_phase=uat project_name=secuPI application_name=badapp env_type=nifi sdp_admin_public=~/.ssh/sdp_pub project_description='Bad project'"
+//data_domain=monitoring resource_group_phase=uat project_name=secuPI application_name=badapp env_type=nifi sdp_admin_public=~/.ssh/sdp_pub project_description='Bad project'
 
 pipeline {
     agent any
@@ -37,6 +37,16 @@ pipeline {
             }
         }
         stage('Create env Config') {
+            script {
+                withCredentials([azureServicePrincipal(credentialsId: '1683b46e-b612-4f6d-a717-9baed4b0dffb',
+                                subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                clientIdVariable: 'AZURE_CLIENT_ID',
+                                clientSecretVariable: 'AZURE_SECRET',
+                                tenantIdVariable: 'AZURE_TENANT')]) {
+                        
+                        ansiblePlaybook credentialsId: 'private_key', inventory: 'inventories/a/hosts', playbook: 'playbooks/create-new-environment.yml'            
+                    }
+
             when {
                 expression {
                     skipRemainingStages
@@ -91,3 +101,4 @@ pipeline {
         }
     }
 }
+
