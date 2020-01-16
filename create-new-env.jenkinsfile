@@ -25,81 +25,10 @@ pipeline {
       		string(name: 'tags', defaultValue: '', description: 'Limit provisioning to these tags') */
        }
     stages {
-        stage('Checkout') {
+        stage ('Create Dataproject') {
             steps {
-                script {
-                    if(params.Environment == 'Please select'){
-                        skipRemainingStages = false
-                    }
-                    println "skipRemainingStages 1 = ${skipRemainingStages}"
-                }
-                checkout scm
-            }
-        }
-        stage('Create env Config') {
-            script {
-                withCredentials([azureServicePrincipal(credentialsId: '1683b46e-b612-4f6d-a717-9baed4b0dffb',
-                                subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
-                                clientIdVariable: 'AZURE_CLIENT_ID',
-                                clientSecretVariable: 'AZURE_SECRET',
-                                tenantIdVariable: 'AZURE_TENANT')]) {   
-                        
-                        ansiblePlaybook credentialsId: 'private_key', inventory: 'inventories/a/hosts', playbook: 'playbooks/create-new-environment.yml'            
-                    }
-
-            when {
-                expression {
-                    skipRemainingStages
-                }
-            }
-            steps {
-                script {
-                    sh 'bash build_envconfig.sh'
-                }
-            }
-        }
-        }
-        stage('Provision cloud') {
-            when {
-                expression {
-                    skipRemainingStages
-                }
-            }
-            environment {
-                CLOUD_TO_USE = "${Cloud}"
-            }
-            steps {
-                script {
-                    if(params.Subscription == "Non-Prod Data and Processing"){
-                        azureSubscription = "33bce92f-b1bc-4bd0-a3a1-4cada2623da3"
-                    } else if (params.Subscription == "Project Azure governance testing"){
-                        azureSubscription = "f9be258b-3adc-4d8f-85c4-36e969384e41"
-                    }
-                    withCredentials([azureServicePrincipal(credentialsId: '1683b46e-b612-4f6d-a717-9baed4b0dffb',
-                                              subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
-                                              clientIdVariable: 'AZURE_CLIENT_ID',
-                                              clientSecretVariable: 'AZURE_SECRET',
-                                              tenantIdVariable: 'AZURE_TENANT')]) {
-                     sh 'echo Executeeeeeeeeeee 1'
-                    sh 'bash build_cloud.sh'
-                    }
-                }
-            }
-        }
-        stage('Provision cluster') {
-            when {
-                expression {
-                     skipRemainingStages
-                }
-            }
-            environment {
-                CLOUD_TO_USE = "${Cloud}"
-            }
-            steps {
-                sh 'echo Executeeeeeeeeeee 2'
-                //sh 'bash install_cluster.sh'
+                ansiblePlaybook playbook: 'playbooks/create-new-environments.yml'
             }
         }
     }
-}
-
+}    
