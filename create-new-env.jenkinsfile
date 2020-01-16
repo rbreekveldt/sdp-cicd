@@ -42,7 +42,7 @@ pipeline {
                                 subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                 clientIdVariable: 'AZURE_CLIENT_ID',
                                 clientSecretVariable: 'AZURE_SECRET',
-                                tenantIdVariable: 'AZURE_TENANT')]) {
+                                tenantIdVariable: 'AZURE_TENANT')]) {   
                         
                         ansiblePlaybook credentialsId: 'private_key', inventory: 'inventories/a/hosts', playbook: 'playbooks/create-new-environment.yml'            
                     }
@@ -57,6 +57,7 @@ pipeline {
                     sh 'bash build_envconfig.sh'
                 }
             }
+        }
         }
         stage('Provision cloud') {
             when {
