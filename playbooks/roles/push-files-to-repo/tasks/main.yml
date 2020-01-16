@@ -5,4 +5,4 @@
       git commit -am "Create environment {{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}"
       git push -u origin master
   args:
-    chdir: "{{ jenkins_ansible_path }}"
+    chdir: "{{ WORKSPACE }}"

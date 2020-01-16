@@ -1,7 +1,7 @@
 ---
 - name: Create Jenkins file
   template:
-    dest: "{{ jenkins_ansible_path }}/environments/{{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}/Jenkinsfile"
+    dest: "{{ WORKSPACE }}/environments/{{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}/Jenkinsfile"
     src: Jenkinsfile.j2
     force: yes 
     output_encoding: utf-8
