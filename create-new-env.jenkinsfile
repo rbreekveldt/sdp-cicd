@@ -27,7 +27,7 @@ pipeline {
     stages {
         stage ('Create Dataproject') {
             steps {
-                ansiblePlaybook playbook: 'playbooks/create-new-environments.yml'
+                ansiblePlaybook playbook: 'playbooks/create-new-environment.yml'
             }
         }
     }
