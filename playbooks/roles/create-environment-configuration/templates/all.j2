@@ -1,37 +1,37 @@
 ---
 cloud_config:
-  project_name: {{ project_name }}
-  env_type: {{ env_type }}
-  resource_group_phase: {{ resource_group_phase }}
-  application_name: {{ application_name }}
-  data_domain: {{ data_domain }}
+  project_name: {{ lookup('env', 'project_name') }}
+  env_type: {{ lookup('env', 'env_type') }}
+  resource_group_phase: {{ lookup('env', 'resource_group_phase') }}
+  application_name: {{ lookup('env', 'application_name') }}
+  data_domain: {{ lookup('env', 'data_domain') }}
 
-  resource_group: {{ data_domain }}-{{ resource_group_phase }}-{{ project_name }}-{{ application_name }}-{{ env_type }}-rg
+  resource_group: {{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}-rg
   location: "westeurope"
   admin_username: "sdp-admin"
 
-  ssh:
-    publickey: {{ sdp_admin_public }}
+  #ssh:
+  #  publickey: {{ sdp_admin_public }}
         
   storage_account:
-    name: sa{{ project_name }}{{ application_name }}{{ env_type }}
+    name: sa{{ lookup('env', 'project_name') }}{{ lookup('env', 'application_name') }}{{ lookup('env', 'env_type') }}
     type: "Standard_LRS"
       
   network:
-    name: vnet-{{ project_name }}-{{ env_type }}
+    name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
     address_prefix: "10.105.0.0/24"
       
   subnet:
-    name: subnet-{{ project_name }}-{{ env_type }}
+    name: subnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
     address_prefix: "10.105.0.0/26"
       
   security_groups:
-    name: nsg-{{ project_name}}-{{ env_type }}
+    name: nsg-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
     port: 22
       
   peering:
-    initial_peering_name: vnet-{{ project_name }}-{{ env_type }}-to-vnet-sdp-internal
-    virtual_network: vnet-{{ project_name }}-{{ env_type }}
+    initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-sdp-internal
+    virtual_network: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
     remote_virtual_network: 'vnet-sdp-internal'
     remote_resource_group: 'access-sdp-jumpbox-rg'
-    connect_peering_name: vnet-sdp-internal-to-vnet-{{ project_name }}-{{ env_type }}
+    connect_peering_name: vnet-sdp-internal-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
