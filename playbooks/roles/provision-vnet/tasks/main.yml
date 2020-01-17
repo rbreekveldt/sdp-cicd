@@ -1,0 +1,14 @@
+---
+# tasks file for provision-vnet
+- name: Create {{ cloud_config.network.name }} Virtual Network
+  azure_rm_virtualnetwork:
+    resource_group: "{{ cloud_config.resource_group }}"
+    name: "{{ cloud_config.network.name }}"
+    address_prefixes_cidr: "{{ cloud_config.network.address_prefix }}"
+
+- name: Create {{ cloud_config.subnet.name }} Subnet
+  azure_rm_subnet:
+    resource_group: "{{ cloud_config.resource_group }}"
+    virtual_network_name: "{{ cloud_config.network.name }}"
+    name: "{{ cloud_config.subnet.name }}"
+    address_prefix_cidr : "{{ cloud_config.subnet.address_prefix }}"

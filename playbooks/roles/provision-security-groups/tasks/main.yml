@@ -1,0 +1,14 @@
+---
+# tasks file for provision-security-groups
+    - name: Create security groups
+      azure_rm_securitygroup:
+        resource_group: "{{ cloud_config.resource_group }}"
+        name: "{{ item.name }}"
+        rules:
+          - name: "AllowPort_{{ item.port }}"
+            protocol: Tcp
+            destination_port_range: "{{ item.port }}"
+            access: Allow
+            direction: Inbound
+            priority: 101
+      with_items: "{{ cloud_config.security_groups }}"
