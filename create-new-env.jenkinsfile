@@ -25,11 +25,6 @@ pipeline {
       		string(name: 'tags', defaultValue: '', description: 'Limit provisioning to these tags') */
        }
     stages {
-        stage ('Checkout Repository') {
-            steps {
-                checkout scm
-            }
-        }
         stage ('Create Dataproject') {
             steps {
                 ansiblePlaybook playbook: 'playbooks/create-new-environment.yml'
