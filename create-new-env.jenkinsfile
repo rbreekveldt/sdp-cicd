@@ -13,7 +13,7 @@ pipeline {
             choice(name: 'resource_group_phase', choices: 'Please select\npii_management\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
             string(name: 'project_name', defaultValue:'', description: 'Specify project name')
             choice(name: 'application_name', choices: 'Please select\nsecupi\nhdp\ndata_gateway', description: 'Application name')
-            choice(name: 'env_type', choices: 'Please select\nDEV\nSIT\nUAT\nPRD', description: 'Environment type to provision')
+            choice(name: 'env_type', choices: 'Please select\ndev\nsit\nuat\nprd', description: 'Environment type to provision')
             string(name: 'project_description', defaultValue:'', description: 'Specify project description')
             booleanParam(defaultValue: false, name: 'nifi', description: ' ')
             booleanParam(defaultValue: false, name: 'kafka', description: ' ')
