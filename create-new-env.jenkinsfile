@@ -25,6 +25,11 @@ pipeline {
       		string(name: 'tags', defaultValue: '', description: 'Limit provisioning to these tags') */
        }
     stages {
+        stage ('Git checkout and switch to Master') {
+            steps {
+                sh 'git checkout --track origin/master'
+            }
+        }
         stage ('Create Dataproject') {
             steps {
                 ansiblePlaybook playbook: 'playbooks/create-new-environment.yml'
