@@ -8,5 +8,5 @@
     - provision-resource-group
     - provision-storageaccount
     - provision-vnet
-#    - provision-peering
+    - provision-peering
 #    - provision-security-groups
