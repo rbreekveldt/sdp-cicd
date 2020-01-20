@@ -9,4 +9,4 @@
     - provision-storageaccount
     - provision-vnet
     - provision-peering
-#    - provision-security-groups
+    - provision-security-groups

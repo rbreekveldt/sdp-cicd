@@ -32,7 +32,13 @@ pipeline {
         }
         stage ('Create Dataproject') {
             steps {
-                ansiblePlaybook playbook: 'playbooks/create-new-environment.yml'
+            withCredentials([azureServicePrincipal(credentialsId: '1683b46e-b612-4f6d-a717-9baed4b0dffb',
+                                                  subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                  clientIdVariable: 'AZURE_CLIENT_ID',
+                                                  clientSecretVariable: 'AZURE_SECRET',
+                                                  tenantIdVariable: 'AZURE_TENANT')]) {
+                 ansiblePlaybook extras: '-e @environments/automation-shared-anutjo-secupi-sit/all', playbook: 'playbooks/provision-virtual-environment.yml'
+                 }
             }
         }
     }
