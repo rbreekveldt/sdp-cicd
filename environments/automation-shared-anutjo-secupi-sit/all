@@ -32,6 +32,6 @@ cloud_config:
   peering:
     initial_peering_name: vnet-anutjo-sit-to-vnet-sdp-internal
     virtual_network: vnet-anutjo-sit
-    remote_virtual_network: 'vnet-sdp-internal'
-    remote_resource_group: 'access-sdp-jumpbox-rg'
+    access_virtual_network: 'vnet-sdp-internal'
+    access_resource_group: 'access-sdp-jumpbox-rg'
     connect_peering_name: vnet-sdp-internal-to-vnet-anutjo-sit
