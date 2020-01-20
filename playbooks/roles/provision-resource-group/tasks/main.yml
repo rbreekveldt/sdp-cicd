@@ -6,5 +6,9 @@
     location: "{{ cloud_config.location }}"
     state: present
     force: yes
+    client_id: {{ lookup('env', 'AZURE_CLIENT_ID') }}
+    secret: {{ lookup('env', 'AZURE_CLIENT_SECRET') }}
+    subscription_id: {{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}
+    tenant: {{ lookup('env', 'AZURE_TENANT_ID') }} 
   ignore_errors: yes
     
