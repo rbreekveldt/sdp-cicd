@@ -12,3 +12,5 @@
     virtual_network_name: "{{ cloud_config.network.name }}"
     name: "{{ cloud_config.subnet.name }}"
     address_prefix_cidr : "{{ cloud_config.subnet.address_prefix }}"
+    security_group:
+      name: "{{ cloud_config.security_groups.name }}"

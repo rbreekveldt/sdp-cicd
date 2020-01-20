@@ -7,6 +7,6 @@
   roles:
     - provision-resource-group
     - provision-storageaccount
+    - provision-security-groups
     - provision-vnet
     - provision-peering
-    - provision-security-groups
