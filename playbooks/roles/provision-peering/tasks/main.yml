@@ -14,9 +14,9 @@
 - name: Connect virtual network peering with {{ cloud_config.peering.access_resource_group }}
   azure_rm_virtualnetworkpeering:
     subscription_id: "{{ cloud_config.peering.access_rg_id }}"
-    tenant: {{ lookup('env', 'AZURE_TENANT') }}
-    secret: {{ lookup('env', 'AZURE_SECRET') }}
-    client_id: {{ lookup('env', 'AZURE_CLIENT_ID')}}        
+    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"        
     resource_group: "{{ cloud_config.peering.access_resource_group }}"
     name: "{{ cloud_config.peering.connect_peering_name }}"
     virtual_network: "{{ cloud_config.peering.access_virtual_network }}"
