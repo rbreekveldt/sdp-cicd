@@ -33,5 +33,6 @@ cloud_config:
     initial_peering_name: vnet-anutjo-sit-to-vnet-sdp-internal
     virtual_network: vnet-anutjo-sit
     access_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
-    access_resource_group: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg'
+    access_resource_group: 'access-sdp-jumpbox-rg'
+    access_rg_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
     connect_peering_name: vnet-sdp-internal-to-vnet-anutjo-sit
