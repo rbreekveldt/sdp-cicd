@@ -19,11 +19,11 @@ cloud_config:
       
   network:
     name: vnet-gaurav-dev
-    address_prefix: "10.105.0.0/24"
+    address_prefix: "10.106.0.0/24"
       
   subnet:
     name: subnet-gaurav-dev
-    address_prefix: "10.105.0.0/26"
+    address_prefix: "10.106.0.0/26"
       
   security_groups:
     name: nsg-gaurav-dev
