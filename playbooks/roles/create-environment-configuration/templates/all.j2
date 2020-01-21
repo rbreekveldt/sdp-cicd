@@ -9,6 +9,13 @@ cloud_config:
   resource_group: {{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}-rg
   location: "westeurope"
   admin_username: "sdp-admin"
+  
+  nifi:
+    provision: {{ lookup('env', 'nifi') }}
+    nodes_count: {{ lookup('env', 'nifi_nodes_count') }}
+  
+  kafka:
+    provision: {{ lookup('env', 'kafka') }}
 
   ssh:
     publickey: {{ sdp_admin_public }}

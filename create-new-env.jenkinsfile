@@ -20,9 +20,9 @@ pipeline {
             choice(name: 'Cloud', choices: 'azure', description: 'Cloud to provision')
       		
             /* booleanParam(defaultValue: false, name: 'Provision_Cloud_Infra', description: '         Deploy Infrastructure on Cloud')
-            booleanParam(defaultValue: false, name: 'Provision_Cluster', description: '         Install Cluster')
-      		string(name: 'Nodes_count', defaultValue: '3', description: 'Specify the count for nifi worker nodes')
-      		string(name: 'tags', defaultValue: '', description: 'Limit provisioning to these tags') */
+            booleanParam(defaultValue: false, name: 'Provision_Cluster', description: '         Install Cluster') */
+      	    string(name: 'nifi_nodes_count', defaultValue: '3', description: 'Specify the count for nifi worker nodes')
+            //string(name: 'tags', defaultValue: '', description: 'Limit provisioning to these tags') 
        }
     stages {
         stage ('Git checkout and switch to Master') {
