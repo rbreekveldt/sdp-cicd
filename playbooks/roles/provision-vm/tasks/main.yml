@@ -1,2 +1,8 @@
 ---
 # tasks file for provision-vm
+
+- name: Create Nifi cluster vm's
+  
+  import_tasks: create-vm.yml
+  when: .....
+
