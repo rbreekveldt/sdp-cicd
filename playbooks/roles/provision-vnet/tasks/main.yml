@@ -5,6 +5,11 @@
     resource_group: "{{ cloud_config.resource_group }}"
     name: "{{ cloud_config.network.name }}"
     address_prefixes_cidr: "{{ cloud_config.network.address_prefix }}"
+  register: vnet_result
+
+- name: Debug vnet id
+  debug: 
+    msg: "{{ vnet_result.state.id }}"
 
 - name: Create {{ cloud_config.subnet.name }} Subnet
   azure_rm_subnet:
