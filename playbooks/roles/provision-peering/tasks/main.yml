@@ -4,7 +4,7 @@
 - name: Initial virtual network peering with {{ cloud_config.peering.access_resource_group }}
   azure_rm_virtualnetworkpeering:
     resource_group: "{{ cloud_config.resource_group }}"
-    virtual_network: "{{ cloud_config.peering.new_virtual_network }}"
+    virtual_network: "{{ cloud_config.network.name }}"
     name: "{{ cloud_config.peering.initial_peering_name }}"
     remote_virtual_network:
       resource_group: "{{ cloud_config.peering.access_resource_group }}"
