@@ -1,5 +1,0 @@
----
-# tasks file for get-vnet-facts
-- name: Get facts for {{ cloud_config.network.name }}
-  azure_rm_virtualnetwork_info:
-    resource_group:        
