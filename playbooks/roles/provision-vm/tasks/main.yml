@@ -3,6 +3,10 @@
 
 - name: Create Nifi cluster vm's
   import_tasks: create-vm.yml
+  vars:
+    flavor: "{{ cloud_config.nifi.flavor }}"
+    host_group: "nifi"
+    count: 1
   when: cloud_config.nifi.provision
 
 #- name: Create Kafaka mock-up vm

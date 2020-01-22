@@ -13,9 +13,11 @@ cloud_config:
   nifi:
     provision: {{ lookup('env', 'nifi') }}
     nodes_count: {{ lookup('env', 'nifi_nodes_count') }}
+    flavor: Standard_D3_v2
   
   kafka:
     provision: {{ lookup('env', 'kafka') }}
+    flavor: Standard_D3_v2
 
   ssh:
     publickey: {{ sdp_admin_public }}
@@ -42,3 +44,10 @@ cloud_config:
     access_resource_group: 'access-sdp-jumpbox-rg'
     access_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
     connect_peering_name: vnet-sdp-internal-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+
+  vm:
+    image:
+      offer: CentOS
+      publisher: OpenLogic
+      sku: '7.4'
+      version: latest

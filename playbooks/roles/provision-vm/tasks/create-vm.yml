@@ -12,34 +12,34 @@
         - name: "ipconfig-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}"
           primary: True
 
-  - name: Create {{ outer_loop.host_group }} node(s)
+  - name: Create  node(s)
     azure_rm_virtualmachine:
       resource_group: "{{ cloud_config.resource_group }}"
       storage_account_name: "{{ cloud_config.storage_account.name }}"
-      name: "vm-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ outer_loop.host_group }}{{ (outer_loop.count > '1') | ternary(local_loop,'') }}"
+      name: "vm-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ host_group }}{{ count }}"
       image:
-        offer: "{{ outer_loop.image.offer }}"
-        publisher: "{{ outer_loop.image.publisher }}"
-        sku: "{{ outer_loop.image.sku }}"
-        version: "{{ outer_loop.image.version }}"
-      vm_size: "{{ outer_loop.flavor }}"
-      network_interface_names: "nic-{{ cloud_config.project_name|default('') }}-{{ cloud_config.env_type|default('') }}-{{ outer_loop.host_group }}{{ (outer_loop.count > '1') | ternary(local_loop,'') }}"
+        offer: "{{ cloud_config.vm.image.offer }}"
+        publisher: "{{ cloud_config.vm.image.publisher }}"
+        sku: "{{ cloud_config.vm.image.sku }}"
+        version: "{{ cloud_config.vm.image.version }}"
+      vm_size: "{{ flavor }}"
+      network_interface_names: "nic-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}"
       ssh_password_enabled: false
       admin_username: "{{ cloud_config.admin_username }}"
       ssh_public_keys:
         - path: "/home/{{ cloud_config.admin_username }}/.ssh/authorized_keys"
-          key_data: "{{ lookup('file', cloud_config.ssh.publickey) }}"
+          key_data: "{{ cloud_config.ssh.publickey }}"
       state: present
-      tags:
-        Cluster: "{{ cluster_name }}"
-        Role: "{{ outer_loop.host_group }}"
-        Group: "{{ cluster_name }}-{{ outer_loop.host_group }}"
-    loop_control:
-      loop_var: local_loop
-    with_sequence: count="{{ outer_loop.count }}" format=-%02x
-    async: 1000
-    poll: 0
-    register: current_nodes_async
+    #   tags:
+    #     Cluster: "{{ cluster_name }}"
+    #     Role: "{{ outer_loop.host_group }}"
+    #     Group: "{{ cluster_name }}-{{ outer_loop.host_group }}"
+    # loop_control:
+    #   loop_var: local_loop
+    # with_sequence: count="{{ outer_loop.count }}" format=-%02x
+    # async: 1000
+    # poll: 0
+    # register: current_nodes_async
 
 # - name: Wait for {{ outer_loop.host_group }} node(s) to be built
 #   async_status:
