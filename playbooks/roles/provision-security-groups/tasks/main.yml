@@ -6,7 +6,7 @@
       name: "{{ cloud_config.security_groups.name }}"
       rules:
           - name: "{{ cloud_config.security_groups.rules.inbound.allow_ssh_inbound.name }}"
-            protocol: "{{ oud_config.security_groups.rules.inbound.allow_ssh_inbound.protocol }}"
+            protocol: "{{ cloud_config.security_groups.rules.inbound.allow_ssh_inbound.protocol }}"
             priority: "{{ cloud_config.security_groups.rules.inbound.allow_ssh_inbound.priority }}"
             source_port_range: "{{ cloud_config.security_groups.rules.inbound.allow_ssh_inbound.source }}"
             destination_port_range: "{{ cloud_config.security_groups.rules.inbound.allow_ssh_inbound.port }}"
