@@ -9,7 +9,12 @@ cloud_config:
   resource_group: dp-ingestion-devoteam-hdp-dev-rg
   location: "westeurope"
   admin_username: "sdp-admin"
-  
+
+  mgmt:
+    provision: true
+    nodes_count: 3
+    flavor: Standard_A5
+
   nifi:
     provision: true
     nodes_count: 3
