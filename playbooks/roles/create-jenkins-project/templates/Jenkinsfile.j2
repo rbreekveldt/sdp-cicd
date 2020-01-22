@@ -9,6 +9,7 @@ pipeline {
     agent any
     parameters{
             //text(name: 'Subscription', {{ lookup( "env", ) }}, description: 'Subscription to provision')
+            choice(name: 'Subscription', choices: '{{ lookup( "env", 'Subscription') }}', description: 'Subscription to provision')
             choice(name: 'data_domain', choices: 'Please select\ndp\nautomation\naccess\nmonitoring', description: 'Data Domain')
             choice(name: 'resource_group_phase', choices: 'Please select\npii_management\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
             string(name: 'project_name', defaultValue:'', description: 'Specify project name')
