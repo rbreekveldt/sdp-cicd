@@ -1,0 +1,67 @@
+---
+cloud_config:
+  project_name: ok
+  env_type: uat
+  resource_group_phase: piimanagement
+  application_name: hdp
+  data_domain: automation
+
+  resource_group: automation-piimanagement-ok-hdp-uat-rg
+  location: "westeurope"
+  admin_username: "sdp-admin"
+  
+  nifi:
+    provision: false
+    nodes_count: 3
+    flavor: Standard_D3_v2
+  
+  kafka:
+    provision: false
+    flavor: Standard_D3_v2
+
+  ssh:
+    publickey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtTDhaa9ldeOti2QpPjipKw4XITgoLGInLlRyS7fE2gSehL+FO75OD7LqSvKWMy7jyBuGiHi/IeneCQHgU/lq7SHSJlb09y7DfaqrR2L7Q9Yl93vPMJZIi7ujE3m1zupbFYDNK2rMAOR2tftqqn0S+iOLKvlhKH+2xZnXhI45u+JmFzOk8rgmFXnrtSUpBEDJkWZcFavoQKsVIkeU5N6/QshfoUB6qafcFfBCxY0Ix4LfGKhLh8qaUdHomZzAfo/FWvD6QIz5y/h8+YKqKzpN0Hc9Qv2s4VKkZrNODXhejUBl3onR1UzrqbD2rD/fvIx34rqbbtHoEgAxgc3dHu5kV sdp-admin@vm-dev-jumpbox
+        
+  storage_account:
+    name: saokhdpuat
+    type: "Standard_LRS"
+      
+  network:
+    name: vnet-ok-uat
+    address_prefix: "10.109.0.0/24"
+      
+  subnet:
+    name: subnet-ok-uat
+    address_prefix: "10.109.0.0/26"
+      
+  security_groups:
+    name: nsg-ok-uat
+    rules:
+      inbound:
+        allow_ssh_inbound:
+          name: Allow_SSH
+          protocol: Tcp
+          port: 22
+          priority: 100
+          source: VirtualNetwork
+          destination: VirtualNetwork
+        allow_icmp_inbound:  
+          name: Allow_ICMP
+          protocol: Icmp
+          priority: 101
+          source: VirtualNetwork
+          destination: VirtualNetwork
+      
+  peering:
+    initial_peering_name: vnet-ok-uat-to-vnet-sdp-internal
+    access_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
+    access_resource_group: 'access-sdp-jumpbox-rg'
+    access_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
+    connect_peering_name: vnet-sdp-internal-to-vnet-ok-uat
+
+  vm:
+    image:
+      offer: CentOS
+      publisher: OpenLogic
+      sku: '7.4'
+      version: latest
