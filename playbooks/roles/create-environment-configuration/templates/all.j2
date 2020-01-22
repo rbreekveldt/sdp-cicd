@@ -44,11 +44,13 @@ cloud_config:
           port: 22
           priority: 100
           source: VirtualNetwork
+          destination: VirtualNetwork
         allow_icmp_inbound:  
           name: Allow_ICMP
-          protocol: "*"
+          protocol: Icmp
           priority: 101
           source: VirtualNetwork
+          destination: VirtualNetwork
       
   peering:
     initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-sdp-internal
