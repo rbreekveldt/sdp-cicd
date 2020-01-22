@@ -40,15 +40,15 @@ cloud_config:
       inbound:
         allow_ssh_inbound:
           name: Allow_SSH
-            protocol: Tcp
-            port: 22
-            priority: 100
-            source: VirtualNetwork
+          protocol: Tcp
+          port: 22
+          priority: 100
+          source: VirtualNetwork
         allow_icmp_inbound  
           name: Allow_ICMP
-            protocol: Icmp
-            priority: 101
-            source: VirtualNetwork
+          protocol: Icmp
+          priority: 101
+          source: VirtualNetwork
       
   peering:
     initial_peering_name: vnet-ok-uat-to-vnet-sdp-internal
