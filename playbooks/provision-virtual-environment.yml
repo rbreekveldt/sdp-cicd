@@ -10,3 +10,4 @@
     - provision-security-groups
     - provision-vnet
     - provision-peering
+    #- provision-vm

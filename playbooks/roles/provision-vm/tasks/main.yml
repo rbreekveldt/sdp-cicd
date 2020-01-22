@@ -2,7 +2,9 @@
 # tasks file for provision-vm
 
 - name: Create Nifi cluster vm's
-  
   import_tasks: create-vm.yml
-  when: .....
+  when: cloud_config.nifi.provision
 
+#- name: Create Kafaka mock-up vm
+#  import_tasks: create-vm.yml
+#  when: kafka.provision is succeeded
