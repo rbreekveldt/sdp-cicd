@@ -36,7 +36,19 @@ cloud_config:
       
   security_groups:
     name: nsg-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
-    port: 22
+    rules:
+      inbound:
+        allow_ssh_inbound:
+          name: Allow_SSH
+            protocol: Tcp
+            port: 22
+            priority: 100
+            source: VirtualNetwork
+        allow_icmp_inbound  
+          name: Allow_ICMP
+            protocol: Icmp
+            priority: 101
+            source: VirtualNetwork
       
   peering:
     initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-sdp-internal
