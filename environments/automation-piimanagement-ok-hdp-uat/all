@@ -28,11 +28,11 @@ cloud_config:
       
   network:
     name: vnet-ok-uat
-    address_prefix: "10.106.0.0/24"
+    address_prefix: "10.109.0.0/24"
       
   subnet:
     name: subnet-ok-uat
-    address_prefix: "10.106.0.0/26"
+    address_prefix: "10.109.0.0/26"
       
   security_groups:
     name: nsg-ok-uat
