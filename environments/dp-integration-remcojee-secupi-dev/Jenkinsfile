@@ -1,4 +1,4 @@
-/Jenkins pipeline to provision Hortonworks infrastructure
+//Jenkins pipeline for the infrastructure of environment
 def azureSubscription = ""
 def inputSubscription = ""
 def skipRemainingStages = "true"
@@ -8,7 +8,7 @@ def skipRemainingStages = "true"
 pipeline {
     agent any
     parameters{
-            text(name: 'Subscription', [], description: 'Subscription to provision')
+            //text(name: 'Subscription', [], description: 'Subscription to provision')
             choice(name: 'data_domain', choices: 'Please select\ndp\nautomation\naccess\nmonitoring', description: 'Data Domain')
             choice(name: 'resource_group_phase', choices: 'Please select\npii_management\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
             string(name: 'project_name', defaultValue:'', description: 'Specify project name')
