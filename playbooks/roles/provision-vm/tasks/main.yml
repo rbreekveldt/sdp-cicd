@@ -5,5 +5,5 @@
   vars:
     flavor: "{{ cloud_config.nifi.flavor }}"
     host_group: "nifi"
-    count: 1
+    count: 3
   when: cloud_config.nifi.provision
