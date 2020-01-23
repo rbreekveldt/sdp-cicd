@@ -9,7 +9,7 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Whitelist ip') {
+        stage('Provision infra') {
                 environment {
                     CLOUD_TO_USE = "${Cloud}"
                 }
