@@ -30,25 +30,39 @@ cloud_config:
   storage_account:
     name: sadevoteamhdpdev
     type: "Standard_LRS"
-      
-  network:
-    name: vnet-devoteam-dev
-    address_prefix: "10.108.0.0/24"
-      
+
+   network:
+    name: vnet-ok-uat
+    address_prefix: "10.121.0.0/24"
+
   subnet:
-    name: subnet-devoteam-dev
-    address_prefix: "10.108.0.0/26"
-      
+    name: subnet-ok-uat
+    address_prefix: "10.121.0.0/26"
+
   security_groups:
-    name: nsg-devoteam-dev
-    port: 22
-      
+    name: nsg-ok-uat
+    rules:
+      inbound:
+        allow_ssh_inbound:
+          name: Allow_SSH
+          protocol: Tcp
+          port: 22
+          priority: 100
+          source: VirtualNetwork
+          destination: VirtualNetwork
+        allow_icmp_inbound:
+          name: Allow_ICMP
+          protocol: Icmp
+          priority: 101
+          source: VirtualNetwork
+          destination: VirtualNetwork
+
   peering:
-    initial_peering_name: vnet-devoteam-dev-to-vnet-sdp-internal
+    initial_peering_name: vnet-ok-uat-to-vnet-sdp-internal
     access_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
     access_resource_group: 'access-sdp-jumpbox-rg'
     access_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-    connect_peering_name: vnet-sdp-internal-to-vnet-devoteam-dev
+    connect_peering_name: vnet-sdp-internal-to-vnet-ok-uat
 
   vm:
     image:
