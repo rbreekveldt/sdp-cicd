@@ -45,10 +45,17 @@ cloud_config:
           priority: 100
           source: VirtualNetwork
           destination: VirtualNetwork
-        allow_icmp_inbound:  
-          name: Allow_ICMP
-          protocol: Icmp
+        allow_ping_inbound:  
+          name: Allow_Ping
+          protocol: Udp
+          port: 7
           priority: 101
+          source: VirtualNetwork
+          destination: VirtualNetwork
+        allow_icmp_inbound:
+          name: Allow_Icmp
+          protocol: Icmp
+          priority: 102
           source: VirtualNetwork
           destination: VirtualNetwork
       
