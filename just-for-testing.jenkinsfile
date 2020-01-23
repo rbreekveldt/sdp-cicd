@@ -24,7 +24,7 @@ pipeline {
                             ansiblePlaybook([
                                     playbook    : 'playbooks/provision-virtual-environment.yml',
                                     installation: 'ansible',
-                                    extras: "--extra-vars 'environments/dp-ingestion-devoteam-hdp-dev/all'"
+                                    extras: "--extra-vars '@environments/dp-ingestion-devoteam-hdp-dev/all'"
                             ])
                          //ansiblePlaybook playbook: './playbooks/whitelist_ips.yml' extra-vars: '.grantaccess/testvar-rg'
                         }
