@@ -17,12 +17,12 @@
       register: current_private_nics_async
 
   - name: Wait for NIC(s) to be built
-      async_status:
-        jid: "{{ ansible_job_id }}"
-      with_items: "{{ current_private_nics_async.results }}"
-      register: current_private_nics
-      until: current_private_nics.finished
-      retries: 120
+    async_status:
+      jid: "{{ ansible_job_id }}"
+    with_items: "{{ current_private_nics_async.results }}"
+    register: current_private_nics
+    until: current_private_nics.finished
+    retries: 120
 
 - name: Create  node(s)
   azure_rm_virtualmachine:
