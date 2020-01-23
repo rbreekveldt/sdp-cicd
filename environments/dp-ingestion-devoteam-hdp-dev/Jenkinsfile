@@ -26,7 +26,6 @@ pipeline {
                                     installation: 'ansible',
                                     extras: "--extra-vars 'all'"
                             ])
-                         //ansiblePlaybook playbook: './playbooks/whitelist_ips.yml' extra-vars: '.grantaccess/testvar-rg'
                         }
                     }
                 }
@@ -38,3 +37,4 @@ pipeline {
             }
         }
     }
+   }

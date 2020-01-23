@@ -8,7 +8,6 @@
     host_group: "mgmt"
     count: cloud_config.mgmt.nodes_count
   when: cloud_config.mgmt.nodes_count > '0'
-  with_items: "cloud_config.mgmt.nodes_count"
 
 - name: Create Nifi cluster vm's
   import_tasks: create-vm.yml
@@ -17,7 +16,6 @@
     host_group: "nifi"
     count: cloud_config.nifi.nodes_count
   when: cloud_config.nifi.nodes_count > '0'
-  with_items: "{{ groups['Group_'~cluster_name~'-'~outer_loop.host_group] }}"
 
 #- name: Create Kafaka mock-up vm
 #  import_tasks: create-vm.yml
