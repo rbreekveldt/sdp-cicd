@@ -12,7 +12,7 @@
       ip_configurations:
         - name: "ipconfig-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}"
           primary: True
-      register: current_private_nics_async
+    register: current_private_nics_async
 
   - name: Wait for NIC(s) to be built
     async_status:
@@ -40,7 +40,7 @@
       - path: "/home/{{ cloud_config.admin_username }}/.ssh/authorized_keys"
         key_data: "{{ cloud_config.ssh.publickey }}"
     state: present
-    register: current_nodes_async
+  register: current_nodes_async
 
 - name: Wait for node(s) to be built
   async_status:
