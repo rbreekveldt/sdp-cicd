@@ -12,7 +12,7 @@ cloud_config:
 
   mgmt:
     provision: true
-    nodes_count: 3
+    nodes_count: 1
     flavor: Standard_A5
 
   nifi:
