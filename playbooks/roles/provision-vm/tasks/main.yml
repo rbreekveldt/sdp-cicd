@@ -1,7 +1,7 @@
 ---
 # tasks file for provision-vm
 - name: Create Nifi cluster vm's
-  import_tasks: create-vm.yml
+  include_tasks: create-vm.yml
   vars:
     flavor: "{{ cloud_config.nifi.flavor }}"
     host_group: "nifi"
