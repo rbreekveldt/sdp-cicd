@@ -28,8 +28,8 @@
     remote_address_space: "{{ item.remote_address_space }}"
   with_items: "{{ results.vnetpeerings }}"
 
-- name: return motd to registered var
-  command: "python files/calculate_vnet_prefix.py"
+- name: find next subnet prefix
+  command: "python roles/calculate-vnet-prefix/files/prefixfile/calculate_vnet_prefix.py"
   register: new-subnet-prefix
 
 - name: replace anchore in all file of this data project
