@@ -1,0 +1,7 @@
+---
+- name: Write to prexif to file
+  lineinfile: 
+    line: "{{ item }}" 
+    path: files/prefixfile
+    create: yes
+  with_items: "{{ remote_address_space.address_prefixes }}"

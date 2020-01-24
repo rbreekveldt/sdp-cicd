@@ -28,11 +28,11 @@ cloud_config:
       
   network:
     name: vnet-devoteam-dev
-    address_prefix: "10.108.0.0/24"
+    address_prefix: "VNET-ANCOR.0/24"
       
   subnet:
     name: subnet-devoteam-dev
-    address_prefix: "10.108.0.0/26"
+    address_prefix: "VNET-ANCOR.0/26"
       
   security_groups:
     name: nsg-devoteam-dev
