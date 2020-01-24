@@ -19,7 +19,6 @@
   - name: Wait for NIC to be built
     async_status:
       jid: "{{ private_nic.ansible_job_id }}"
-      #with_items: "{{ private_nic.results }}"
     register: job_result
     until: job_result.finished
     retries: 120
@@ -42,37 +41,3 @@
       - path: "/home/{{ cloud_config.admin_username }}/.ssh/authorized_keys"
         key_data: "{{ cloud_config.ssh.publickey }}"
     state: present
-    #  async: 1000
-    #poll: 0
-    #register: current_nodes_async
-
-    #- name: Wait for node(s) to be built
-    # async_status:
-    #jid: "{{ current_nodes_async.ansible_job_id }}"
-    #with_items: "{{ current_nodes_async.results }}"
-    #register: current_nodes
-    #until: current_nodes.finished
-    #retries: 120
-
-
-
-    #   tags:
-    #     Cluster: "{{ cluster_name }}"
-    #     Role: "{{ outer_loop.host_group }}"
-    #     Group: "{{ cluster_name }}-{{ outer_loop.host_group }}"
-    # loop_control:
-    #   loop_var: local_loop
-    # with_sequence: count="{{ outer_loop.count }}" format=-%02x
-    # async: 1000
-    # poll: 0
-    # register: current_nodes_async
-
-# - name: Wait for {{ outer_loop.host_group }} node(s) to be built
-#   async_status:
-#     jid: "{{ local_loop.ansible_job_id }}"
-#   loop_control:
-#     loop_var: local_loop
-#   with_items: "{{ current_nodes_async.results }}"
-#   register: current_nodes
-#   until: current_nodes.finished
-#   retries: 120
