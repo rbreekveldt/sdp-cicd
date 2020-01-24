@@ -7,6 +7,7 @@
     virtual_network: "{{ cloud_config.network.name }}"
     name: "{{ cloud_config.peering.initial_peering_name }}"
     remote_virtual_network: "{{ cloud_config.peering.access_virtual_network }}"
+    allow_virtual_network_access: true
 
 - name: Connect virtual network peering with {{ cloud_config.peering.access_resource_group }}
   azure_rm_virtualnetworkpeering:
@@ -18,3 +19,4 @@
     name: "{{ cloud_config.peering.connect_peering_name }}"
     virtual_network: "{{ cloud_config.peering.access_virtual_network }}"
     remote_virtual_network: "{{ vnet_result.state.id }}"
+    allow_virtual_network_access: true
