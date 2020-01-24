@@ -2,7 +2,7 @@
 - name: Include var files
   include_vars:
     dir: vars
-      
+
 - name: Create project all
   template:
     dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"

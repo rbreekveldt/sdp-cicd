@@ -1,0 +1,7 @@
+---
+- name: Write to prefix to file
+  lineinfile: 
+    line: "{{ item }}" 
+    path: playbooks/roles/calculate-vnet-prefix/files/prefixfile
+    create: yes
+  with_items: "{{ remote_address_space.address_prefixes }}"

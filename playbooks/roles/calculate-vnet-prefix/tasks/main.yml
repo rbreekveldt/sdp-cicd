@@ -1,0 +1,41 @@
+---
+# tasks file for calculate-vnet-prefix
+- name: Get list of peering
+  azure_rm_virtualnetworkpeering_facts:
+    resource_group: "{{ cloud_config.peering.access_resource_group }}"
+    virtual_network: "{{ cloud_config.peering.access_virtual_network }}"
+    subscription_id: "{{ cloud_config.peering.access_subscription_id }}"
+    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+  register: results
+
+- name: delete file
+  ignore_errors: yes
+  file:
+    state: absent
+    path: files/prefixfile
+ 
+- name: Ansible create file if it doesn't exist example
+  ignore_errors: yes
+  file:
+    path: "files/prefixfile"
+    state: touch
+
+- name: Distillate all subnet prexies already taken
+  include_tasks: distillate-subnet-prexies.yml
+  vars:
+    remote_address_space: "{{ item.remote_address_space }}"
+  with_items: "{{ results.vnetpeerings }}"
+
+- name: return motd to registered var
+  command: "python files/calculate_vnet_prefix.py"
+  register: new-subnet-prefix
+
+- name: replace anchore in all file of this data project
+  replace:
+    path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
+    replace: "{{ new-subnet-prefix }}"
+    regexp: "VNET-ANCOR"
+
+
