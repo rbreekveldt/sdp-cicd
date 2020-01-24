@@ -4,6 +4,8 @@
     dir: vars
 
 - name: Calculate vnet address space prefix
+  import_role: 
+    name: calculate-vnet-prefix
   
 - name: Create project all
   template:
