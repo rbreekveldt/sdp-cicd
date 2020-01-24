@@ -7,7 +7,7 @@ def find_nex_prefix():
   third_digit = 0
   
   #Read all vnet prefiex in list
-  with fileinput.input(files=('files/prefixfile')) as f:
+  with fileinput.input(files=('playbooks/roles/calculate-vnet-prefix/files/prefixfile')) as f:
     for line in f:
       token = line[0:(line.rindex('.'))]
       lineList.append(token)
