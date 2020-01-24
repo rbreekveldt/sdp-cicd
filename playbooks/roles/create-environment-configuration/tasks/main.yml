@@ -11,3 +11,8 @@
     owner: "{{ lookup('env', 'USER') }}"
     output_encoding: utf-8
     mode: 0644
+
+- name: Calculate vnet address space prefix
+  import_role: 
+    name: calculate-vnet-prefix
+
