@@ -11,17 +11,24 @@ cloud_config:
   admin_username: "sdp-admin"
 
   mockup:
-    kafka: {{ lookup('env', 'kafka') }}
-    sftp: {{ lookup('env', 'sftp') }}
+    kafka:
+      provision: {{ lookup('env', 'kafka') }}
+      functionality: kafka
+    sftp:
+      provision: {{ lookup('env', 'kafka') }}
+      functionality: sftp
+    nodes_count: 1
     flavor: Standard_D3_v2
 
   mgmt:
     provision: {{ lookup('env', 'nifi') }}
+    functionality: nifimgmt
     nodes_count: 1
     flavor: Standard_D3_v2
 
   nifi:
     provision: {{ lookup('env', 'nifi') }}
+    functionality: nifi
     nodes_count: {{ lookup('env', 'nifi_nodes_count') }}
     flavor: Standard_A5
 
