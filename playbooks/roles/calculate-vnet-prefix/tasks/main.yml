@@ -2,9 +2,9 @@
 # tasks file for calculate-vnet-prefix
 - name: Get list of peering
   azure_rm_virtualnetworkpeering_facts:
-    resource_group: "{{ access_resource_group }}"
-    virtual_network: "{{ access_virtual_network }}"
-    subscription_id: "{{ access_subscription_id }}"
+    resource_group: "{{ cloud_config.peering.access_resource_group }}"
+    virtual_network: "{{ cloud_config.peering.access_virtual_network }}"
+    subscription_id: "{{ cloud_config.peering.access_subscription_id }}"
   register: results
 
 - name: delete file
