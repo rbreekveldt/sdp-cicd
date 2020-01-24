@@ -32,16 +32,16 @@
   command: "python calculate_vnet_prefix.py"
   args:
     chdir: "{{ lookup('env', 'WORKSPACE') }}/playbooks/roles/calculate-vnet-prefix/files"
-  register: new-subnet-prefix
+  register: newsubnetprefix
 
 - name: "!!!! Calculated value "
   debug:
-     msg: "{{ new-subnet-prefix }}"
-     
+     msg: "{{ newsubnetprefix }}"
+
 - name: replace anchore in all file of this data project
   replace:
     path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
-    replace: "{{ new-subnet-prefix }}"
+    replace: "{{ newsubnetprefix }}"
     regexp: "VNET-ANCOR"
 
 
