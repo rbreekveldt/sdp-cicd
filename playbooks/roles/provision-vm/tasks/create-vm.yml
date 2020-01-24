@@ -19,7 +19,7 @@
   - name: Wait for NIC to be built
     async_status:
       jid: "{{ private_nic.ansible_job_id }}"
-    with_items: "{{ private_nic.results }}"
+      #with_items: "{{ private_nic.results }}"
     register: job_result
     until: job_result.finished
     retries: 120
