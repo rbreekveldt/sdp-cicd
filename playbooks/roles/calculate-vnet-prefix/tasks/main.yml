@@ -29,9 +29,9 @@
   with_items: "{{ results.vnetpeerings }}"
 
 - name: find next subnet prefix
-  command: "python playbooks/roles/calculate-vnet-prefix/files/calculate_vnet_prefix.py"
+  command: "python calculate_vnet_prefix.py"
   args:
-    chdir: "{{ lookup('env', 'WORKSPACE') }}"
+    chdir: "{{ lookup('env', 'WORKSPACE') }}/playbooks/roles/calculate-vnet-prefix/files"
   register: new-subnet-prefix
 
 - name: "!!!! Calculated value "
