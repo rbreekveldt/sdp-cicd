@@ -16,6 +16,9 @@
     poll: 0
     register: current_private_nics_async
 
+  - name: Debug
+    debug: msg="{{ current_private_nics_async }}"
+
   - name: Wait for NIC(s) to be built
     async_status:
       jid: "{{ ansible_job_id }}"
