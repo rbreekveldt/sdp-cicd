@@ -5,6 +5,9 @@
     resource_group: "{{ cloud_config.peering.access_resource_group }}"
     virtual_network: "{{ cloud_config.peering.access_virtual_network }}"
     subscription_id: "{{ cloud_config.peering.access_subscription_id }}"
+    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
   register: results
 
 - name: delete file
