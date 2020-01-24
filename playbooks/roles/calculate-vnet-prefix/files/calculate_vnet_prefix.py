@@ -1,13 +1,13 @@
 import fileinput
 
-def find_nex_prefix():
+def find_next_prefix():
 
   lineList = list()
   default_subnet_prefix = '10.250.'
   third_digit = 0
   
-  #Read all vnet prefiex in list
-  with fileinput.input(files=('playbooks/roles/calculate-vnet-prefix/files/prefixfile')) as f:
+  #Read all vnet prefix in list
+  with fileinput.input(files=('/var/lib/jenkins/workspace/CICD\ Automation/Create\ Data\ Environment/playbooks/roles/calculate-vnet-prefix/files/prefixfile')) as f:
     for line in f:
       token = line[0:(line.rindex('.'))]
       lineList.append(token)
@@ -22,4 +22,4 @@ def find_nex_prefix():
   print(vnet_prefix)
 
 
-find_nex_prefix()
+find_next_prefix()
