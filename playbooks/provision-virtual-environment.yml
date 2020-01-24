@@ -9,5 +9,5 @@
     - provision-storageaccount
     - provision-security-groups
     - provision-vnet
-    - provision-peering
+    #- provision-peering
     - provision-vm

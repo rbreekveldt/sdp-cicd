@@ -9,15 +9,28 @@ cloud_config:
   resource_group: {{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}-rg
   location: "westeurope"
   admin_username: "sdp-admin"
-  
+
+  mockup:
+    kafka:
+      provision: {{ lookup('env', 'kafka') }}
+      functionality: kafka
+    sftp:
+      provision: {{ lookup('env', 'kafka') }}
+      functionality: sftp
+    nodes_count: 1
+    flavor: Standard_D3_v2
+
+  mgmt:
+    provision: {{ lookup('env', 'nifi') }}
+    functionality: nifimgmt
+    nodes_count: 1
+    flavor: Standard_D3_v2
+
   nifi:
     provision: {{ lookup('env', 'nifi') }}
+    functionality: nifi
     nodes_count: {{ lookup('env', 'nifi_nodes_count') }}
-    flavor: Standard_D3_v2
-  
-  kafka:
-    provision: {{ lookup('env', 'kafka') }}
-    flavor: Standard_D3_v2
+    flavor: Standard_A5
 
   ssh:
     publickey: {{ sdp_admin_public }}
