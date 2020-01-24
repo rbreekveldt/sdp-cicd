@@ -42,11 +42,11 @@ cloud_config:
   network:
     name: vnet-milou-sit
 
-    address_prefix: "VNET-ANCOR.0/24"
+    address_prefix: "10.250.0.0/24"
       
   subnet:
     name: subnet-milou-sit
-    address_prefix: "VNET-ANCOR.0/26"
+    address_prefix: "10.250.0.0/26"
       
   security_groups:
     name: nsg-milou-sit
