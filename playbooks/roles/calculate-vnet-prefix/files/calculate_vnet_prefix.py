@@ -19,6 +19,6 @@ def find_next_prefix():
     third_digit += 1
     vnet_prefix = default_subnet_prefix + str(third_digit)
  
-  return vnet_prefix
+  print vnet_prefix
  
 find_next_prefix()
