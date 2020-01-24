@@ -9,7 +9,7 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Whitelist ip') {
+        stage('Provision infra') {
                 environment {
                     CLOUD_TO_USE = "${Cloud}"
                 }
@@ -22,10 +22,11 @@ pipeline {
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
                          dir("${WORKSPACE}") {
                             ansiblePlaybook([
-                                    playbook    : '@playbooks/provision-virtual-environment.yml',
+                                    playbook    : 'playbooks/provision-virtual-environment.yml',
                                     installation: 'ansible',
-                                    extras: "--extra-vars 'all'"
+                                    extras: "--extra-vars '@environments/dp-ingestion-devoteam-hdp-dev/all'"
                             ])
+                         //ansiblePlaybook playbook: './playbooks/whitelist_ips.yml' extra-vars: '.grantaccess/testvar-rg'
                         }
                     }
                 }
@@ -37,4 +38,4 @@ pipeline {
             }
         }
     }
-   }
+  }

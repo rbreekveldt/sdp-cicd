@@ -19,30 +19,30 @@ cloud_config:
     provision: true
     nodes_count: 3
     flavor: Standard_D3_v2
-  
+
   kafka:
     provision: true
     flavor: Standard_D3_v2
 
   ssh:
     publickey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtTDhaa9ldeOti2QpPjipKw4XITgoLGInLlRyS7fE2gSehL+FO75OD7LqSvKWMy7jyBuGiHi/IeneCQHgU/lq7SHSJlb09y7DfaqrR2L7Q9Yl93vPMJZIi7ujE3m1zupbFYDNK2rMAOR2tftqqn0S+iOLKvlhKH+2xZnXhI45u+JmFzOk8rgmFXnrtSUpBEDJkWZcFavoQKsVIkeU5N6/QshfoUB6qafcFfBCxY0Ix4LfGKhLh8qaUdHomZzAfo/FWvD6QIz5y/h8+YKqKzpN0Hc9Qv2s4VKkZrNODXhejUBl3onR1UzrqbD2rD/fvIx34rqbbtHoEgAxgc3dHu5kV sdp-admin@vm-dev-jumpbox
-        
+
   storage_account:
     name: sadevoteamhdpdev
     type: "Standard_LRS"
-      
+
   network:
     name: vnet-devoteam-dev
     address_prefix: "VNET-ANCOR.0/24"
-      
+
   subnet:
     name: subnet-devoteam-dev
     address_prefix: "VNET-ANCOR.0/26"
-      
+
   security_groups:
     name: nsg-devoteam-dev
     port: 22
-      
+
   peering:
     initial_peering_name: vnet-devoteam-dev-to-vnet-sdp-internal
     access_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
@@ -56,4 +56,3 @@ cloud_config:
       publisher: OpenLogic
       sku: '7.4'
       version: latest
-  
