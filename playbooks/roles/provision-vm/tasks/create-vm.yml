@@ -13,7 +13,7 @@
         - name: "ipconfig-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}"
           primary: True
     async: 1000
-    poll: 0
+    poll: 5
     register: private_nic
 
   - name: Wait for NIC to be built
