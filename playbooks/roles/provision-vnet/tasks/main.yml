@@ -1,11 +1,8 @@
 ---
 # tasks file for provision-vnet
 
-- include_vars:
-    file: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
-
 - name: Calculate vnet address space prefix
-  import_role: 
+  include_role: 
     name: calculate-vnet-prefix
 
 - name: Create {{ cloud_config.network.name }} Virtual Network
