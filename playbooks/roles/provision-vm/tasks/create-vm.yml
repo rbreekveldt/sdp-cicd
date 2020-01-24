@@ -2,7 +2,7 @@
 # tasks file for create-vm
 
 - block:
-  - name: Create NIC(s) (with private IP only)
+  - name: Create NIC (with private IP only)
     azure_rm_networkinterface:
       resource_group: "{{ cloud_config.resource_group }}"
       name: "nic-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ number }}"
@@ -14,17 +14,17 @@
           primary: True
     async: 1000
     poll: 0
-    register: current_private_nics_async
+    register: private_nic
 
-  - name: Wait for NIC(s) to be built
+  - name: Wait for NIC to be built
     async_status:
-      jid: "{{ current_private_nics_async.ansible_job_id }}"
+      jid: "{{ private_nic.ansible_job_id }}"
       # with_items: "{{ current_private_nics_async.results }}"
-    register: current_private_nics
-    until: current_private_nics.finished
+    register: job_result
+    until: job_result.finished
     retries: 120
 
-- name: Create  node(s)
+- name: Create  node
   azure_rm_virtualmachine:
     resource_group: "{{ cloud_config.resource_group }}"
     storage_account_name: "{{ cloud_config.storage_account.name }}"
@@ -42,17 +42,17 @@
       - path: "/home/{{ cloud_config.admin_username }}/.ssh/authorized_keys"
         key_data: "{{ cloud_config.ssh.publickey }}"
     state: present
-  async: 1000
-  poll: 0
-  register: current_nodes_async
+    #  async: 1000
+    #poll: 0
+    #register: current_nodes_async
 
-- name: Wait for node(s) to be built
-  async_status:
-    jid: "{{ current_nodes_async.ansible_job_id }}"
+    #- name: Wait for node(s) to be built
+    # async_status:
+    #jid: "{{ current_nodes_async.ansible_job_id }}"
     #with_items: "{{ current_nodes_async.results }}"
-  register: current_nodes
-  until: current_nodes.finished
-  retries: 120
+    #register: current_nodes
+    #until: current_nodes.finished
+    #retries: 120
 
 
 
