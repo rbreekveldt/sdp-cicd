@@ -29,7 +29,9 @@
   with_items: "{{ results.vnetpeerings }}"
 
 - name: find next subnet prefix
-  command: "python roles/calculate-vnet-prefix/files/prefixfile/calculate_vnet_prefix.py"
+  command: "python playbooks/roles/calculate-vnet-prefix/files/prefixfile/calculate_vnet_prefix.py"
+  args:
+    chdir: "{{ lookup('env', 'WORKSPACE') }}"
   register: new-subnet-prefix
 
 - name: replace anchore in all file of this data project
