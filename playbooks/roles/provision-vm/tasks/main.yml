@@ -5,7 +5,7 @@
   vars:
     flavor: "{{ cloud_config.mgmt.flavor }}"
     host_group: "nifi"
-    functionality: {{ cloud_config.mgmt.functionality }}
+    functionality: "{{ cloud_config.mgmt.functionality }}"
     number: "{{ local_loop }}"
   loop_control:
     loop_var: local_loop
@@ -17,7 +17,7 @@
   vars:
     flavor: "{{ cloud_config.nifi.flavor }}"
     host_group: "nifi"
-    functionality: {{ cloud_config.nifi.functionality }}
+    functionality: "{{ cloud_config.nifi.functionality }}"
     number: "{{ local_loop }}"
   loop_control:
     loop_var: local_loop
@@ -29,7 +29,7 @@
   vars:
     flavor: "{{ cloud_config.mockup.flavor }}"
     host_group: "nifi"
-    functionality: {{ cloud_config.mockup.kafka.functionality }}
+    functionality: "{{ cloud_config.mockup.kafka.functionality }}"
     number: "{{ local_loop }}"
   loop_control:
     loop_var: local_loop
@@ -41,7 +41,7 @@
   vars:
     flavor: "{{ cloud_config.mockup.flavor }}"
     host_group: "nifi"
-    functionality: {{ cloud_config.mockup.sftp.functionality }}
+    functionality: "{{ cloud_config.mockup.sftp.functionality }}"
     number: "{{ local_loop }}"
   loop_control:
     loop_var: local_loop
