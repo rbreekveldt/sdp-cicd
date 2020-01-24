@@ -1,12 +1,49 @@
 ---
 # tasks file for provision-vm
+- name: Create Ambari Mgmt vm's
+  include_tasks: create-vm.yml
+  vars:
+    flavor: "{{ cloud_config.mgmt.flavor }}"
+    host_group: "nifi"
+    functionality: {{ cloud_config.mgmt.functionality }}
+    number: "{{ local_loop }}"
+  loop_control:
+    loop_var: local_loop
+  with_sequence: count="{{ cloud_config.mgmt.nodes_count }}" format=%02x
+  when: cloud_config.mgmt.provision
+
 - name: Create Nifi cluster vm's
   include_tasks: create-vm.yml
   vars:
     flavor: "{{ cloud_config.nifi.flavor }}"
     host_group: "nifi"
+    functionality: {{ cloud_config.nifi.functionality }}
     number: "{{ local_loop }}"
   loop_control:
     loop_var: local_loop
-  with_sequence: count="3" format=%02x
+  with_sequence: count="{{ cloud_config.nifi.nodes_count }}" format=%02x
   when: cloud_config.nifi.provision
+
+- name: Create mockup vm's
+  include_tasks: create-vm.yml
+  vars:
+    flavor: "{{ cloud_config.mockup.flavor }}"
+    host_group: "nifi"
+    functionality: {{ cloud_config.mockup.kafka.functionality }}
+    number: "{{ local_loop }}"
+  loop_control:
+    loop_var: local_loop
+  with_sequence: count="{{ cloud_config.mockup.nodes_count }}" format=%02x
+  when: cloud_config.mockup.kafka.provision
+
+- name: Create mockup vm's
+  include_tasks: create-vm.yml
+  vars:
+    flavor: "{{ cloud_config.mockup.flavor }}"
+    host_group: "nifi"
+    functionality: {{ cloud_config.mockup.sftp.functionality }}
+    number: "{{ local_loop }}"
+  loop_control:
+    loop_var: local_loop
+  with_sequence: count="{{ cloud_config.mockup.nodes_count }}" format=%02x
+  when: cloud_config.mockup.sftp.provision
