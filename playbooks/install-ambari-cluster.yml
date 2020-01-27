@@ -1,0 +1,9 @@
+---
+- name: Install Ambari cluster
+  hosts: all
+  gather_facts: true
+  #connection: local
+  tasks:
+    - name: Ping all
+      ping:
+  
