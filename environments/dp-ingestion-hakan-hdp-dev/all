@@ -42,11 +42,11 @@ cloud_config:
   network:
     name: vnet-hakan-dev
 
-    address_prefix: "10.250.1.0/24"
+    address_prefix: "10.250.2.0/24"
       
   subnet:
     name: subnet-hakan-dev
-    address_prefix: "10.250.1.0/26"
+    address_prefix: "10.250.2.0/26"
       
   security_groups:
     name: nsg-hakan-dev
