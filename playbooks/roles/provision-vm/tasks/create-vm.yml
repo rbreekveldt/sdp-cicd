@@ -26,7 +26,7 @@
 - name: Create {{ functionality }}{{ number }} node
   azure_rm_virtualmachine:
     resource_group: "{{ cloud_config.resource_group }}"
-    storage_account_name: "{{ cloud_config.storage_account.name }}"
+    managed_disk_type: "{{ cloud_config.vm.managed_disk_type }}"
     name: "vm-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
     image:
       offer: "{{ cloud_config.vm.image.offer }}"
