@@ -33,7 +33,9 @@ cloud_config:
     flavor: Standard_A5
 
   ssh:
-    publickey: {{ sdp_admin_public }}
+    sdp-admin_publickey: {{ sdp-admin_public }}
+    jenkins_publickey: {{ jenkins_public }}
+
         
   storage_account:
     name: sa{{ lookup('env', 'project_name') }}{{ lookup('env', 'application_name') }}{{ lookup('env', 'env_type') }}

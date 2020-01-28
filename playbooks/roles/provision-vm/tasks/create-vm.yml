@@ -39,5 +39,7 @@
     admin_username: "{{ cloud_config.admin_username }}"
     ssh_public_keys:
       - path: "/home/{{ cloud_config.admin_username }}/.ssh/authorized_keys"
-        key_data: "{{ cloud_config.ssh.publickey }}"
+        key_data: "{{ cloud_config.ssh.sdp-admin_publickey }}"
+      - path: "/home/{{ cloud_config.admin_username }}/.ssh/authorized_keys"
+        key_data: "{{ cloud_config.ssh.jenkins_publickey }}"
     state: present
