@@ -76,18 +76,18 @@ cloud_config:
           destination: VirtualNetwork
       
   peering:
-  - vnet-sdp-internal:
-     initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-sdp-internal
-     remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
-     remote_resource_group: 'access-sdp-jumpbox-rg'
-     remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-     connect_peering_name: vnet-sdp-internal-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
-  - vnet-cicd-prd:
-     initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-cicd-prd
-     remote_virtual_network: '/subscriptions/fd478270-bd64-4cf3-bb8b-53016bb2ffd6/resourceGroups/automation-cicd-prd-rg/providers/Microsoft.Network/virtualNetworks/vnet-cicd-prd'
-     remote_resource_group: 'automation-cicd-prd-rg'
-     remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
-     connect_peering_name: vnet-cicd-prd-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+    vnet-sdp-internal:
+      initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-sdp-internal
+      remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
+      remote_resource_group: 'access-sdp-jumpbox-rg'
+      remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
+      connect_peering_name: vnet-sdp-internal-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+    vnet-cicd-prd:
+      initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-cicd-prd
+      remote_virtual_network: '/subscriptions/fd478270-bd64-4cf3-bb8b-53016bb2ffd6/resourceGroups/automation-cicd-prd-rg/providers/Microsoft.Network/virtualNetworks/vnet-cicd-prd'
+      remote_resource_group: 'automation-cicd-prd-rg'
+      remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
+      connect_peering_name: vnet-cicd-prd-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
 
   vm:
     managed_disk_type: Standard_LRS

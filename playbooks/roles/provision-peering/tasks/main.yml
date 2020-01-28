@@ -1,3 +1,2 @@
 - name: Provision Peering
   import_tasks: provision-peering.yml
-  loop: "{{ cloud_config.peering }}"
