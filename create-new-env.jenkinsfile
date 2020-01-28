@@ -60,8 +60,8 @@ pipeline {
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
-                  ansiblePlaybook credentialsId: '33fc679d-0106-472d-96e3-27e54dacbd9f', extras: '-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all, resource_group="'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'", inventory: 'azure_rm.yml', playbook: 'playbooks/install-ambari-cluster.yml'
-            }
+                  ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all" inventory: environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/azure_rm.yml", playbook: 'playbooks/install-ambari-cluster.yml'
+                  }
             }
         }
     }
