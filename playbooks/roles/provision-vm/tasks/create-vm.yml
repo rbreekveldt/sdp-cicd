@@ -6,6 +6,7 @@
     azure_rm_networkinterface:
       resource_group: "{{ cloud_config.resource_group }}"
       name: "nic-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
+      tags: "{{ cloud_config.tags }}"
       virtual_network_name: "{{ cloud_config.network.name }}"
       subnet_name: "{{ cloud_config.subnet.name }}"
       security_group_name: "{{ cloud_config.security_groups.name }}"
@@ -28,6 +29,7 @@
     resource_group: "{{ cloud_config.resource_group }}"
     managed_disk_type: "{{ cloud_config.vm.managed_disk_type }}"
     name: "vm-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
+    tags: "{{ cloud_config.tags }}"
     image:
       offer: "{{ cloud_config.vm.image.offer }}"
       publisher: "{{ cloud_config.vm.image.publisher }}"
