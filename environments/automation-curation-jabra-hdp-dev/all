@@ -44,11 +44,11 @@ cloud_config:
   network:
     name: vnet-jabra-dev
 
-    address_prefix: "10.250.4.0/24"
+    address_prefix: "10.250.3.0/24"
       
   subnet:
     name: subnet-jabra-dev
-    address_prefix: "10.250.4.0/26"
+    address_prefix: "10.250.3.0/26"
       
   security_groups:
     name: nsg-jabra-dev
