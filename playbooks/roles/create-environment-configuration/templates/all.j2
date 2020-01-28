@@ -83,6 +83,7 @@ cloud_config:
     connect_peering_name: vnet-sdp-internal-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
 
   vm:
+  	managed_disk_type: Standard_LRS
     image:
       offer: CentOS
       publisher: OpenLogic
