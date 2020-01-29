@@ -51,9 +51,6 @@ pipeline {
             }
         }
         stage ('Install ambari cluster') {
-            when {
-            expression { return params.nifi }
-            }
             steps {
             withCredentials([azureServicePrincipal(credentialsId: '1683b46e-b612-4f6d-a717-9baed4b0dffb',
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',

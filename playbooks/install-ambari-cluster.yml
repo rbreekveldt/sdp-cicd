@@ -6,4 +6,5 @@
   tasks:
     - name: Ping all
       ping:
+  when: nifi.provision == true            
   
