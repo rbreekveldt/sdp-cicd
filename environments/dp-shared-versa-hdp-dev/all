@@ -44,11 +44,11 @@ cloud_config:
   network:
     name: vnet-versa-dev
 
-    address_prefix: "10.250.4.0/24"
+    address_prefix: "VNET-ANCOR.0/24"
       
   subnet:
     name: subnet-versa-dev
-    address_prefix: "10.250.4.0/26"
+    address_prefix: "VNET-ANCOR.0/26"
       
   security_groups:
     name: nsg-versa-dev
@@ -96,3 +96,11 @@ cloud_config:
       publisher: OpenLogic
       sku: '7.4'
       version: latest
+      
+  tags:
+    Env: dev
+    Project: devoteam
+    Phase: ingestion
+    Country: NL
+    Unit: Data-Solutions
+    Type: CentOS    
