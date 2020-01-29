@@ -1,0 +1,30 @@
+---
+# All common linux OS related tasks are goes heir
+- name: Load variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "main.yml"
+      paths:
+        - ../common/vars
+
+- name: Install required packages
+  package:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items: "{{ packages | join(',') }}"
+
+- name: Install Java
+  include_tasks: java.yml
+
+- name: Make sure the NTP service is started
+  service:
+    name: "{{ ntp_service_name }}"
+    state: started
+
+- name: Make sure the NTP service is enabled
+  service:
+    name: "{{ ntp_service_name }}"
+    enabled: yes
+  ignore_errors: true
