@@ -20,12 +20,12 @@
 
 - name: Check if vnet already exists
   azure_rm_virtualnetwork_facts:
-    resource_group: "{{ cloud_config.resource_group }}"
-    name: "{{ cloud_config.network.name }}"
+    resource_group: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}-rg"
+    name: "vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
   register: virtualnetwork   
 
 - name: Debug
-    msg: {{ virtualnetwork }}
+    msg: "{{ virtualnetwork }}"
 
 - name: Calculate vnet address space prefix
   import_role: 
