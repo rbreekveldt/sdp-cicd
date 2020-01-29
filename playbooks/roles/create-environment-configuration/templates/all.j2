@@ -104,3 +104,15 @@ cloud_config:
     Country: NL
     Unit: Data-Solutions
     Type: CentOS    
+
+
+########################
+## java configuration ##
+########################
+
+java: 'embedded'                                          # can be set to 'embedded', 'openjdk' or 'oraclejdk'
+oraclejdk_options:                                        # only used when java is set to 'oraclejdk'
+  base_folder: '/usr/java'                                # the folder where the Java package should be unpacked to
+  tarball_location: '/tmp/jdk-8u181-linux-x64.tar.gz'     # the location of the tarball on the remote system or on the Ansible controller
+  jce_location: '/tmp/jce_policy-8.zip'                   # the location of the JCE package on the remote system or on the Ansible controller
+  remote_files: no                                        # set to yes to indicate the files are already on the remote systems, otherwise they will be copied by Ansible from the Ansible controller
