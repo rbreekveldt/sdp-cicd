@@ -4,6 +4,7 @@
   azure_rm_securitygroup:
       resource_group: "{{ cloud_config.resource_group }}"
       name: "{{ cloud_config.security_groups.name }}"
+      tags: "{{ cloud_config.tags }}"
       #rules:
       #   - name: "{{ cloud_config.security_groups.rules.inbound.allow_ssh_inbound.name }}"
       #      protocol: "{{ cloud_config.security_groups.rules.inbound.allow_ssh_inbound.protocol }}"

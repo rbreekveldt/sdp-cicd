@@ -4,6 +4,7 @@
   azure_rm_storageaccount:
     resource_group: "{{ cloud_config.resource_group }}"
     name: "{{ cloud_config.storage_account.name | truncate(24, True) }}"
+    tags: "{{ cloud_config.tags }}"
     state: present
     account_type: "{{ cloud_config.storage_account.type }}"
 
