@@ -25,7 +25,7 @@
   register: virtualnetwork   
 
 - name: Debug
-  msg: "{{ virtualnetwork }}"
+    msg: "{{ virtualnetwork }}"
 
 - name: Calculate vnet address space prefix
   import_role: 
