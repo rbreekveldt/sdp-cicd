@@ -6,17 +6,26 @@
 - name: Check if All files exists
   stat:
     path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
-  register: all_file   
+  register: all_file    
 
 - name: Create project all
   template:
     dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
     src: all.j2
-    force: no 
+    force: yes 
     owner: "{{ lookup('env', 'USER') }}"
     output_encoding: utf-8
     mode: 0644
-  when: all_file.stat.exists == false  
+  when: all_file.stat.exists == false
+
+- name: Check if vnet already exists
+  azure_rm_virtualnetwork_facts:
+    resource_group: {{ cloud_config.resource_group }}
+    name: {{ cloud_config.network.name }}
+  register: virtualnetwork   
+
+- name: Debug
+  msg: {{ virtualnetwork }}
 
 - name: Calculate vnet address space prefix
   import_role: 
@@ -32,7 +41,7 @@
   template:
     dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/azure_rm.yml"
     src: azure_rm.j2
-    force: no 
+    force: yes 
     owner: "{{ lookup('env', 'USER') }}"
     output_encoding: utf-8
     mode: 0644
