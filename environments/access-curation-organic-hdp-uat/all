@@ -14,6 +14,8 @@ cloud_config:
     kafka:
       provision: true
       functionality: kafka
+      nodes_count: 1
+      flavor: Standard_D3_v2
       tags:
         role: kafka_mockup
 
@@ -21,6 +23,7 @@ cloud_config:
       provision: true
       functionality: sftp
       flavor: Standard_D3_v2
+      nodes_count: 1
       tags:
         role: sftp_mockup
 
