@@ -14,16 +14,16 @@ cloud_config:
     kafka:
       provision: true
       functionality: kafka
-    tags:
-      role: kafka_mockup
+      tags:
+        role: kafka_mockup
 
     sftp:
       provision: true
       functionality: sftp
-    nodes_count: 1
-    flavor: Standard_D3_v2
-    tags:
-      role: sftp_mockup
+      nodes_count: 1
+      flavor: Standard_D3_v2
+      tags:
+        role: sftp_mockup
 
   mgmt:
     provision: true
