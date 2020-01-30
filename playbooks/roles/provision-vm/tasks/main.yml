@@ -18,7 +18,7 @@
     host_group: "nifi"
     functionality: "{{ cloud_config.mgmt.functionality }}"
     number: "{{ local_loop }}"
-    my_tags: ambari_tags
+    my_tags: "{{ ambari_tags }}"
   loop_control:
     loop_var: local_loop
   with_sequence: count="{{ cloud_config.mgmt.nodes_count }}" format=%02x
@@ -41,7 +41,7 @@
     host_group: "nifi"
     functionality: "{{ cloud_config.nifi.functionality }}"
     number: "{{ local_loop }}"
-    my_tags: nifi_tags
+    my_tags: "{{ nifi_tags }}"
   loop_control:
     loop_var: local_loop
   with_sequence: count="{{ cloud_config.nifi.nodes_count }}" format=%02x
@@ -64,7 +64,7 @@
     host_group: "nifi"
     functionality: "{{ cloud_config.mockup.kafka.functionality }}"
     number: "{{ local_loop }}"
-    my_tags: kafka_mockup_tags
+    my_tags: "{{ kafka_mockup_tags }}"
   loop_control:
     loop_var: local_loop
   with_sequence: count="{{ cloud_config.mockup.nodes_count }}" format=%02x
@@ -87,7 +87,7 @@
     host_group: "nifi"
     functionality: "{{ cloud_config.mockup.sftp.functionality }}"
     number: "{{ local_loop }}"
-    my_tags: sftp_mockup_tags
+    my_tags: "{{ sftp_mockup_tags }}"
   loop_control:
     loop_var: local_loop
   with_sequence: count="{{ cloud_config.mockup.nodes_count }}" format=%02x
