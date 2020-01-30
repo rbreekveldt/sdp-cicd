@@ -20,7 +20,6 @@ cloud_config:
     sftp:
       provision: {{ lookup('env', 'kafka') }}
       functionality: sftp
-      nodes_count: 1
       flavor: Standard_D3_v2
       tags:
         role: sftp_mockup
