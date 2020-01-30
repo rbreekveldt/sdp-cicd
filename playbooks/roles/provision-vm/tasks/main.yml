@@ -60,11 +60,15 @@
 - name: Create mockup kafka vm's
   include_tasks: create-vm.yml
   vars:
-    flavor: "{{ cloud_config.mockup.flavor }}"
+    flavor: "{{ cloud_config.mockup.kafka.flavor }}"
     host_group: "nifi"
     functionality: "{{ cloud_config.mockup.kafka.functionality }}"
     number: "{{ local_loop }}"
     my_tags: "{{ kafka_mockup_tags }}"
+  loop_control:
+    loop_var: local_loop
+  with_sequence: count="{{ cloud_config.nifi.nodes_count }}" format=%02x
+  
   when: cloud_config.mockup.kafka.provision
 
 - name: Combine sftp mockup Common tags
@@ -80,9 +84,11 @@
 - name: Create mockup sftp vm's
   include_tasks: create-vm.yml
   vars:
-    flavor: "{{ cloud_config.mockup.flavor }}"
+    flavor: "{{ cloud_config.mockup.sftp.flavor }}"
     host_group: "nifi"
     functionality: "{{ cloud_config.mockup.sftp.functionality }}"
     number: "{{ local_loop }}"
     my_tags: "{{ sftp_mockup_tags }}"
+  loop_control:
+    loop_var: local_loop
   when: cloud_config.mockup.sftp.provision

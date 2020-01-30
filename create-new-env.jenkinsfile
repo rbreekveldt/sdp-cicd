@@ -13,8 +13,9 @@ pipeline {
             choice(name: 'application_name', choices: 'Please select\nsecupi\nhdp\ndatagateway', description: 'Application name')
             choice(name: 'env_type', choices: 'Please select\ndev\nsit\nuat\nprd', description: 'Environment type to provision')
             string(name: 'project_description', defaultValue:'', description: 'Specify project description')
-            booleanParam(defaultValue: false, name: 'nifi', description: ' ')
-            booleanParam(defaultValue: false, name: 'kafka', description: ' ')
+            booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster')
+            booleanParam(defaultValue: false, name: 'kafka', description: 'Provision a Kafka mockup server')
+            booleanParam(defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server')
             choice(name: 'Cloud', choices: 'azure', description: 'Cloud to provision')
       		
             /* booleanParam(defaultValue: false, name: 'Provision_Cloud_Infra', description: '         Deploy Infrastructure on Cloud')
