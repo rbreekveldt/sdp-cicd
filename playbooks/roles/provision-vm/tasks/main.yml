@@ -4,12 +4,12 @@
 - name: Combine Ambari Common tags
   set_fact:             
     ambari_tags: "{{ ambari_tags|default({}) | combine( {item.key: item.value} ) }}"
-  loop: "{{ lookup('dict', cloud_config.tags) }}"
+  loop: "{{ query('dict', cloud_config.tags) }}"
                             
 - name: Combine Ambari specific tags                   
   set_fact:             
     ambari_tags: "{{ ambari_tags|default({}) | combine( {item.key: item.value} ) }}"
-  loop: "{{ lookup('dict', cloud_config.mgmt.tags) }}"
+  loop: "{{ query('dict', cloud_config.mgmt.tags) }}"
 
 - name: Create Ambari Mgmt vm's
   include_tasks: create-vm.yml
@@ -27,12 +27,12 @@
 - name: Combine Nifi Common tags
   set_fact:             
     nifi_tags: "{{ nifi_tags|default({}) | combine( {item.key: item.value} ) }}"
-  loop: "{{ lookup('dict', cloud_config.tags) }}"
+  loop: "{{ query('dict', cloud_config.tags) }}"
                             
 - name: Combine Nifi specific tags                   
   set_fact:             
     nifi_tags: "{{ nifi_tags|default({}) | combine( {item.key: item.value} ) }}"
-  loop: "{{ lookup('dict', cloud_config.nifi.tags) }}"
+  loop: "{{ query('dict', cloud_config.nifi.tags) }}"
 
 - name: Create Nifi cluster vm's
   include_tasks: create-vm.yml
@@ -50,12 +50,12 @@
 - name: Combine Kafka mockup Common tags
   set_fact:             
     kafka_mockup_tags: "{{ kafka_mockup_tags|default({}) | combine( {item.key: item.value} ) }}"
-  loop: "{{ lookup('dict', cloud_config.tags) }}"
+  loop: "{{ query('dict', cloud_config.tags) }}"
                             
 - name: Combine Kafka specific tags                   
   set_fact:             
     kafka_mockup_tags: "{{ kafka_mockup_tags|default({}) | combine( {item.key: item.value} ) }}"
-  loop: "{{ lookup('dict', cloud_config.mockup.kafka.tags) }}"
+  loop: "{{ query('dict', cloud_config.mockup.kafka.tags) }}"
 
 - name: Create mockup kafka vm's
   include_tasks: create-vm.yml
@@ -73,12 +73,12 @@
 - name: Combine sftp mockup Common tags
   set_fact:             
     sftp_mockup_tags: "{{ sftp_mockup_tags|default({}) | combine( {item.key: item.value} ) }}"
-  loop: "{{ lookup('dict', cloud_config.tags) }}"
+  loop: "{{ query('dict', cloud_config.tags) }}"
                             
 - name: Combine sftp specific tags                   
   set_fact:             
     sftp_mockup_tags: "{{ sftp_mockup_tags|default({}) | combine( {item.key: item.value} ) }}"
-  loop: "{{ lookup('dict', cloud_config.mockup.sftp.tags) }}"
+  loop: "{{ query('dict', cloud_config.mockup.sftp.tags) }}"
 
 - name: Create mockup sftp vm's
   include_tasks: create-vm.yml
