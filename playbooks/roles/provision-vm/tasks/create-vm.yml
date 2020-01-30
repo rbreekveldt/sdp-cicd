@@ -2,16 +2,16 @@
 # tasks file for create-vm
 
 - block:
-  - name: Create NIC {{ functionality }}{{ number }} (with private IP only)
+  - name: Create NIC {{ functionality }} (with private IP only)
     azure_rm_networkinterface:
       resource_group: "{{ cloud_config.resource_group }}"
-      name: "nic-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
+      name: "nic-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}"
       tags: "{{ cloud_config.tags }}"
       virtual_network_name: "{{ cloud_config.network.name }}"
       subnet_name: "{{ cloud_config.subnet.name }}"
       security_group_name: "{{ cloud_config.security_groups.name }}"
       ip_configurations:
-        - name: "ipconfig-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
+        - name: "ipconfig-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}"
           primary: True
     async: 1000
     poll: 0
@@ -36,7 +36,7 @@
       sku: "{{ cloud_config.vm.image.sku }}"
       version: "{{ cloud_config.vm.image.version }}"
     vm_size: "{{ flavor }}"
-    network_interface_names: "nic-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
+    network_interface_names: "nic-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}"
     ssh_password_enabled: false
     admin_username: "{{ cloud_config.admin_username }}"
     ssh_public_keys:
