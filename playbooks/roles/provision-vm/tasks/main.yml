@@ -1,5 +1,16 @@
 ---
 # tasks file for provision-vm
+
+- name: Combine Ambari Common tags
+  set_fact:             
+    ambari_tags: "{{ ambari_tags|default({}) | combine( {item.key: item.value} ) }}"
+  loop: "{{ lookup('dict', cloud_config.tags) }}"
+                            
+- name: Combine Ambari specific tags                   
+  set_fact:             
+    ambari_tags: "{{ ambari_tags|default({}) | combine( {item.key: item.value} ) }}"
+  loop: "{{ lookup('dict', cloud_config.mgmt.tags) }}"
+
 - name: Create Ambari Mgmt vm's
   include_tasks: create-vm.yml
   vars:
@@ -7,10 +18,21 @@
     host_group: "nifi"
     functionality: "{{ cloud_config.mgmt.functionality }}"
     number: "{{ local_loop }}"
+    my_tags: ambari_tags
   loop_control:
     loop_var: local_loop
   with_sequence: count="{{ cloud_config.mgmt.nodes_count }}" format=%02x
   when: cloud_config.mgmt.provision
+
+- name: Combine Nifi Common tags
+  set_fact:             
+    nifi_tags: "{{ nifi_tags|default({}) | combine( {item.key: item.value} ) }}"
+  loop: "{{ lookup('dict', cloud_config.tags) }}"
+                            
+- name: Combine Nifi specific tags                   
+  set_fact:             
+    nifi_tags: "{{ nifi_tags|default({}) | combine( {item.key: item.value} ) }}"
+  loop: "{{ lookup('dict', cloud_config.nifi.tags) }}"
 
 - name: Create Nifi cluster vm's
   include_tasks: create-vm.yml
@@ -19,10 +41,21 @@
     host_group: "nifi"
     functionality: "{{ cloud_config.nifi.functionality }}"
     number: "{{ local_loop }}"
+    my_tags: nifi_tags
   loop_control:
     loop_var: local_loop
   with_sequence: count="{{ cloud_config.nifi.nodes_count }}" format=%02x
   when: cloud_config.nifi.provision
+
+- name: Combine Kafka mockup Common tags
+  set_fact:             
+    kafka_mockup_tags: "{{ kafka_mockup_tags|default({}) | combine( {item.key: item.value} ) }}"
+  loop: "{{ lookup('dict', cloud_config.tags) }}"
+                            
+- name: Combine Kafka specific tags                   
+  set_fact:             
+    kafka_mockup_tags: "{{ kafka_mockup_tags|default({}) | combine( {item.key: item.value} ) }}"
+  loop: "{{ lookup('dict', cloud_config.mockup.kafka.tags) }}"
 
 - name: Create mockup kafka vm's
   include_tasks: create-vm.yml
@@ -31,10 +64,21 @@
     host_group: "nifi"
     functionality: "{{ cloud_config.mockup.kafka.functionality }}"
     number: "{{ local_loop }}"
+    my_tags: kafka_mockup_tags
   loop_control:
     loop_var: local_loop
   with_sequence: count="{{ cloud_config.mockup.nodes_count }}" format=%02x
   when: cloud_config.mockup.kafka.provision
+
+- name: Combine sftp mockup Common tags
+  set_fact:             
+    sftp_mockup_tags: "{{ sftp_mockup_tags|default({}) | combine( {item.key: item.value} ) }}"
+  loop: "{{ lookup('dict', cloud_config.tags) }}"
+                            
+- name: Combine sftp specific tags                   
+  set_fact:             
+    sftp_mockup_tags: "{{ sftp_mockup_tags|default({}) | combine( {item.key: item.value} ) }}"
+  loop: "{{ lookup('dict', cloud_config.mockup.sftp.tags) }}"
 
 - name: Create mockup sftp vm's
   include_tasks: create-vm.yml
@@ -43,6 +87,7 @@
     host_group: "nifi"
     functionality: "{{ cloud_config.mockup.sftp.functionality }}"
     number: "{{ local_loop }}"
+    my_tags: sftp_mockup_tags
   loop_control:
     loop_var: local_loop
   with_sequence: count="{{ cloud_config.mockup.nodes_count }}" format=%02x

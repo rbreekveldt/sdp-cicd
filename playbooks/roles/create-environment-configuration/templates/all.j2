@@ -14,23 +14,34 @@ cloud_config:
     kafka:
       provision: {{ lookup('env', 'kafka') }}
       functionality: kafka
+    tags:
+      role: kafka_mockup
+
     sftp:
       provision: {{ lookup('env', 'kafka') }}
       functionality: sftp
     nodes_count: 1
     flavor: Standard_D3_v2
+    tags:
+      role: sftp_mockup
 
   mgmt:
     provision: {{ lookup('env', 'nifi') }}
     functionality: nifimgmt
     nodes_count: 1
     flavor: Standard_D3_v2
+    tags:
+      role: ambari_mgmt
+
 
   nifi:
     provision: {{ lookup('env', 'nifi') }}
     functionality: nifi
     nodes_count: {{ lookup('env', 'nifi_nodes_count') }}
     flavor: Standard_A5
+    tags:
+      role: nifi_worker
+
 
   ssh:
     sdp_admin_publickey: {{ sdp_admin_public }}
@@ -103,7 +114,7 @@ cloud_config:
     Phase: ingestion
     Country: NL
     Unit: Data-Solutions
-    Type: CentOS    
+    Type: CentOS
 
 
 ########################
