@@ -65,9 +65,6 @@
     functionality: "{{ cloud_config.mockup.kafka.functionality }}"
     number: "{{ local_loop }}"
     my_tags: "{{ kafka_mockup_tags }}"
-  loop_control:
-    loop_var: local_loop
-  with_sequence: count="{{ cloud_config.mockup.kafka.nodes_count }}" format=%02x
   when: cloud_config.mockup.kafka.provision
 
 - name: Combine sftp mockup Common tags
@@ -88,7 +85,4 @@
     functionality: "{{ cloud_config.mockup.sftp.functionality }}"
     number: "{{ local_loop }}"
     my_tags: "{{ sftp_mockup_tags }}"
-  loop_control:
-    loop_var: local_loop
-  with_sequence: count="{{ cloud_config.mockup.sftp.nodes_count }}" format=%02x
   when: cloud_config.mockup.sftp.provision
