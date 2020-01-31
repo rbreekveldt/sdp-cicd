@@ -1,0 +1,9 @@
+---
+- name: Install Software of Data cluster
+  hosts: all
+  become: yes
+  
+  tasks: 
+    - name: Deploy sftp host
+      import_playbook: install-sftp-mockup-server.yml
+      when: hostvars[inventory_hostname]['tags']['role'] == 'sftp_mockup'

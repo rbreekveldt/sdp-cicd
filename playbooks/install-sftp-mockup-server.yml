@@ -1,0 +1,7 @@
+---
+- name: Install a sftp mockup server
+  gather_facts: true
+  become: yes
+  
+  roles:
+    - sftp-mockup-server
