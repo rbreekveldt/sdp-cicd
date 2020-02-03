@@ -4,8 +4,5 @@ sftp_users:
   - name: sdp-user
     password: "$6$qjBqQW0jx3uQI8DN$Xi/NPRUEeRUCUc6JxAQFj4dZOvrHDHw9b1h2qqwXx/VDwKdfXskxL6bDt19oT7zhsb3XLJjM4/3D3Xmf5QoKK1"
     
-sftp_directories:
-- /data/sftp
-- { name: public, mode: 755 }
-
+sftp_directories: '/data/sftp'
 sftp_group: sftpusers

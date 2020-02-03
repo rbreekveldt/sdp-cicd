@@ -1,14 +1,6 @@
 ---
 # tasks file for sftp-mockup-server
 
-- name: "Compute SFTP users."
-  set_fact:
-    _sftp_users: >-
-      [{% for sftp_user in sftp_users -%}
-        {{ sftp_user | combine({'home': sftp_user.home | default(sftp_home_partition + '/' + sftp_user.name) }) }}
-        {{ '' if loop.last else ',' }}
-      {%- endfor %}]
-
 # Creates group for SFTP users.
 - name: SFTP-Server | Create sftp user group
   group:
@@ -58,47 +50,33 @@
     name: "{{ sftp_group }}"
     state: present
 
-# Create each SFTP user with home directory on the correct partition, and add to SFTP group.
+# Create each SFTP user with NO home directory, and add to SFTP group.
 - name: SFTP-Server | Create sftp users
   user:
     name: "{{ item.name }}"
     group: "{{ sftp_group }}"
-    append: "{{ item.append | default(False) }}"
-    home: "{{ item.home }}"
-    # `None` means default value -> default is to have a shell
+    append: "yes"
     shell: "/usr/bin/false"
     create_home: no
     state: present
-  with_items: "{{ _sftp_users }}"
+  with_subitems: 
+    - "{{ sftp_users }}"
 
 # A working chrooted SFTP setup requires root:sftgroup ownership of a user's home directory.
 - name: SFTP-Server | Correct ownership and permission of home directories
   file:
-    path: "{{ item.home }}"
+    path: "{{ sftp_directories }}"
     owner: root
-    group: "{{ item.group | default(sftp_group_name) }}"
-    mode: "{{ item.mode | default(0750) }}"
-  with_items: "{{ _sftp_users }}"
+    group: "{{ sftp_group }}"
+    mode: 0750
 
 # Update user passwords, if they were specified.
 - name: SFTP-Server | Update user passwords
   user:
     name: "{{ item.name }}"
     password: "{{ item.password }}"
-  with_items: "{{ _sftp_users }}"
+  with_items: "{{ sftp_users }}"
   when: item.password is defined
-
-# Create directories for all SFTP users. Optional, but recommended.
-- name: SFTP-Server | Create directories
-  file:
-    path: "{{ item[0].home }}/{{ item[1].name | default(item[1]) }}"
-    owner: "{{ item[0].name }}"
-    group: "{{ item[0].group | default(item[0].name) }}"
-    mode: "{{ item[1].mode | default(0750) }}"
-    state: directory
-  with_nested:
-    - "{{ _sftp_users }}"
-    - "{{ sftp_directories }}"
 
 - name: SFTP-Server | Enable Logging
   blockinfile:
