@@ -1,21 +1,12 @@
 ---
 # vars file for sftp-mockup-server
 sftp_users:
-  - name: peter
-    password: "$1$salty$li5TXAa2G6oxHTDkqx3Dz/"
+  - name: sdp-user
+    password: "123Sdp!"
     shell: False
     sftp_directories:
-    - directory_only_for_peter1
-    - directory_only_for_peter2
-  - name: sally
-    password: ""
-    authorized: [sally.pub]
-    home: /var/tmp/sally
-    append: True
-    sftp_directories:
-    - directory_only_for_sally1
-    - directory_only_for_sally2
-sftp_directories:
+    - /data/sftp
+  sftp_directories:
 - imports
 - exports
 - { name: public, mode: 755 }
