@@ -5,4 +5,4 @@
   hosts: all
   
   roles:
-    - sftp-mockup-server
+    - install-sftp-mockup-server

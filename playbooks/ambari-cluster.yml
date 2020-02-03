@@ -5,4 +5,4 @@
   become: yes
   
   roles:
-    - common
+    - install-ambari-cluster

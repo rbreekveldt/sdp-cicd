@@ -4,6 +4,17 @@
   gather_facts: true
   any_errors_fatal: true
   become: yes
-   
-- import_playbook: install-sftp-mockup-server.yml
-  when: hostvars[inventory_hostname]['tags']['role'] == 'sftp_mockup'
+
+# Execute common task on all vms
+  roles:
+    - common
+
+- import_playbook: ambari-cluster.yml
+  when: cloud_config.nifi.provision
+
+- import_playbook: sftp-mockup-server.yml
+#  when: hostvars[inventory_hostname]['tags']['role'] == 'sftp_mockup'
+  when: cloud_config.mockup.sftp.provision
+
+- import_playbook: kafka-mockup-server.yml
+  when: cloud_config.mockup.kafka.provision
