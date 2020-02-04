@@ -11,3 +11,6 @@
     - provision-vnet
     - provision-peering
     - provision-vm
+      tags: dataproject
+    - provision-sqlserver
+      tags: hdi  
