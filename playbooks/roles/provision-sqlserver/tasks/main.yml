@@ -4,23 +4,21 @@
   include_vars:
     dir: vars
 
-- name: Provision SQL Server
-
-  - block:
-     - name: Create (or update) SQL Server
-       azure_rm_sqlserver:
-         resource_group: "{{ cloud_config.resource_group }}"
-         name: "dbsqlserver{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}"
-         location: "{{ cloud_config.location }}"
-         admin_username: "{{ cloud.config.env_type }}-admin"
-         admin_password: "{{ sql_db_pwd }}"
+- block:
+  - name: Create (or update) SQL Server
+    azure_rm_sqlserver:
+      resource_group: "{{ cloud_config.resource_group }}"
+      name: "dbsqlserver{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}"
+      location: "{{ cloud_config.location }}"
+      admin_username: "{{ cloud.config.env_type }}-admin"
+      admin_password: "{{ sql_db_pwd }}"
   
-     - name: Create SQL Database
-       azure_rm_sqldatabase:
-         resource_group: "{{ cloud_config.resource_group }}"
-         server_name: "dbsqlserver{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}"
-         name: "dbsql{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}{{ item.name }}"
-         location: "{{ cloud_config.location }}"
-         edition: basic
-       when: item.optional
-       with_items: "{{ cloud_config.sql_db }}"
+  - name: Create SQL Database
+    azure_rm_sqldatabase:
+      resource_group: "{{ cloud_config.resource_group }}"
+      server_name: "dbsqlserver{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}"
+      name: "dbsql{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}{{ item.name }}"
+      location: "{{ cloud_config.location }}"
+      edition: basic
+    when: item.optional
+    with_items: "{{ cloud_config.sql_db }}"
