@@ -60,6 +60,14 @@ cloud_config:
       remote_resource_group: 'automation-cicd-prd-rg'
       remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
       connect_peering_name: vnet-cicd-prd-to-vnet-tmns-dev
+  
+  sql_db:
+    - name: "oozie"
+      optional: 
+    - name: "hive"
+      optional: 
+    - name: "ranger"
+      optional: 
 
   tags:
     Env: dev
