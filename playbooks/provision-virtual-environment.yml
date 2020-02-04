@@ -7,6 +7,7 @@
   roles:
     - role: provision-resource-group
     - role: provision-storageaccount
+      tags: dataproject
     - role: provision-security-groups
     - role: provision-vnet
     - role: provision-peering
