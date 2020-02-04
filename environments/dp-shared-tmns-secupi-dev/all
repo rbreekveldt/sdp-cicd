@@ -63,11 +63,11 @@ cloud_config:
   
   sql_db:
     - name: "oozie"
-      optional: 
+      optional: true
     - name: "hive"
-      optional: 
+      optional: true
     - name: "ranger"
-      optional: 
+      optional: true
 
   tags:
     Env: dev
