@@ -1,96 +1,77 @@
----
+---  
 # tasks file for sftp-mockup-server
-
-# Creates group for SFTP users.
+     
+# A working chrooted SFTP setup requires root:sftgroup ownership of a user's home directory.
+- name: SFTP-Server | Correct ownership and permission of home directories
+  file:
+    path: "{{ sftp_directories }}"
+    owner: root
+    mode: 0701
+    state: directory
+    recurse: yes
+     
+- name: SFTP-Server | Correct ownership and permission of home directories
+  file:
+    path: "{{ sftp_directories }}/sftp"
+    owner: root
+    state: directory
+    recurse: yes
+     
+# Creates group for SFTP users.         
 - name: SFTP-Server | Create sftp user group
   group:
     name: "{{ sftp_group_name }}"
     state: present
-
-# Necessary for chrooting of SFTP users.
-- name: SFTP-Server | Alter sftp subsystem entry
-  lineinfile:
-    dest: /etc/ssh/sshd_config
-    regexp: '^Subsystem(\s+)sftp'
-    line: "Subsystem sftp internal-sftp -f AUTH -l VERBOSE"
-    state: present
-  notify: SFTP-Server | Restart sshd
-
-- name: SFTP-Server | Ensure SELinux management package is present
-  package:
-    name: "{{ 'python-semanage' if ansible_distribution == 'Debian' else 'libsemanage-python' }}"
-    state: present
-  when: ansible_selinux and sftp_enable_selinux_support
-
-- name: SFTP-Server | Set SELinux booleans
-  seboolean:
-    name: "{{ item }}"
-    state: yes
-    persistent: yes
-  with_items:
-    - ssh_chroot_full_access
-    - ssh_chroot_rw_homedirs
-  when: ansible_selinux and sftp_enable_selinux_support
-
-- name: SFTP-Server | Add sshd_config block
-  blockinfile:
-    dest: /etc/ssh/sshd_config
-    marker: '# {mark} SFTP-Server {{ sftp_group_name }} block'
-    block: |
-      Match Group {{ sftp_group_name }}
-          ChrootDirectory %h
-          AllowTCPForwarding no
-          X11Forwarding no
-          ForceCommand internal-sftp {{ sftp_enable_logging | ternary('-l VERBOSE', '') }} {{ (sftp_start_directory in sftp_directories) | ternary('-d /' + sftp_start_directory, '') }}
-          PasswordAuthentication {{ sftp_allow_passwords | ternary('yes', 'no') }}
-  notify: SFTP-Server | Restart sshd
-
-- name: SFTP-Server | Create sftp user's group
-  group:
-    name: "{{ sftp_group }}"
-    state: present
-
+     
 # Create each SFTP user with NO home directory, and add to SFTP group.
 - name: SFTP-Server | Create sftp users
   user:
     name: "{{ item.name }}"
     group: "{{ sftp_group }}"
     append: "yes"
-    shell: "/usr/bin/false"
-    create_home: no
+    shell: "/sbin/nologin"
+    home: "/{{ item.name }}"
+    create_home: yes
     state: present
-  with_subitems: 
-    - "{{ sftp_users }}"
-
-# A working chrooted SFTP setup requires root:sftgroup ownership of a user's home directory.
+    password: "{{ item.password | password_hash('sha512') }}"
+  with_items: "{{ sftp_users }}"
+     
+- name: SFTP-Server | Create working directory for each user
+  file:
+    path: "{{ sftp_directories }}/{{ item.name }}"
+    owner: "root"
+    group: "{{ sftp_group }}"
+    state: directory
+    recurse: yes
+  with_items: "{{ sftp_users }}"
+     
+- name: SFTP-Server | Change directory modeCreate working directory for each user
+  file:
+    path: "{{ sftp_directories }}/{{ item.name }}/work"
+    owner: "{{ item.name }}"
+    group: "{{ sftp_group }}"
+    state: directory
+    recurse: yes
+  with_items: "{{ sftp_users }}"
+    
+    
 - name: SFTP-Server | Correct ownership and permission of home directories
   file:
-    path: "{{ sftp_directories }}"
+    path: "/data/sftp"
     owner: root
-    group: "{{ sftp_group }}"
-    mode: 0750
-
-# Update user passwords, if they were specified.
-- name: SFTP-Server | Update user passwords
-  user:
-    name: "{{ item.name }}"
-    password: "{{ item.password }}"
+    state: directory
+    recurse: yes
   with_items: "{{ sftp_users }}"
-  when: item.password is defined
-
-- name: SFTP-Server | Enable Logging
+    
+- name: SFTP-Server | Add sshd_config block
   blockinfile:
-    dest: "/etc/rsyslog.d/sshd.conf"
-    create: yes
+    dest: /etc/ssh/sshd_config
+    marker: '# {mark} SFTP-Server {{ sftp_group_name }} block'
     block: |
-      # Create an additional socket for some of the sshd chrooted users.
-      {% for user in sftp_users %}
-      $AddUnixListenSocket {{ sftp_home_partition }}/{{ user.name }}/dev/log
-      {% endfor %}
-      # Log internal-sftp in a separate file
-      :programname, isequal, "internal-sftp" -/var/log/sftp/verbose.log
-      :programname, isequal, "internal-sftp" ~
-      # additionally write an auth log
-      auth,authpriv.*  /var/log/sftp/auth.log
-  when: sftp_enable_logging
-  notify: SFTP-Server | Restart rsyslog
+      Match Group {{ sftp_group }}
+          ChrootDirectory /data/%u
+          AllowTCPForwarding no
+          X11Forwarding no
+          ForceCommand internal-sftp
+          PasswordAuthentication {{ sftp_allow_passwords | ternary('yes', 'no') }}
+  notify: SFTP-Server | Restart sshd
