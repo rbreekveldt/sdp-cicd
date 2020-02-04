@@ -10,7 +10,7 @@
       resource_group: "{{ cloud_config.resource_group }}"
       name: "dbsqlserver{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}"
       location: "{{ cloud_config.location }}"
-      admin_username: "{{ cloud.config.env_type }}-admin"
+      admin_username: "{{ cloud_config.env_type }}-admin"
       admin_password: "{{ sql_db_pwd }}"
   
   - name: Create SQL Database
