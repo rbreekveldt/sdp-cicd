@@ -16,7 +16,6 @@ pipeline {
             booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster')
             booleanParam(defaultValue: false, name: 'kafka', description: 'Provision a Kafka mockup server')
             booleanParam(defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server')
-            booleanParam(defaultValue: false, name: 'hdinsight', description: 'Provision an HDInsight cluster')
             choice(name: 'Cloud', choices: 'azure', description: 'Cloud to provision')
       		
             /* booleanParam(defaultValue: false, name: 'Provision_Cloud_Infra', description: '         Deploy Infrastructure on Cloud')
