@@ -1,6 +1,12 @@
 ---
 # tasks file for kafka-mockup-server
 
+# Creates kafka group for kafka users.         
+- name: Kafka-Server | Create kafka user group
+  group:
+    name: kafka
+    state: present
+
 # Create kafka user
 - name: Kafka-Server | Create kafka users
   user:
@@ -16,6 +22,7 @@
 # Create download directory
 - name: Kafka-Server | Create download directory
   file:
+    become_user: kafka
     path: ~/downloads
     owner: "kafka"
     group: "kafka"
@@ -25,6 +32,7 @@
 # Download Software
 - name: Kafka-Server | Download kafka
   get_url:
+    become_user: kafka
     url: "{{ kafka_download_url }}/{{ kafka_version }}/{{ kafka_file }}"
     dest: ~/downloads
     mode: '0440'
@@ -32,6 +40,7 @@
 # Create untar working directory
 - name: Kafka-Server | Create untar working directory
   file:
+    become_user: kafka
     path: ~/kafka
     owner: "kafka"
     group: "kafka"
@@ -41,6 +50,7 @@
 # Untar file    
 - name: Extract kafka  to into ~/kafka
   unarchive:
+    become_user: kafka
     src: ~/downloads/kafka_download_url
     dest: ~/kafka
     extra_opts: 
@@ -63,7 +73,4 @@
   service:
     name: kafka
     state: started
-
-
-
-  
+ 
