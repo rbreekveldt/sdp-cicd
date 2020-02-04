@@ -60,6 +60,14 @@ cloud_config:
       remote_resource_group: 'automation-cicd-prd-rg'
       remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
       connect_peering_name: vnet-cicd-prd-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+  
+  sql_db:
+    - name: "oozie"
+      optional: {{ lookup('env', 'oozie_db') }}
+    - name: "hive"
+      optional: {{ lookup('env', 'hive_db') }}
+    - name: "ranger"
+      optional: {{ lookup('env', 'ranger_db') }}
 
   tags:
     Env: dev
