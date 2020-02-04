@@ -21,5 +21,6 @@
          server_name: "dbsqlserver{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}{{ number }}"
          name: "dbsql{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}{{ item.name }}"
          location: "{{ cloud_config.location }}"
+         edition: basic
        when: item.optional
        with_items: "{{ cloud_config.sql_db }}"
