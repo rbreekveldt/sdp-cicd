@@ -1,0 +1,13 @@
+#Start point of provisioning HDInsight environment
+#- import_playbook: "set-azure-credentials.yml"
+- name: Provision HDInsight Infrastructure
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  roles:
+    - provision-resource-group
+    - provision-storageaccount
+    - provision-security-groups
+    - provision-vnet
+    - provision-peering
+    - provision-sqlserver

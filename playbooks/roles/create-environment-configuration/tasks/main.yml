@@ -3,14 +3,27 @@
   include_vars:
     dir: vars
 
-- name: Create project all
+- name: Create Data Project all file
   template:
     dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
-    src: all.j2
+    src: data_environment_configuration.j2
     force: yes 
     owner: "{{ lookup('env', 'USER') }}"
     output_encoding: utf-8
     mode: 0644
+  tags: 
+  - dataproject
+
+- name: Create HDI all file
+  template:
+    dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
+    src: hdi_environment_configuration.j2
+    force: yes
+    owner: "{{ lookup('env', 'USER') }}"
+    output_encoding: utf-8
+    mode: 0644
+  tags: 
+  - hdi    
 
 - name: Check if vnet already exists
   azure_rm_virtualnetwork_facts:
@@ -23,10 +36,6 @@
     name: calculate-vnet-prefix
   when: vnetcheck.virtualnetworks == []
 
-  #- name: Show outcome of debug
-  #debug: 
-  #msg: "{{ vnetcheck.virtualnetworks[0].address_prefixes[0].split('.')[:3] | join('.') }}"
-    
 - name: Replace anchor with vnet prefix in all file
   replace:
     path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
@@ -48,5 +57,3 @@
     output_encoding: utf-8
     mode: 0644
   when: azure_rm_file.stat.exists == false
-  
-

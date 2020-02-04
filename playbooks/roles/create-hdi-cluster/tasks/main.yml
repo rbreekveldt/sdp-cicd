@@ -1,4 +1,0 @@
----
-# tasks file for create-hdi-cluster
-- name: Create HDInsight Cluster
-
