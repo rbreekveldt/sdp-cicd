@@ -14,13 +14,8 @@ cloud_config:
     sdp_admin_publickey: {{ sdp_admin_public }}
     jenkins_publickey: {{ jenkins_public }}
 
-  storage_account:
-    name: sa{{ lookup('env', 'project_name') }}{{ lookup('env', 'application_name') }}{{ lookup('env', 'env_type') }}
-    type: "Standard_LRS"
-      
   network:
     name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
-
     address_prefix: "VNET-ANCOR.0/24"
       
   subnet:
