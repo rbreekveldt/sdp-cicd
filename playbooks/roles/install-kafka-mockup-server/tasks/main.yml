@@ -1,2 +1,69 @@
 ---
 # tasks file for kafka-mockup-server
+
+# Create kafka user
+- name: Kafka-Server | Create kafka users
+  user:
+    name: kafka
+    group: kafka
+    groups: wheel
+    append: yes
+    shell: /bin/bash
+    create_home: yes
+    state: present
+    password: "{{ '123Sdp!' | password_hash('sha512') }}"
+
+# Create download directory
+- name: Kafka-Server | Create download directory
+  file:
+    path: ~/downloads
+    owner: "kafka"
+    group: "kafka"
+    state: directory
+    recurse: yes
+
+# Download Software
+- name: Kafka-Server | Download kafka
+  get_url:
+    url: "{{ kafka_download_url }}/{{ kafka_version }}/{{ kafka_file }}"
+    dest: ~/downloads
+    mode: '0440'
+
+# Create untar working directory
+- name: Kafka-Server | Create untar working directory
+  file:
+    path: ~/kafka
+    owner: "kafka"
+    group: "kafka"
+    state: directory
+    recurse: yes
+
+# Untar file    
+- name: Extract kafka  to into ~/kafka
+  unarchive:
+    src: ~/downloads/kafka_download_url
+    dest: ~/kafka
+    extra_opts: 
+    - '--strip 1'
+
+# Write zookeeper systemd unit file
+- name: Write zookeeper systemd unit file
+  template:
+    src: zookerper-systemd.j2
+    dest: /etc/systemd/system/zookeeper.service
+
+# Write kafka systemd unit file
+- name: Write kafka systemd unit file
+  template:
+    src: kafka-systemd.j2
+    dest: /etc/systemd/system/kafka.service
+
+# Start kafka
+- name: Start service kafka, if not started
+  service:
+    name: kafka
+    state: started
+
+
+
+  
