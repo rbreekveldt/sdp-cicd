@@ -8,11 +8,24 @@
     address_prefixes_cidr: "{{ cloud_config.network.address_prefix }}"
   register: vnet_result
 
-- name: Create {{ cloud_config.subnet.name }} Subnet
+- name: Create {{ item.name }} Subnet
   azure_rm_subnet:
     resource_group: "{{ cloud_config.resource_group }}"
     virtual_network_name: "{{ cloud_config.network.name }}"
-    name: "{{ cloud_config.subnet.name }}"
-    address_prefix_cidr : "{{ cloud_config.subnet.address_prefix }}"
+    name: "{{ item.name }}"
+    address_prefix_cidr : "{{ item.address_prefix }}"
     security_group:
       name: "{{ cloud_config.security_groups.name }}"
+  with_items: "{{ cloud_config.subnet }}"
+  tags: hdi 
+
+- name: Create {{ item.name.0 }} Subnet
+  azure_rm_subnet:
+    resource_group: "{{ cloud_config.resource_group }}"
+    virtual_network_name: "{{ cloud_config.network.name }}"
+    name: "{{ item.name.0 }}"
+    address_prefix_cidr : "{{ item.address_prefix }}"
+    security_group:
+      name: "{{ cloud_config.security_groups.name }}"
+  with_items: "{{ cloud_config.subnet }}"
+  tags: dataproject
