@@ -7,7 +7,7 @@
   connection: local
   tasks:
     - include_role:
-        name: "{{ item }}"
+        name: '{{ item }}'
       with_items:
         - provision-resource-group
         - provision-security-groups
