@@ -7,15 +7,15 @@
   connection: local
   tasks:
     - block:
-      - include_role:
-        role: provision-storageaccount
-        role: provision-vm
-      tags: dataproject   
+        include_role:
+          role: provision-storageaccount
+          role: provision-vm
+        tags: dataproject   
     
     - block: 
-      - include_role:
-        role: provision-sqlserver
-      tags: hdi
+        include_role:
+          role: provision-sqlserver
+        tags: hdi
     - include_role:
       role: provision-vnet
       role: provision-peering  
