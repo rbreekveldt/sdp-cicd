@@ -15,6 +15,6 @@
       - role: provision-vm
       tags: dataproject
 
-    block:
+    - block:
       - role: provision-sqlserver
       tags: hdi  
