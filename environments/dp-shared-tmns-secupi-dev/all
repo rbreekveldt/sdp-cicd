@@ -20,7 +20,7 @@ cloud_config:
         role: kafka_mockup
 
     sftp:
-      provision: 
+      provision: false
       functionality: sftp
       flavor: Standard_D3_v2
       nodes_count: 1
@@ -28,7 +28,7 @@ cloud_config:
         role: sftp_mockup
 
   mgmt:
-    provision: 
+    provision: false
     functionality: nifimgmt
     nodes_count: 1
     flavor: Standard_D3_v2
@@ -37,9 +37,9 @@ cloud_config:
 
 
   nifi:
-    provision: 
+    provision: false
     functionality: nifi
-    nodes_count: 
+    nodes_count: 0
     flavor: Standard_A5
     tags:
       role: nifi_worker
