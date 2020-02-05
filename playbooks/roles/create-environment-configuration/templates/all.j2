@@ -12,7 +12,7 @@ cloud_config:
 
   mockup:
     kafka:
-      provision: {{ lookup('env', 'kafka') | default('false') }}
+      provision: {{ lookup('env', 'kafka') | default('false', true) }}
       functionality: kafka
       nodes_count: 1
       flavor: Standard_D3_v2
