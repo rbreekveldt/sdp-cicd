@@ -10,11 +10,11 @@
     - provision-vnet
     - provision-peering  
     
-    - block:
+    block:
       - provision-storageaccount
       - provision-vm
       tags: dataproject
 
-    - block:
+    block:
       - provision-sqlserver
       tags: hdi  
