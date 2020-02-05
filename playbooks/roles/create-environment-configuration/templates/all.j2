@@ -12,7 +12,7 @@ cloud_config:
 
   mockup:
     kafka:
-      provision: {{ lookup('env', 'kafka') | default(false) }}
+      provision: {{ lookup('env', 'kafka') | default('false') }}
       functionality: kafka
       nodes_count: 1
       flavor: Standard_D3_v2
@@ -20,7 +20,7 @@ cloud_config:
         role: kafka_mockup
 
     sftp:
-      provision: {{ lookup('env', 'sftp') | default(false) }}
+      provision: {{ lookup('env', 'sftp') | default('false') }}
       functionality: sftp
       flavor: Standard_D3_v2
       nodes_count: 1
@@ -28,7 +28,7 @@ cloud_config:
         role: sftp_mockup
 
   mgmt:
-    provision: {{ lookup('env', 'nifi') | default(false) }}
+    provision: {{ lookup('env', 'nifi') | default('false') }}
     functionality: nifimgmt
     nodes_count: 1
     flavor: Standard_D3_v2
@@ -37,20 +37,20 @@ cloud_config:
 
 
   nifi:
-    provision: {{ lookup('env', 'nifi') | default(false) }}
+    provision: {{ lookup('env', 'nifi') | default('false') }}
     functionality: nifi
-    nodes_count: {{ lookup('env', 'nifi_nodes_count') | default(0) }}
+    nodes_count: {{ lookup('env', 'nifi_nodes_count') | default('0') }}
     flavor: Standard_A5
     tags:
       role: nifi_worker
 
   sql_db:
     - name: "oozie"
-      provision: {{ lookup('env', 'oozie_db') | default(false) }}
+      provision: {{ lookup('env', 'oozie_db') | default('false') }}
     - name: "hive"
-      provision: {{ lookup('env', 'hive_db') | default(false) }}
+      provision: {{ lookup('env', 'hive_db') | default('false') }}
     - name: "ranger"
-      provision: {{ lookup('env', 'ranger_db') | default(false) }}
+      provision: {{ lookup('env', 'ranger_db') | default('false') }}
 
   ssh:
     sdp_admin_publickey: {{ sdp_admin_public }}
