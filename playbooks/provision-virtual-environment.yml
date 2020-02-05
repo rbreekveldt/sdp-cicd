@@ -5,13 +5,16 @@
   gather_facts: false
   connection: local
   roles:
-    - role: provision-resource-group
-    - role: provision-storageaccount
+    - provision-resource-group
+    - provision-security-groups
+    - provision-vnet
+    - provision-peering  
+    
+    - block:
+      - provision-storageaccount
+      - provision-vm
       tags: dataproject
-    - role: provision-security-groups
-    - role: provision-vnet
-    - role: provision-peering
-    - role: provision-vm
-      tags: dataproject
-    - role: provision-sqlserver
+
+    - block:
+      - provision-sqlserver
       tags: hdi  
