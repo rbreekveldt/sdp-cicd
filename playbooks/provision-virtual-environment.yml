@@ -6,21 +6,21 @@
   gather_facts: false
   connection: local
   tasks:
-    - import_role:
-        name: '{{ item }}'
+    - include_role:
+        name: "{{ item }}"
       with_items:
         - provision-resource-group
         - provision-security-groups
         - provision-vnet
         - provision-peering      
   
-    - import_role: 
+    - include_role: 
         name: "{{ item }}"
       with_items:
         - provision-storageaccount
         - provision-vm
       tags: dataproject
 
-    - import_role:
+    - include_role:
         name: provision-sqlserver
       tags: hdi    
