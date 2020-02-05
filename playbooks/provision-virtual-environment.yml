@@ -6,7 +6,7 @@
   gather_facts: false
   connection: local
   include_role:
-    name: {{ item }}
+    name: "{{ item }}"
   with_items:
     - provision-resource-group
     - provision-security-groups
@@ -14,7 +14,7 @@
     - provision-peering      
   
   include_role: 
-    name: {{ item }}
+    name: "{{ item }}"
   with_items:
     - provision-storageaccount
     - provision-vm
