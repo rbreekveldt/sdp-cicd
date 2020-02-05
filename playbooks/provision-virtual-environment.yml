@@ -5,21 +5,22 @@
   hosts: localhost
   gather_facts: false
   connection: local
-  include_role:
-    name: "{{ item }}"
-  with_items:
-    - provision-resource-group
-    - provision-security-groups
-    - provision-vnet
-    - provision-peering      
+  tasks:
+    - include_role:
+        name: "{{ item }}"
+      with_items:
+        - provision-resource-group
+        - provision-security-groups
+        - provision-vnet
+        - provision-peering      
   
-  include_role: 
-    name: "{{ item }}"
-  with_items:
-    - provision-storageaccount
-    - provision-vm
-  tags: dataproject
+    - include_role: 
+        name: "{{ item }}"
+      with_items:
+        - provision-storageaccount
+        - provision-vm
+      tags: dataproject
 
-  include_role:
-    name: provision-sqlserver
-  tags: hdi    
+    - include_role:
+        name: provision-sqlserver
+      tags: hdi    
