@@ -1,20 +1,21 @@
+---
 #Start point of provisioning virtual environment
 #- import_playbook: "set-azure-credentials.yml"
 - name: Provision virtual environment
   hosts: localhost
   gather_facts: false
   connection: local
-  roles:
-    - role: provision-resource-group
-    - role: provision-security-groups
-    - role: provision-vnet
-    - role: provision-peering  
+  tasks:
+    - block:
+      - include_role:
+        provision-storageaccount
+        provision-vm
+      tags: dataproject   
     
-    - block:
-      - role: provision-storageaccount
-      - role: provision-vm
-      tags: dataproject
-
-    - block:
-      - role: provision-sqlserver
-      tags: hdi  
+    - block: 
+      - include_role:
+        provision-sqlserver
+      tags: hdi
+    - include_role:
+      provision-vnet
+      provision-peering  
