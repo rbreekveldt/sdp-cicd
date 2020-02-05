@@ -5,17 +5,18 @@
   hosts: localhost
   gather_facts: false
   connection: local
-  tasks:
-    - block:
-        include_role:
-          role: provision-storageaccount
-          role: provision-vm
-        tags: dataproject   
+  roles:
+    - provision-resource-group
+    - provision-security-groups
+    - provision-vnet
+    - provision-peering      
+  block:
+     roles:
+       - provision-storageaccount
+       - provision-vm
+     tags: dataproject   
     
-    - block: 
-        include_role:
-          role: provision-sqlserver
-        tags: hdi
-    - include_role:
-      role: provision-vnet
-      role: provision-peering  
+  block: 
+    roles:
+      - provision-sqlserver
+    tags: hdi
