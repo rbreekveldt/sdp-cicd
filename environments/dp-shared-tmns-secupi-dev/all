@@ -12,7 +12,7 @@ cloud_config:
 
   mockup:
     kafka:
-      provision: 
+      provision: false
       functionality: kafka
       nodes_count: 1
       flavor: Standard_D3_v2
