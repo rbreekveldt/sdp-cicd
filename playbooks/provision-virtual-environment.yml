@@ -8,14 +8,14 @@
   tasks:
     - block:
       - include_role:
-        provision-storageaccount
-        provision-vm
+        role: provision-storageaccount
+        role: provision-vm
       tags: dataproject   
     
     - block: 
       - include_role:
-        provision-sqlserver
+        role: provision-sqlserver
       tags: hdi
     - include_role:
-      provision-vnet
-      provision-peering  
+      role: provision-vnet
+      role: provision-peering  
