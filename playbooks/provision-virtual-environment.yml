@@ -5,7 +5,7 @@
   gather_facts: false
   connection: local
   roles:
-    - role: rovision-resource-group
+    - role: provision-resource-group
     - role: provision-security-groups
     - role: provision-vnet
     - role: provision-peering  
