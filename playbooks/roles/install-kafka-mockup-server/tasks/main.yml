@@ -19,67 +19,66 @@
     state: present
     password: "{{ '123Sdp!' | password_hash('sha512') }}"
 
-- block:    
-  # Create download directory
-  - name: Kafka-Server | Create download directory
-    file:
-      path: ~/downloads
-      owner: "kafka"
-      group: "kafka"
-      state: directory
-      recurse: yes
-    become_user: kafka
+# Create download directory
+- name: Kafka-Server | Create download directory
+  file:
+    path: ~/downloads
+    owner: "kafka"
+    group: "kafka"
+    state: directory
+    recurse: yes
+  become_user: kafka
     
-  # Download Software
-  - name: Kafka-Server | Download kafka
-    get_url:
-      url: "{{ kafka_download_url }}/{{ kafka_version }}/{{ kafka_file }}"
-      dest: ~/downloads
-      mode: '0666'
-    become_user: kafka
+# Download Software
+- name: Kafka-Server | Download kafka
+  get_url:
+    url: "{{ kafka_download_url }}/{{ kafka_version }}/{{ kafka_file }}"
+    dest: ~/downloads
+    mode: '0666'
+  become_user: kafka
     
-  # Create untar working directory
-  - name: Kafka-Server | Create untar working directory
-    file:
-      path: ~/kafka
-      owner: "kafka"
-      group: "kafka"
-      state: directory
-      recurse: yes
-    become_user: kafka
+# Create untar working directory
+- name: Kafka-Server | Create untar working directory
+  file:
+    path: ~/kafka
+    owner: "kafka"
+    group: "kafka"
+    state: directory
+    recurse: yes
+  become_user: kafka
 
-  # Untar file    
-  - name: Extract kafka  to into ~/kafka
-    unarchive:
-      src: "~/downloads/{{ kafka_file }}"
-      dest: ~/kafka
-      remote_src: yes
-      creates:
-      extra_opts: [--strip-components=1]
-    become_user: kafka
+# Untar file    
+- name: Extract kafka  to into ~/kafka
+  unarchive:
+    src: "~/downloads/{{ kafka_file }}"
+    dest: ~/kafka
+    remote_src: yes
+    creates:
+    extra_opts: [--strip-components=1]
+  become_user: kafka
   
-  # Write zookeeper systemd unit file
-  - name: Write zookeeper systemd unit file
-    template:
-      src: zookeeper-systemd copy.j2
-      dest: /etc/systemd/system/zookeeper.service
+# Write zookeeper systemd unit file
+- name: Write zookeeper systemd unit file
+  template:
+    src: zookeeper-systemd copy.j2
+    dest: /etc/systemd/system/zookeeper.service
   
-  # Write kafka systemd unit file
-  - name: Write kafka systemd unit file
-    template:
-      src: kafka-systemd.j2
-      dest: /etc/systemd/system/kafka.service
+# Write kafka systemd unit file
+- name: Write kafka systemd unit file
+  template:
+    src: kafka-systemd.j2
+    dest: /etc/systemd/system/kafka.service
   
-  # Start kafka
-  - name: Start service kafka, if not started
-    service:
-      name: kafka
-      state: started
-      enabled: yes
+# Start kafka
+- name: Start service kafka, if not started
+  service:
+    name: kafka
+    state: started
+    enabled: yes
 
-  # Create given toppics
-  - name: Create kafka toppics 
-    command:
-      cmd: "/home/kafka/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic {{ item }}"
-    with_items: kafka_topics
+# Create given topics
+- name: Create kafka topics 
+  command:
+    cmd: "/home/kafka/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic {{ item }}"
+  with_items: kafka_topics
   
