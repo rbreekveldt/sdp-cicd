@@ -8,7 +8,7 @@
     address_prefixes_cidr: "{{ cloud_config.network.address_prefix }}"
   register: vnet_result
 
-- name: Create {{ item }} Subnet
+- name: Create "{{ item }}" Subnet
   azure_rm_subnet:
     resource_group: "{{ cloud_config.resource_group }}"
     virtual_network_name: "{{ cloud_config.network.name }}"
@@ -19,7 +19,7 @@
   with_items: "{{ cloud_config.subnet }}"
   tags: hdi 
 
-- name: Create {{ item.0 }} Subnet
+- name: Create "{{ item.0 }}" Subnet
   azure_rm_subnet:
     resource_group: "{{ cloud_config.resource_group }}"
     virtual_network_name: "{{ cloud_config.network.name }}"
