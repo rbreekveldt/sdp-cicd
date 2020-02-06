@@ -66,8 +66,12 @@ cloud_config:
     address_prefix: "10.250.1.0/24"
       
   subnet:
-    name: subnet-dopper-sit
-    address_prefix: "10.250.1.0/26"
+    - name: subnet-dopper-sit01
+      address_prefix: "10.250.1.0/26"
+    - name: subnet-dopper-sit02
+      address_prefix: "10.250.1.64/26"
+    - name: subnet-dopper-sit03
+      address_prefix: "10.250.1.128/26"
       
   security_groups:
     name: nsg-dopper-sit

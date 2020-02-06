@@ -66,8 +66,12 @@ cloud_config:
     address_prefix: "VNET-ANCOR.0/24"
       
   subnet:
-    name: subnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
-    address_prefix: "VNET-ANCOR.0/26"
+    - name: subnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}01
+      address_prefix: "VNET-ANCOR.0/26"
+    - name: subnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}02
+      address_prefix: "VNET-ANCOR.64/26"
+    - name: subnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}03
+      address_prefix: "VNET-ANCOR.128/26"
       
   security_groups:
     name: nsg-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
