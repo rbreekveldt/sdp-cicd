@@ -30,12 +30,12 @@
   become_user: kafka
   
 # Download Software
-#- name: Kafka-Server | Download kafka
-#  get_url:
-#    url: "{{ kafka_download_url }}/{{ kafka_version }}/{{ kafka_file }}"
-#    dest: ~/downloads
-#    mode: '0440'
-#  become_user: kafka
+- name: Kafka-Server | Download kafka
+  get_url:
+    url: "{{ kafka_download_url }}/{{ kafka_version }}/{{ kafka_file }}"
+    dest: ~/downloads
+    mode: '0440'
+  become_user: kafka
   
 # Create untar working directory
 - name: Kafka-Server | Create untar working directory
