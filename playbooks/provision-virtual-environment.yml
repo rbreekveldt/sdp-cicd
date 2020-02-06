@@ -7,18 +7,22 @@
   connection: local
   tasks:
     - include_role:
-        name: "{{ item }}"
-      with_items:
+        name: "{{ role }}"
+      loop:
         - provision-resource-group
         - provision-security-groups
         - provision-vnet
-        - provision-peering      
+        - provision-peering
+      loop_control:
+        loop_var: role        
   
     - include_role: 
-        name: "{{ item }}"
-      with_items:
+        name: "{{ role }}"
+      loop:
         - provision-storageaccount
         - provision-vm
+      loop_control:
+        loop_var: role        
       tags: dataproject
 
     - include_role:
