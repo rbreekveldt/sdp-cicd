@@ -19,12 +19,12 @@
   with_items: "{{ cloud_config.subnet }}"
   tags: hdi 
 
-- name: Create "{{ item.0 }}" Subnet
+- name: Create "{{ item[0] }}" Subnet
   azure_rm_subnet:
     resource_group: "{{ cloud_config.resource_group }}"
     virtual_network_name: "{{ cloud_config.network.name }}"
-    name: "{{ item.0.name }}"
-    address_prefix_cidr : "{{ item.0.address_prefix }}"
+    name: "{{ item[0].name }}"
+    address_prefix_cidr : "{{ item[0].address_prefix }}"
     security_group:
       name: "{{ cloud_config.security_groups.name }}"
   with_items: "{{ cloud_config.subnet }}"
