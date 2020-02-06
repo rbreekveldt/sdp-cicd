@@ -34,7 +34,7 @@
   get_url:
     url: "{{ kafka_download_url }}/{{ kafka_version }}/{{ kafka_file }}"
     dest: ~/downloads
-    mode: '0440'
+    mode: '0550'
   become_user: kafka
   
 # Create untar working directory
@@ -50,8 +50,8 @@
 # Untar file    
 - name: Extract kafka  to into ~/kafka
   unarchive:
-    src: "/home/kafka/downloads/{{ kafka_file }}"
-    dest: /home/kafka/kafka
+    src: "~/downloads/{{ kafka_file }}"
+    dest: ~/kafka
     remote_src: yes
     creates:
     extra_opts: [--strip-components=1]
@@ -74,3 +74,11 @@
   service:
     name: kafka
     state: started
+    enabled: yes
+
+# Create given toppics
+- name: Create kafka toppics 
+  command:
+    cmd: "~/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic {{ item }}"
+  with_items: kafka_topics
+  become_use: kafka
