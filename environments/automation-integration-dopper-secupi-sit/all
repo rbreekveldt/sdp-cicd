@@ -144,8 +144,8 @@ cloud_config:
     Env: sit 
     Project: dopper
     Phase: integration
-    Country: 
-    Unit: 
+    Country: nl
+    Unit: datasolutions
 
 ########################
 ## java configuration ##
