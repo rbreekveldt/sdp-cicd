@@ -4,5 +4,8 @@
   gather_facts: true
   become: yes
   
+- import_playbook: "set_ambari_variables.yml"
+  tags: always
+
   roles:
     - install-ambari-cluster
