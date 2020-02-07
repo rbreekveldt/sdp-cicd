@@ -4,7 +4,6 @@
   include_role: 
     name: azure-keyvault
     tasks_from: generate-secret.yml
-  register: sql_db_pwd  
     
 - block:
   - name: Create SQL Server
