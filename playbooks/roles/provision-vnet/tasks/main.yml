@@ -1,34 +1,17 @@
 ---
 # tasks file for provision-vnet
 - name: Create {{ cloud_config.network.name }} Virtual Network
-  azure_rm_virtualnetwork:
-    resource_group: "{{ cloud_config.resource_group }}"
-    name: "{{ cloud_config.network.name }}"
-    tags: "{{ cloud_config.tags }}"
-    address_prefixes_cidr: "{{ cloud_config.network.address_prefix }}"
-  register: vnet_result
+  include_tasks: create-vnet.yml
 
 - name: Create HDI Subnets
-  azure_rm_subnet:
-    resource_group: "{{ cloud_config.resource_group }}"
-    virtual_network_name: "{{ cloud_config.network.name }}"
-    name: "{{ subnet.name }}"
-    address_prefix_cidr : "{{ subnet.address_prefix }}"
-    security_group:
-      name: "{{ cloud_config.security_groups.name }}"
+  include_tasks: create-subnet.yml
   loop: "{{ cloud_config.subnet }}"
   loop_control:
     loop_var: subnet
   tags: hdi 
 
-- name: Create Subnet
-  azure_rm_subnet:
-    resource_group: "{{ cloud_config.resource_group }}"
-    virtual_network_name: "{{ cloud_config.network.name }}"
-    name: "{{ subnet.name }}"
-    address_prefix_cidr : "{{ subnet.address_prefix }}"
-    security_group:
-      name: "{{ cloud_config.security_groups.name }}"
+- name: Create HDF Subnet
+  include_tasks: create-subnet.yml
   loop: "{{ cloud_config.subnet }}"
   loop_control:
     loop_var: subnet
