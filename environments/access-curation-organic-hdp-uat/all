@@ -12,7 +12,7 @@ cloud_config:
 
   mockup:
     kafka:
-      provision: true
+      provision: false
       functionality: kafka
       nodes_count: 1
       flavor: Standard_D3_v2
@@ -20,7 +20,7 @@ cloud_config:
         role: kafka_mockup
 
     sftp:
-      provision: true
+      provision: false
       functionality: sftp
       flavor: Standard_D3_v2
       nodes_count: 1
@@ -28,7 +28,7 @@ cloud_config:
         role: sftp_mockup
 
   mgmt:
-    provision: true
+    provision: false
     functionality: nifimgmt
     nodes_count: 1
     flavor: Standard_D3_v2
