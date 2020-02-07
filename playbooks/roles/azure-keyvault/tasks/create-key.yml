@@ -1,0 +1,6 @@
+---
+# tasks file for azure-keyvault
+- name: Create key in {{ cloud_config.azkeyvault.name }} KeyVault
+  azure_rm_keyvaultkey:
+    key_name: "{{ key_name }}" 
+    keyvault_uri: "{{ cloud_config.azkeyvault.uri }}"     
