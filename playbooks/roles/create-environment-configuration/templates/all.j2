@@ -65,9 +65,6 @@ cloud_config:
   azkeyvault:
     name: kv-dp-hdi-prd
     uri: https://kv-dp-hdi-prd.vault.azure.net/
-    resource_group: 'automation-sdp-prd-rg'
-    subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
-    
     
   network:
     name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}

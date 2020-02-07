@@ -6,14 +6,15 @@ def skipRemainingStages = "true"
 pipeline {
     agent any
     parameters{
-            choice(name: 'Subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProject CPD\nProject Audience Measurement', description: 'Subscription to provision')
+            choice(name: 'subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProject CPD\nProject Audience Measurement', description: 'Subscription to provision')
             choice(name: 'data_domain', choices: 'Please select\ndp\nautomation\naccess\nmonitoring', description: 'Data Domain')
             choice(name: 'resource_group_phase', choices: 'Please select\npiimanagement\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
             string(name: 'project_name', defaultValue:'', description: 'Specify project name')
             choice(name: 'application_name', choices: 'Please select\nsecupi\nhdp\ndatagateway', description: 'Application name')
             choice(name: 'env_type', choices: 'Please select\ndev\nsit\nuat\nprd', description: 'Environment type to provision')
             string(name: 'project_description', defaultValue:'', description: 'Specify project description')
-            choice(name: 'Cloud', choices: 'azure', description: 'Cloud to provision')
+            choice(name: 'country', choices: 'Please select\nnl\nch\nie\nde\nat', description: 'Select Country')
+            choice(name: 'unit', choices: 'Please select\nconsumeranalytics\ndatacentertechnology\ndatasolutions\nitsecurity\nsupplychain', description: 'Select Unit')
             booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
             booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
             booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
