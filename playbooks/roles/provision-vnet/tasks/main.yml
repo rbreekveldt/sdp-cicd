@@ -1,6 +1,6 @@
 ---
 # tasks file for provision-vnet
-- name: Create {{ cloud_config.network.name }} Virtual Network
+- name: Create Virtual Network
   include_tasks: create-vnet.yml
 
 - name: Create HDI Subnets
