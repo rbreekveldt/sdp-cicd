@@ -9,6 +9,13 @@
   - name: Create SQL Server
     include_tasks: create-sqlserver.yml 
   
+  - name: Store password
+    include_role:
+      name: azure-keyvault
+      tasks_from: create-secret.yml
+    vars:
+      secret_name: "dbsqlserver{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}"
+
   - name: Create SQL Database 
     include_tasks: create-sqldatabase.yml
     when: item.provision
