@@ -5,7 +5,6 @@ cloud_config:
   resource_group_phase: {{ lookup('env', 'resource_group_phase') }}
   application_name: {{ lookup('env', 'application_name') }}
   data_domain: {{ lookup('env', 'data_domain') }}
-
   resource_group: {{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}-rg
   location: "westeurope"
   admin_username: "sdp-admin"
@@ -47,8 +46,10 @@ cloud_config:
   sql_db:
     - name: "oozie"
       provision: {{ lookup('env', 'oozie_db') | default('false', true) }}
+
     - name: "hive"
       provision: {{ lookup('env', 'hive_db') | default('false', true) }}
+
     - name: "ranger"
       provision: {{ lookup('env', 'ranger_db') | default('false', true) }}
 
@@ -60,7 +61,11 @@ cloud_config:
   storage_account:
     name: sa{{ lookup('env', 'project_name') }}{{ lookup('env', 'application_name') }}{{ lookup('env', 'env_type') }}
     type: "Standard_LRS"
-      
+  
+  azkeyvault:
+    name: kv-dp-hdi-prd
+    uri: https://kv-dp-hdi-prd.vault.azure.net/
+    
   network:
     name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
     address_prefix: "VNET-ANCOR.0/24"
@@ -68,8 +73,10 @@ cloud_config:
   subnet:
     - name: subnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}01
       address_prefix: "VNET-ANCOR.0/26"
+
     - name: subnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}02
       address_prefix: "VNET-ANCOR.64/26"
+
     - name: subnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}03
       address_prefix: "VNET-ANCOR.128/26"
       
@@ -84,6 +91,7 @@ cloud_config:
           priority: 100
           source: VirtualNetwork
           destination: VirtualNetwork
+
         allow_ping_inbound:  
           name: Allow_Ping
           protocol: Udp
@@ -91,6 +99,7 @@ cloud_config:
           priority: 101
           source: VirtualNetwork
           destination: VirtualNetwork
+
         allow_icmp_inbound:
           name: Allow_Icmp
           protocol: Icmp
@@ -105,12 +114,27 @@ cloud_config:
       remote_resource_group: 'access-sdp-jumpbox-rg'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
       connect_peering_name: vnet-sdp-internal-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+
+    vnet_sdp_external:
+      initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-sdp-external
+      remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-external'
+      remote_resource_group: 'access-sdp-jumpbox-rg'
+      remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
+      connect_peering_name: vnet-sdp-external-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+
     vnet_cicd_prd:
       initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-cicd-prd
       remote_virtual_network: '/subscriptions/fd478270-bd64-4cf3-bb8b-53016bb2ffd6/resourceGroups/automation-cicd-prd-rg/providers/Microsoft.Network/virtualNetworks/vnet-cicd-prd'
       remote_resource_group: 'automation-cicd-prd-rg'
       remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
       connect_peering_name: vnet-cicd-prd-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+
+    vnet_ad_domain:
+      initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-Liberty-Global-AD-domain-services
+      remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/Liberty-Global-Shared-Resources/providers/Microsoft.Network/virtualNetworks/Liberty-Global-AD-domain-services'
+      remote_resource_group: 'Liberty-Global-Shared-Resources'
+      remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
+      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
 
   vm:
     managed_disk_type: Standard_LRS
@@ -121,13 +145,11 @@ cloud_config:
       version: latest
       
   tags:
-    Env: dev
-    Project: devoteam
-    Phase: ingestion
-    Country: NL
-    Unit: Data-Solutions
-    Type: CentOS
-
+    Env: {{ lookup('env', 'env_type') }} 
+    Project: {{ lookup('env', 'project_name') }}
+    Phase: {{ lookup('env', 'resource_group_phase') }}
+    Country: {{ lookup('env', 'country') }}
+    Unit: {{ lookup('env', 'unit') }}
 
 ########################
 ## java configuration ##
