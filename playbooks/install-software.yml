@@ -9,7 +9,7 @@
   roles:
     - common
 
-- import_playbook: ambari-cluster.yml
+- import_playbook: install-ambari-cluster.yml
   when: cloud_config.nifi.provision and hostvars[inventory_hostname]['tags']['role'] == 'nifi'
 
 - import_playbook: sftp-mockup-server.yml
