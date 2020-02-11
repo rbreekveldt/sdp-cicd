@@ -1,5 +1,5 @@
 ---
-- name: Write to prefix to file
+- name: Write existing vnet prefixes to file
   lineinfile: 
     line: "{{ remote_address_space.address_prefixes }}" 
     path: roles/calculate-vnet-prefix/files/prefixfile
