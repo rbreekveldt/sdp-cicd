@@ -23,13 +23,13 @@
       client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
     register: vnet_ad_result
 
-- name: debug vnet internal
-  debug:
-    msg: "{{ vnet_internal_result.vnetpeerings }}"
+- name: Combine VNET AD DOMAIN and VNET INTERNAL peerings
+  set_fact:
+    peering_results: "{{ vnet_internal_result }},{{ vnet_ad_result }}"        
 
-- name: debug vnet ad domain
+- name: debug vnet end result
   debug:
-    msg: "{{ vnet_ad_result.vnetpeerings }}"        
+    msg: "{{ peering_results }}"        
 
 - name: delete file
   ignore_errors: yes
@@ -47,7 +47,7 @@
   include_tasks: distillate-subnet-prexies.yml
   vars:
     remote_address_space: "{{ item.remote_address_space }}"
-  with_items: "{{ results.vnetpeerings }}"
+  with_items: "{{ peering_results }}"
 
 - name: find next subnet prefix
   command: "python calculate_vnet_prefix.py"
