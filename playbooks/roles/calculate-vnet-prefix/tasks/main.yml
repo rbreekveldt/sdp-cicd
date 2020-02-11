@@ -39,7 +39,7 @@
   include_tasks: distillate-subnet-prexies.yml
   vars:
     remote_address_space: "{{ peering.remote_address_space }}"
-  loop: "{{ vnet_internal_result.vnetpeerings|zip(vnet_ad_result.vnetpeerings)|list|flatten|unique }}"
+  loop: "{{ vnet_internal_result.vnetpeerings, vnet_ad_result.vnetpeerings|list|flatten(levels=1) }}"
   loop_control:
     loop_var: peering
 
