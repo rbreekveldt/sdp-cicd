@@ -39,6 +39,10 @@
     path: "{{ lookup('env', 'WORKSPACE') }}/playbooks/roles/calculate-vnet-prefix/files/prefixfile"
     state: touch
 
+- name: debug vnet calc results\
+  debug:
+    msg: "{{ peering_results }}"        
+
 - name: Distillate all subnet prexies already taken
   include_tasks: distillate-subnet-prexies.yml
   vars:
