@@ -4,6 +4,12 @@
   include_tasks: create-vnet.yml
 
 - name: Create HDI Subnets
+  vars:
+    service_endpoints:
+      - service:     
+          Microsoft.Sql
+      - service:
+          Microsoft.AzureActiveDirectory  
   include_tasks: create-subnet.yml
   loop: "{{ cloud_config.subnet }}"
   loop_control:
