@@ -68,17 +68,17 @@ cloud_config:
     
   network:
     name: vnet-jacob-uat
-    address_prefix: "10.250.0.0/24"
+    address_prefix: "10.250.1.0/24"
       
   subnet:
     - name: subnet-jacob-uat01
-      address_prefix: "10.250.0.0/26"
+      address_prefix: "10.250.1.0/26"
 
     - name: subnet-jacob-uat02
-      address_prefix: "10.250.0.64/26"
+      address_prefix: "10.250.1.64/26"
 
     - name: subnet-jacob-uat03
-      address_prefix: "10.250.0.128/26"
+      address_prefix: "10.250.1.128/26"
       
   security_groups:
     name: nsg-jacob-uat
