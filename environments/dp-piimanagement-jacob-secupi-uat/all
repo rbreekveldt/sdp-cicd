@@ -1,0 +1,163 @@
+---
+cloud_config:
+  project_name: jacob
+  env_type: uat
+  resource_group_phase: piimanagement
+  application_name: secupi
+  data_domain: dp
+  resource_group: dp-piimanagement-jacob-secupi-uat-rg
+  location: "westeurope"
+  admin_username: "sdp-admin"
+
+  mockup:
+    kafka:
+      provision: false
+      functionality: kafka
+      nodes_count: 1
+      flavor: Standard_D3_v2
+      tags:
+        role: kafka_mockup
+
+    sftp:
+      provision: false
+      functionality: sftp
+      flavor: Standard_D3_v2
+      nodes_count: 1
+      tags:
+        role: sftp_mockup
+
+  mgmt:
+    provision: false
+    functionality: nifimgmt
+    nodes_count: 1
+    flavor: Standard_D3_v2
+    tags:
+      role: ambari_mgmt
+
+
+  nifi:
+    provision: false
+    functionality: nifi
+    nodes_count: 0
+    flavor: Standard_A5
+    tags:
+      role: nifi_worker
+
+  sql_db:
+    - name: "oozie"
+      provision: true
+
+    - name: "hive"
+      provision: false
+
+    - name: "ranger"
+      provision: false
+
+  ssh:
+    sdp_admin_publickey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtTDhaa9ldeOti2QpPjipKw4XITgoLGInLlRyS7fE2gSehL+FO75OD7LqSvKWMy7jyBuGiHi/IeneCQHgU/lq7SHSJlb09y7DfaqrR2L7Q9Yl93vPMJZIi7ujE3m1zupbFYDNK2rMAOR2tftqqn0S+iOLKvlhKH+2xZnXhI45u+JmFzOk8rgmFXnrtSUpBEDJkWZcFavoQKsVIkeU5N6/QshfoUB6qafcFfBCxY0Ix4LfGKhLh8qaUdHomZzAfo/FWvD6QIz5y/h8+YKqKzpN0Hc9Qv2s4VKkZrNODXhejUBl3onR1UzrqbD2rD/fvIx34rqbbtHoEgAxgc3dHu5kV sdp-admin@vm-dev-jumpbox
+    jenkins_publickey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoyva5cbaOKy/6lw6FBcLO8zZ0BaPwL6SzX4t9urNgY2RfBZzQIT90rrZMbNepjvkl9+AwQK8KukY9g3mYHn9sxvQEmBnn7ExZsNuLM9YZwZRFN5HpVS7OHr5QR/wt8ueYYd4xaEOvqgEmxuNIYT0P2UzXNNO+XsNtUJHJoPu1Ra+SzYQyBEGQ0+v63SVZSTVd70A7GvcyhQWsXHJptV48yfenxIS5NfU0UGKEsgPqxUF8qtxoucKsJ1s3eL7yLcnE36fBkPiSRjvV0XH+OByCV82cc+LallJqJAPdluMn7fylrYL1CbZhkxEemGs1RZQpnZjC7ZqlJHvOEIWzMSb9 jenkins@jenkins.prod.sdp.aa.liberty.biz
+
+        
+  storage_account:
+    name: sajacobsecupiuat
+    type: "Standard_LRS"
+  
+  azkeyvault:
+    name: kv-dp-hdi-prd
+    uri: https://kv-dp-hdi-prd.vault.azure.net/
+    
+  network:
+    name: vnet-jacob-uat
+    address_prefix: "10.250.0.0/24"
+      
+  subnet:
+    - name: subnet-jacob-uat01
+      address_prefix: "10.250.0.0/26"
+
+    - name: subnet-jacob-uat02
+      address_prefix: "10.250.0.64/26"
+
+    - name: subnet-jacob-uat03
+      address_prefix: "10.250.0.128/26"
+      
+  security_groups:
+    name: nsg-jacob-uat
+    rules:
+      inbound:
+        allow_ssh_inbound:
+          name: Allow_SSH
+          protocol: Tcp
+          port: 22
+          priority: 100
+          source: VirtualNetwork
+          destination: VirtualNetwork
+
+        allow_ping_inbound:  
+          name: Allow_Ping
+          protocol: Udp
+          port: 7
+          priority: 101
+          source: VirtualNetwork
+          destination: VirtualNetwork
+
+        allow_icmp_inbound:
+          name: Allow_Icmp
+          protocol: Icmp
+          priority: 102
+          source: VirtualNetwork
+          destination: VirtualNetwork
+      
+  peering:
+    vnet_sdp_internal:
+      initial_peering_name: vnet-jacob-uat-to-vnet-sdp-internal
+      remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
+      remote_resource_group: 'access-sdp-jumpbox-rg'
+      remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
+      connect_peering_name: vnet-sdp-internal-to-vnet-jacob-uat
+
+    vnet_sdp_external:
+      initial_peering_name: vnet-jacob-uat-to-vnet-sdp-external
+      remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-external'
+      remote_resource_group: 'access-sdp-jumpbox-rg'
+      remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
+      connect_peering_name: vnet-sdp-external-to-vnet-jacob-uat
+
+    vnet_cicd_prd:
+      initial_peering_name: vnet-jacob-uat-to-vnet-cicd-prd
+      remote_virtual_network: '/subscriptions/fd478270-bd64-4cf3-bb8b-53016bb2ffd6/resourceGroups/automation-cicd-prd-rg/providers/Microsoft.Network/virtualNetworks/vnet-cicd-prd'
+      remote_resource_group: 'automation-cicd-prd-rg'
+      remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
+      connect_peering_name: vnet-cicd-prd-to-vnet-jacob-uat
+
+    vnet_ad_domain:
+      initial_peering_name: vnet-jacob-uat-to-Liberty-Global-AD-domain-services
+      remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/Liberty-Global-Shared-Resources/providers/Microsoft.Network/virtualNetworks/Liberty-Global-AD-domain-services'
+      remote_resource_group: 'Liberty-Global-Shared-Resources'
+      remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
+      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-jacob-uat
+
+  vm:
+    managed_disk_type: Standard_LRS
+    image:
+      offer: CentOS
+      publisher: OpenLogic
+      sku: '7.4'
+      version: latest
+      
+  tags:
+    Env: uat 
+    Project: jacob
+    Phase: piimanagement
+    Country: nl
+    Unit: datasolutions
+
+########################
+## java configuration ##
+########################
+
+java: 'openjdk'                                          # can be set to 'embedded', 'openjdk' or 'oraclejdk'
+oraclejdk_options:                                        # only used when java is set to 'oraclejdk'
+  base_folder: '/usr/java'                                # the folder where the Java package should be unpacked to
+  tarball_location: '/tmp/jdk-8u181-linux-x64.tar.gz'     # the location of the tarball on the remote system or on the Ansible controller
+  jce_location: '/tmp/jce_policy-8.zip'                   # the location of the JCE package on the remote system or on the Ansible controller
+  remote_files: no                                        # set to yes to indicate the files are already on the remote systems, otherwise they will be copied by Ansible from the Ansible controller
