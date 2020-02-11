@@ -41,7 +41,7 @@
   #    remote_address_space: "{{ peering.remote_address_space }}"
   debug:
     msg: "{{ peering.remote_address_space }}"        
-  loop: "{{ vnet_internal_result.vnetpeerings|zip(vnet_ad_result.vnetpeerings)|list }}"
+  loop: "{{ vnet_internal_result.vnetpeerings|zip(vnet_ad_result.vnetpeerings)|flatten(levels=1) }}"
   loop_control:
     loop_var: peering
 
