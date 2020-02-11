@@ -11,6 +11,7 @@
       tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
       secret: "{{ lookup('env', 'AZURE_SECRET') }}"
       client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+    register: vnet_internal_result  
 
   - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
     azure_rm_virtualnetworkpeering_facts:
@@ -20,11 +21,15 @@
       tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
       secret: "{{ lookup('env', 'AZURE_SECRET') }}"
       client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-  register: results
+    register: vnet_ad_result
 
-- name: debug
+- name: debug vnet internal
   debug:
-    msg: "{{ result }}"      
+    msg: "{{ vnet_internal_result }}"
+
+- name: debug vnet ad domain
+  debug:
+    msg: "{{ vnet_ad_result }}"        
 
 - name: delete file
   ignore_errors: yes
