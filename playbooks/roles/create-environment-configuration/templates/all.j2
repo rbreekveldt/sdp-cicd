@@ -79,6 +79,12 @@ cloud_config:
 
     - name: subnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}03
       address_prefix: "VNET-ANCOR.128/26"
+  
+  adls_whitelist:
+    - name: Liberty_Office
+      ip: 213.46.252.136
+    - name: Jenkins_Machine
+      ip: 51.105.193.222
       
   security_groups:
     name: nsg-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
