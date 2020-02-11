@@ -11,7 +11,6 @@
     az account set --subscription {{ subscription_id | quote }}
     az dls account create --account "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}" --resource-group "{{ cloud_config.resource_group }}"
 
-
 - name: Add firewall rule to Datalake
   shell: |
     az dls account firewall create --account "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}" --end-ip-address "{{ item.ip }}" --firewall-rule-name "{{ item.name }}" --start-ip-address "{{ item.ip }}" --resource-group "{{ cloud_config.resource_group }}"

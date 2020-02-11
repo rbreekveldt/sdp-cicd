@@ -2,15 +2,26 @@
 # tasks file for calculate-vnet-prefix
 - include_vars: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
 
-- name: Get list of peering
-  azure_rm_virtualnetworkpeering_facts:
-    resource_group: "{{ cloud_config.peering.vnet_sdp_internal.remote_resource_group }}"
-    virtual_network: "{{ cloud_config.peering.vnet_sdp_internal.remote_virtual_network }}"
-    subscription_id: "{{ cloud_config.peering.vnet_sdp_internal.remote_subscription_id }}"
-    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
-    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
-    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-  register: results
+- block:
+  - name: Get list of VNET SDP INTERNAL peerings
+    azure_rm_virtualnetworkpeering_facts:
+      resource_group: "{{ cloud_config.peering.vnet_sdp_internal.remote_resource_group }}"
+      virtual_network: "{{ cloud_config.peering.vnet_sdp_internal.remote_virtual_network }}"
+      subscription_id: "{{ cloud_config.peering.vnet_sdp_internal.remote_subscription_id }}"
+      tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+      secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+      client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+    register: vnet_internal_result  
+
+  - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
+    azure_rm_virtualnetworkpeering_facts:
+      resource_group: "{{ cloud_config.peering.vnet_ad_domain.remote_resource_group }}"
+      virtual_network: "{{ cloud_config.peering.vnet_ad_domain.remote_virtual_network }}"
+      subscription_id: "{{ cloud_config.peering.vnet_ad_domain.remote_subscription_id }}"
+      tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+      secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+      client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+    register: vnet_ad_result
 
 - name: delete file
   ignore_errors: yes
@@ -27,8 +38,10 @@
 - name: Distillate all subnet prexies already taken
   include_tasks: distillate-subnet-prexies.yml
   vars:
-    remote_address_space: "{{ item.remote_address_space }}"
-  with_items: "{{ results.vnetpeerings }}"
+    remote_address_space: "{{ peering.remote_address_space }}"
+  loop: "{{ (vnet_internal_result.vnetpeerings + vnet_ad_result.vnetpeerings) |list|flatten(levels=1)|unique }}"
+  loop_control:
+    loop_var: peering
 
 - name: find next subnet prefix
   command: "python calculate_vnet_prefix.py"
