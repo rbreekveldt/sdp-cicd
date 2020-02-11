@@ -23,10 +23,6 @@
       client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
     register: vnet_ad_result
 
-- name: Combine VNET AD DOMAIN and VNET INTERNAL peerings
-  set_fact:
-    peering_results: "{{ vnet_internal_result }},{{ vnet_ad_result }}"        
-
 - name: delete file
   ignore_errors: yes
   file:
@@ -39,15 +35,11 @@
     path: "{{ lookup('env', 'WORKSPACE') }}/playbooks/roles/calculate-vnet-prefix/files/prefixfile"
     state: touch
 
-- name: debug vnet calc results\
-  debug:
-    msg: "{{ peering_results }}"        
-
 - name: Distillate all subnet prexies already taken
   include_tasks: distillate-subnet-prexies.yml
   vars:
     remote_address_space: "{{ peering.remote_address_space }}"
-  loop: "{{ peering_results.vnetpeerings }}"
+  loop: "{{ vnet_internal_result.vnetpeerings|zip(vnet_ad_result.vnetpeerings)|list }}"
   loop_control:
     loop_var: peering
 
