@@ -14,9 +14,9 @@
 
 - name: Add firewall rule to Datalake
   shell: |
-    az dls account firewall create --account "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}" --end-ip-address 213.46.252.136 --firewall-rule-name Liberty_Office --start-ip-address 213.46.252.136 --resource-group "{{ cloud_config.resource_group }}"
-    az dls account firewall create --account "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}" --end-ip-address 51.105.193.222 --firewall-rule-name Jenkins_Machine --start-ip-address 51.105.193.222 --resource-group "{{ cloud_config.resource_group }}"
-
+    az dls account firewall create --account "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}" --end-ip-address "{{ item.ip }}" --firewall-rule-name "{{ item.name }}" --start-ip-address "{{ item.ip }}" --resource-group "{{ cloud_config.resource_group }}"
+  with_items: "{{ cloud_config.adls_whitelist }}"
+  
 - name: Add Service endpoint to subnet
   shell: |
     az network vnet subnet update --name "{{ item.name }}" --vnet-name "{{ cloud_config.network.name }}" --address-prefixes "{{ item.address_prefix }}" --service-endpoints Microsoft.Sql Microsoft.AzureActiveDirectory --resource-group "{{ cloud_config.resource_group }}"
