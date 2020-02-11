@@ -6,6 +6,7 @@
     remote_virtual_network: "{{ cloud_config.peering.vnet_sdp_internal.remote_virtual_network }}"    
     remote_resource_group: "{{ cloud_config.peering.vnet_sdp_internal.remote_resource_group }}"
     connect_peering_name: "{{ cloud_config.peering.vnet_sdp_internal.connect_peering_name }}"
+    remote_subscription_id: "{{ cloud_config.peering.vnet_sdp_internal.remote_subscription_id }}"
   include_tasks: provision-peering.yml
   tags: dataproject
   
@@ -15,6 +16,7 @@
     remote_virtual_network: "{{ cloud_config.peering.vnet_cicd_prd.remote_virtual_network }}"    
     remote_resource_group: "{{ cloud_config.peering.vnet_cicd_prd.remote_resource_group }}"
     connect_peering_name: "{{ cloud_config.peering.vnet_cicd_prd.connect_peering_name }}"
+    remote_subscription_id: "{{ cloud_config.peering.vnet_cicd_prd.remote_subscription_id }}"
   include_tasks: provision-peering.yml
   tags: dataproject
 
@@ -24,6 +26,7 @@
     remote_virtual_network: "{{ cloud_config.peering.vnet_ad_domain.remote_virtual_network }}"    
     remote_resource_group: "{{ cloud_config.peering.vnet_ad_domain.remote_resource_group }}"
     connect_peering_name: "{{ cloud_config.peering.vnet_ad_domain.connect_peering_name }}"
+    remote_subscription_id: "{{ cloud_config.peering.vnet_ad_domain.remote_subscription_id }}"
   include_tasks: provision-peering.yml
   tags: hdi
   

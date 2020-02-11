@@ -10,7 +10,7 @@
 
 - name: Connect virtual network peering with {{ remote_resource_group }}
   azure_rm_virtualnetworkpeering:
-    subscription_id: "{{ peering.remote_subscription_id }}"
+    subscription_id: "{{ remote_subscription_id }}"
     tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
     secret: "{{ lookup('env', 'AZURE_SECRET') }}"
     client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"        
