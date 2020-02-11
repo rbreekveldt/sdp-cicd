@@ -1,7 +1,7 @@
 ---
 - name: Install Software of Data cluster
-  hosts: all
-  gather_facts: true
+  hosts: localhost
+  gather_facts: false
   any_errors_fatal: true
   become: yes
 
