@@ -27,10 +27,6 @@
   set_fact:
     peering_results: "{{ vnet_internal_result.vnetpeerings }},{{ vnet_ad_result.vnetpeerings }}"        
 
-- name: debug vnet end result
-  debug:
-    msg: "{{ peering_results }}"        
-
 - name: delete file
   ignore_errors: yes
   file:
@@ -46,8 +42,10 @@
 - name: Distillate all subnet prexies already taken
   include_tasks: distillate-subnet-prexies.yml
   vars:
-    remote_address_space: "{{ item.remote_address_space }}"
-  with_items: "{{ peering_results }}"
+    remote_address_space: "{{ peering.remote_address_space }}"
+  loop: "{{ peering_results }}"
+  loop_control:
+    loop_var: peering
 
 - name: find next subnet prefix
   command: "python calculate_vnet_prefix.py"
