@@ -41,7 +41,7 @@
 
 - name: debug vnet calc results\
   debug:
-    msg: "{{ peering_results }}"        
+    msg: "{{ peering_results.remote_address_space }}"        
 
 - name: Distillate all subnet prexies already taken
   include_tasks: distillate-subnet-prexies.yml
