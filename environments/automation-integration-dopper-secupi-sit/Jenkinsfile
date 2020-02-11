@@ -9,7 +9,7 @@ pipeline {
     agent any
     parameters{
             //text(name: 'Subscription', [], description: 'Subscription to provision')
-            choice(name: 'Subscription', choices: 'Project Azure governance testing', description: 'Subscription to provision')
+            choice(name: 'Subscription', choices: '', description: 'Subscription to provision')
             choice(name: 'ResourceGroup', choices: 'automation-integration-dopper-secupi-sit', description: 'Subscription to provision')
             choice(name: 'data_domain', choices: 'automation', description: 'Data Domain')
             choice(name: 'resource_group_phase', choices: 'integration', description: 'Resourcegroup Phase')
