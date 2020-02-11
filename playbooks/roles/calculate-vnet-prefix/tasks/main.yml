@@ -40,7 +40,7 @@
   vars:
     remote_address_space: "{{ peering.remote_address_space }}"
   loop: 
-    - "{{ vnet_internal_result.vnetpeerings|list|flaten(levels=1) }}"
+    - "{{ vnet_internal_result.vnetpeerings|list|flatten(levels=1) }}"
     - "{{ vnet_ad_result.vnetpeerings|list|flatten(levels=1) }}"
   loop_control:
     loop_var: peering
