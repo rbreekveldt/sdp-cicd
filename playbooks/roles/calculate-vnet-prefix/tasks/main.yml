@@ -25,11 +25,11 @@
 
 - name: debug vnet internal
   debug:
-    msg: "{{ vnet_internal_result }}"
+    msg: "{{ vnet_internal_result.vnetpeerings }}"
 
 - name: debug vnet ad domain
   debug:
-    msg: "{{ vnet_ad_result }}"        
+    msg: "{{ vnet_ad_result.vnetpeerings }}"        
 
 - name: delete file
   ignore_errors: yes
