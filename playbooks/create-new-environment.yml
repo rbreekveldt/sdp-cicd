@@ -4,6 +4,6 @@
   connection: local
   
   roles:
-          #    - create-jenkins-project
+    - create-jenkins-project
     - create-environment-configuration
       #    - push-files-to-repo
