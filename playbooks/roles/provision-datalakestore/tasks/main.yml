@@ -1,2 +1,25 @@
 ---
 # tasks file for provision-datalakestore
+---
+# tasks file for provision-datalakestore
+- name: Create DataLake
+  vars:
+    subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
+    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+  shell: |
+    az login --service-principal -u {{ client_id | quote }} -p {{ secret | quote }} -t {{ tenant | quote }}
+    az account set --subscription {{ subscription_id | quote }}
+    az dls account create --account secupidlstoragegen2 --resource-group "{{ cloud_config.resource_group }}"
+
+
+- name: Add firewall rule to Datalake
+  shell: |
+    az dls account firewall create --account secupidlstoragegen1 --end-ip-address 213.46.252.136 --firewall-rule-name Liberty_Office --start-ip-address 213.46.252.136 --resource-group "{{ cloud_config.resource_group }}"
+    az dls account firewall create --account secupidlstoragegen1 --end-ip-address 51.105.193.222 --firewall-rule-name Jenkins_Machine --start-ip-address 51.105.193.222 --resource-group "{{ cloud_config.resource_group }}"
+
+- name: Add network rule to Datalake
+  shell: |
+    az dls account network-rule create --account-name secupidlstoragegen1 --name "{{ item.name }}" --subnet "{{ item.name }}" --resource-group "{{ cloud_config.resource_group }}" --vnet-name "{{ cloud_config.network.name }}"
+  with_items: "{{ cloud_config.subnet }}"
