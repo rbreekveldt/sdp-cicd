@@ -1,2 +1,29 @@
-- name: Provision Peering
-  import_tasks: provision-peering.yml
+---
+# tasks file for provision-peering
+- name: Provision SDP Internal Peering
+  vars:
+    initial_peering_name: "{{ cloud_config.peering.vnet_sdp_internal.initial_peering_name }}"
+    remote_virtual_network: "{{ cloud_config.peering.vnet_sdp_internal.remote_virtual_network }}"    
+    remote_resource_group: "{{ cloud_config.peering.vnet_sdp_internal.remote_resource_group }}"
+    connect_peering_name: "{{ cloud_config.peering.vnet_sdp_internal.connect_peering_name }}"
+  include_tasks: provision-peering.yml
+  tags: dataproject
+  
+- name: Provision CICD Prod Peering
+  vars:
+    initial_peering_name: "{{ cloud_config.peering.vnet_cicd_prd.initial_peering_name }}"
+    remote_virtual_network: "{{ cloud_config.peering.vnet_cicd_prd.initial.remote_virtual_network }}"    
+    remote_resource_group: "{{ cloud_config.peering.vnet_cicd_prd.initial.remote_resource_group }}"
+    connect_peering_name: "{{ cloud_config.peering.vnet_cicd_prd.initial.connect_peering_name }}"
+  include_tasks: provision-peering.yml
+  tags: dataproject
+
+- name: Provision AD Domain Peering
+  vars:
+    initial_peering_name: "{{ cloud_config.peering.vnet_ad_domain.initial_peering_name }}"
+    remote_virtual_network: "{{ cloud_config.peering.vnet_ad_domain.initial.remote_virtual_network }}"    
+    remote_resource_group: "{{ cloud_config.peering.vnet_ad_domain.initial.remote_resource_group }}"
+    connect_peering_name: "{{ cloud_config.peering.vnet_ad_domain.initial.connect_peering_name }}"
+  include_tasks: provision-peering.yml
+  tags: hdi
+  

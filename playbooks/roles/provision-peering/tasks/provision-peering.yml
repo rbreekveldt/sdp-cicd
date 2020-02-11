@@ -1,41 +1,21 @@
 ---
 # tasks file for provision-peering
-- name: Initial virtual network peering with {{ cloud_config.peering.vnet_sdp_internal.remote_resource_group }}
+- name: Initial virtual network peering with {{ peering.remote_resource_group }}
   azure_rm_virtualnetworkpeering:
     resource_group: "{{ cloud_config.resource_group }}"
     virtual_network: "{{ cloud_config.network.name }}"
-    name: "{{ cloud_config.peering.vnet_sdp_internal.initial_peering_name }}"
-    remote_virtual_network: "{{ cloud_config.peering.vnet_sdp_internal.remote_virtual_network }}"
+    name: "{{ initial_peering_name }}"
+    remote_virtual_network: "{{ remote_virtual_network }}"
     allow_virtual_network_access: true
 
-- name: Connect virtual network peering with {{ cloud_config.peering.vnet_sdp_internal.remote_resource_group }}
+- name: Connect virtual network peering with {{ peering.remote_resource_group }}
   azure_rm_virtualnetworkpeering:
-    subscription_id: "{{ cloud_config.peering.vnet_sdp_internal.remote_subscription_id }}"
+    subscription_id: "{{ peering.remote_subscription_id }}"
     tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
     secret: "{{ lookup('env', 'AZURE_SECRET') }}"
     client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"        
-    resource_group: "{{ cloud_config.peering.vnet_sdp_internal.remote_resource_group }}"
-    name: "{{ cloud_config.peering.vnet_sdp_internal.connect_peering_name }}"
-    virtual_network: "{{ cloud_config.peering.vnet_sdp_internal.remote_virtual_network }}"
+    resource_group: "{{ remote_resource_group }}"
+    name: "{{ connect_peering_name }}"
+    virtual_network: "{{ remote_virtual_network }}"
     remote_virtual_network: "{{ vnet_result.state.id }}"
     allow_virtual_network_access: true
-
-- name: Initial virtual network peering with {{ cloud_config.peering.vnet_cicd_prd.remote_resource_group }}
-  azure_rm_virtualnetworkpeering:
-    resource_group: "{{ cloud_config.resource_group }}"
-    virtual_network: "{{ cloud_config.network.name }}"
-    name: "{{ cloud_config.peering.vnet_cicd_prd.initial_peering_name }}"
-    remote_virtual_network: "{{ cloud_config.peering.vnet_cicd_prd.remote_virtual_network }}"
-    allow_virtual_network_access: true
-
-- name: Connect virtual network peering with {{ cloud_config.peering.vnet_cicd_prd.remote_resource_group }}
-  azure_rm_virtualnetworkpeering:
-    subscription_id: "{{ cloud_config.peering.vnet_cicd_prd.remote_subscription_id }}"
-    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
-    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
-    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-    resource_group: "{{ cloud_config.peering.vnet_cicd_prd.remote_resource_group }}"
-    name: "{{ cloud_config.peering.vnet_cicd_prd.connect_peering_name }}"
-    virtual_network: "{{ cloud_config.peering.vnet_cicd_prd.remote_virtual_network }}"
-    remote_virtual_network: "{{ vnet_result.state.id }}"
-    allow_virtual_network_access: true    
