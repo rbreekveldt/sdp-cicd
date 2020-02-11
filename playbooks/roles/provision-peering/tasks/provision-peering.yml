@@ -1,6 +1,6 @@
 ---
 # tasks file for provision-peering
-- name: Initial virtual network peering with {{ peering.remote_resource_group }}
+- name: Initial virtual network peering with {{ remote_resource_group }}
   azure_rm_virtualnetworkpeering:
     resource_group: "{{ cloud_config.resource_group }}"
     virtual_network: "{{ cloud_config.network.name }}"
@@ -8,7 +8,7 @@
     remote_virtual_network: "{{ remote_virtual_network }}"
     allow_virtual_network_access: true
 
-- name: Connect virtual network peering with {{ peering.remote_resource_group }}
+- name: Connect virtual network peering with {{ remote_resource_group }}
   azure_rm_virtualnetworkpeering:
     subscription_id: "{{ peering.remote_subscription_id }}"
     tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
