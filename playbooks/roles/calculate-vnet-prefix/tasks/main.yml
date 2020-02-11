@@ -25,7 +25,7 @@
 
 - name: Combine VNET AD DOMAIN and VNET INTERNAL peerings
   set_fact:
-    peering_results: "{{ vnet_internal_result }},{{ vnet_ad_result }}"        
+    peering_results: "{{ vnet_internal_result.vnetpeerings }},{{ vnet_ad_result.vnetpeerings }}"        
 
 - name: debug vnet end result
   debug:
