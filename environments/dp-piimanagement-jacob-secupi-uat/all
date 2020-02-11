@@ -68,17 +68,17 @@ cloud_config:
     
   network:
     name: vnet-jacob-uat
-    address_prefix: "10.250.3.0/24"
+    address_prefix: "10.250.2.0/24"
       
   subnet:
     - name: subnet-jacob-uat01
-      address_prefix: "10.250.3.0/26"
+      address_prefix: "10.250.2.0/26"
 
     - name: subnet-jacob-uat02
-      address_prefix: "10.250.3.64/26"
+      address_prefix: "10.250.2.64/26"
 
     - name: subnet-jacob-uat03
-      address_prefix: "10.250.3.128/26"
+      address_prefix: "10.250.2.128/26"
   
   adls_whitelist:
     - name: Liberty_Office
