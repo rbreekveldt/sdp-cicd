@@ -36,9 +36,11 @@
     state: touch
 
 - name: Distillate all subnet prexies already taken
-  include_tasks: distillate-subnet-prexies.yml
-  vars:
-    remote_address_space: "{{ peering.remote_address_space }}"
+  #  include_tasks: distillate-subnet-prexies.yml
+  #  vars:
+  #    remote_address_space: "{{ peering.remote_address_space }}"
+  debug:
+    msg: {{ peering }}        
   loop: "{{ vnet_internal_result.vnetpeerings|zip(vnet_ad_result.vnetpeerings)|list }}"
   loop_control:
     loop_var: peering
