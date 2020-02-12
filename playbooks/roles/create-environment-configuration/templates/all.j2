@@ -86,6 +86,12 @@ cloud_config:
     - name: Jenkins_Machine
       ip: 51.105.193.222
       
+  role_definition_id:
+    - e40ec5ca-96e0-45a2-b4ff-59039f2c2b59
+    - f1a07417-d97a-45cb-824c-7a7467783830
+
+  sp_object_id: d696769f-50d7-4490-8865-e37228af1c7a    
+      
   security_groups:
     name: nsg-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
     rules:
