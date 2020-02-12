@@ -29,5 +29,4 @@
     address_prefix_cidr : "{{ subnet.address_prefix }}"
     security_group:
       name: "{{ cloud_config.security_groups.name }}"
-  register: service_endpoint_creation
   tags: hdi

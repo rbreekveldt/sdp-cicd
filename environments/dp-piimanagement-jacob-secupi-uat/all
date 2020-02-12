@@ -42,7 +42,12 @@ cloud_config:
     flavor: Standard_A5
     tags:
       role: nifi_worker
-
+  
+  sql_server:
+    name: dbsqlserverpiimanagementjacobuat
+    secret_name: dbsqlserverpiimanagementjacobuat-db-pwd
+    admin_username: uat-admin
+  
   sql_db:
     - name: "oozie"
       provision: true
@@ -77,9 +82,6 @@ cloud_config:
     - name: subnet-jacob-uat02
       address_prefix: "10.250.2.64/26"
 
-    - name: subnet-jacob-uat03
-      address_prefix: "10.250.2.128/26"
-  
   adls_whitelist:
     - name: Liberty_Office
       ip: 213.46.252.136

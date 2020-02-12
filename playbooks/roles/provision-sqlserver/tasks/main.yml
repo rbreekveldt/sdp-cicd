@@ -13,10 +13,15 @@
     include_role:
       name: azure-keyvault
       tasks_from: create-secret.yml
-    vars:
-      secret_name: "dbsqlserver{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}-db-pwd"
 
   - name: Create SQL Database 
     include_tasks: create-sqldatabase.yml
     when: item.provision
     loop: "{{ cloud_config.sql_db }}"
+
+  - name: Create SQL VNET rule
+    include_tasks: create-sqlvnetrule.yml
+    loop: "{{ cloud_config.subnet }}"
+    loop_control:
+      loop_var: subnet       
+      
