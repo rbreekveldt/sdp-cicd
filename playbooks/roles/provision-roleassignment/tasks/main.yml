@@ -1,14 +1,12 @@
 ---
 # tasks file for provision-roleassignment
 
-- name: Assign role and grant permission to aa-dp-sdp-prd automation account
+- name: Create a role assignment
   vars:
-    subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
-    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
-    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
-    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-  shell: |
-    az login --service-principal -u {{ client_id | quote }} -p {{ secret | quote }} -t {{ tenant | quote }}
-    az account set --subscription {{ subscription_id | quote }}
-    $identity = az identity show --resource-group "{{ cloud_config.resource_group }}" --name mi-amsei0-h8
-    az role assignment create --role "Managed Identity Contributor" --scope $identity.Id --assignee-object-id 876129b8-4a16-41f7-bf82-bfe70442127c --assignee-principal-type Application
+    managed_identity: "mi-{{ cloud_config.resource_group_phase }}-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}"
+  azure_rm_roleassignment:
+    scope: "/subscriptions/{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}/resourcegroups/dp-integration-oreo-anupi-sit-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{{ managed_identity }}"
+    assignee_object_id: "{{ cloud_config.sp_object_id }}"
+    role_definition_id: "/subscriptions/{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}/providers/Microsoft.Authorization/roleDefinitions/{{item}}"
+  with_items: "{{ cloud_config.role_definition_id }}"
+  tags: hdi
