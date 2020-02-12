@@ -1,2 +1,12 @@
 ---
 # tasks file for provision-managed-identity
+- name: Create Managed Identity
+  vars:
+    subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
+    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+  shell: |
+    az login --service-principal -u {{ client_id | quote }} -p {{ secret | quote }} -t {{ tenant | quote }}
+    az account set --subscription {{ subscription_id | quote }}
+    az identity create -g "{{ cloud_config.resource_group }}" -n mi-amsei0-h8 --tags "{{ cloud_config.tags }}"
