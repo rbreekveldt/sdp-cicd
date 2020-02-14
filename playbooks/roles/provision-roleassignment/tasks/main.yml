@@ -1,12 +1,26 @@
 ---
 # tasks file for provision-roleassignment
 
-- name: Create a role assignment
+- name: Create a role assignment for ManagedIdentity
   vars:
     managed_identity: "mi-{{ cloud_config.resource_group_phase }}-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}"
   azure_rm_roleassignment:
-    scope: "/subscriptions/{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}/resourcegroups/dp-integration-oreo-anupi-sit-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{{ managed_identity }}"
-    assignee_object_id: "{{ cloud_config.sp_object_id }}"
+    scope: "/subscriptions/{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}/resourcegroups/{{ cloud_config.resource_group }}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{{ managed_identity }}"
+    assignee_object_id: "{{ cloud_config.adls_service_principal_objectid }}"
     role_definition_id: "/subscriptions/{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}/providers/Microsoft.Authorization/roleDefinitions/{{item}}"
+    state: present
   with_items: "{{ cloud_config.role_definition_id }}"
   tags: hdi
+
+#- debug:
+#    msg:
+#      - "identity is############### {{ identity.stdout_lines|list|flatten(levels=1) }}"
+
+# use powershell for now
+#- name: Create a role assignment for AAD
+#  azure_rm_roleassignment:
+#    scope: "{{ cloud_config.ad_domain_service.resource_path }}"
+#    assignee_object_id: "{{ identity.principalId}}" #the value needs to be fetched with correct jinja filter
+#    role_definition_id: "{{ cloud_config.ad_role_definition_id }}"
+#    state: present
+
