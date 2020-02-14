@@ -21,3 +21,12 @@
     az dls account network-rule create --account-name "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}" --name "{{ item.name }}" --subnet "{{ item.name }}" --resource-group "{{ cloud_config.resource_group }}" --vnet-name "{{ cloud_config.network.name }}"
   with_items: "{{ cloud_config.subnet }}"
 
+
+# 253 to 256
+#- name: Creates a file or folder in a Data Lake Store account
+#  vars:
+#    cluster_name: "amsei0-h8-hdi"
+#    dataLakeStorage : "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}.azuredatalakestore.net"
+#  shell: |
+#    az dls fs create --account {{ dataLakeStorage | quote }} --folder  --path "/clusters/{{ cluster_name }}"
+
