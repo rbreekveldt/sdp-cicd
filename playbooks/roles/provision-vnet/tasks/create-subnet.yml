@@ -1,10 +1,32 @@
 ---
 # tasks file for provision-vnet
-- name: Create {{ subnet.name }} Subnet
+- block:
+  - name: Create {{ subnet.name }} Subnet
+    azure_rm_subnet:
+      resource_group: "{{ cloud_config.resource_group }}"
+      virtual_network_name: "{{ cloud_config.network.name }}"
+      name: "{{ subnet.name }}"
+      address_prefix_cidr : "{{ subnet.address_prefix }}"
+      security_group:
+        name: "{{ cloud_config.security_groups.name }}"
+    async: 1000
+    poll: 0
+    register: subnet_creation
+
+  - name: Wait for {{ subnet.name }} Creation
+    async_status:
+      jid: "{{ subnet_creation.ansible_job_id }}" 
+    register: job_result
+    until: job_result.finished
+    retries: 120    
+
+- name: Add service endpoint to subnet
   azure_rm_subnet:
     resource_group: "{{ cloud_config.resource_group }}"
     virtual_network_name: "{{ cloud_config.network.name }}"
+    service_endpoints: "{{ service_endpoints }}"
     name: "{{ subnet.name }}"
     address_prefix_cidr : "{{ subnet.address_prefix }}"
     security_group:
       name: "{{ cloud_config.security_groups.name }}"
+  tags: hdi

@@ -12,6 +12,9 @@
         - provision-resource-group
         - provision-security-groups
         - provision-vnet
+        - provision-datalakestore
+        - provision-managed-identity
+        - provision-roleassignment
         - provision-peering
       loop_control:
         loop_var: role        

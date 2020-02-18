@@ -6,4 +6,5 @@
     name: "{{ cloud_config.network.name }}"
     tags: "{{ cloud_config.tags }}"
     address_prefixes_cidr: "{{ cloud_config.network.address_prefix }}"
+    dns_servers: "{{ dns_servers|default(omit) }}"
   register: vnet_result

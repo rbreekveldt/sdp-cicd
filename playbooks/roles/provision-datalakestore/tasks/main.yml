@@ -1,2 +1,32 @@
 ---
 # tasks file for provision-datalakestore
+- name: Create DataLake
+  vars:
+    subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
+    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+  shell: |
+    az login --service-principal -u {{ client_id | quote }} -p {{ secret | quote }} -t {{ tenant | quote }}
+    az account set --subscription {{ subscription_id | quote }}
+    az dls account create --account "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}" --resource-group "{{ cloud_config.resource_group }}" --tags "{{ cloud_config.tags }}"
+
+- name: Add firewall rule to Datalake
+  shell: |
+    az dls account firewall create --account "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}" --end-ip-address "{{ item.ip }}" --firewall-rule-name "{{ item.name }}" --start-ip-address "{{ item.ip }}" --resource-group "{{ cloud_config.resource_group }}"
+  with_items: "{{ cloud_config.adls_whitelist }}"
+
+- name: Add network rule to Datalake
+  shell: |
+    az dls account network-rule create --account-name "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}" --name "{{ item.name }}" --subnet "{{ item.name }}" --resource-group "{{ cloud_config.resource_group }}" --vnet-name "{{ cloud_config.network.name }}"
+  with_items: "{{ cloud_config.subnet }}"
+
+
+# 253 to 256
+#- name: Creates a file or folder in a Data Lake Store account
+#  vars:
+#    cluster_name: "amsei0-h8-hdi"
+#    dataLakeStorage : "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}.azuredatalakestore.net"
+#  shell: |
+#    az dls fs create --account {{ dataLakeStorage | quote }} --folder  --path "/clusters/{{ cluster_name }}"
+

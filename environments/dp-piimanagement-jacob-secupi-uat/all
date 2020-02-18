@@ -1,11 +1,11 @@
 ---
 cloud_config:
-  project_name: dopper
-  env_type: sit
-  resource_group_phase: integration
+  project_name: jacob
+  env_type: uat
+  resource_group_phase: piimanagement
   application_name: secupi
-  data_domain: automation
-  resource_group: automation-integration-dopper-secupi-sit-rg
+  data_domain: dp
+  resource_group: dp-piimanagement-jacob-secupi-uat-rg
   location: "westeurope"
   admin_username: "sdp-admin"
 
@@ -42,16 +42,21 @@ cloud_config:
     flavor: Standard_A5
     tags:
       role: nifi_worker
-
+  
+  sql_server:
+    name: dbsqlserverpiimanagementjacobuat
+    secret_name: dbsqlserverpiimanagementjacobuat-db-pwd
+    admin_username: uat-admin
+  
   sql_db:
     - name: "oozie"
       provision: true
 
     - name: "hive"
-      provision: true
+      provision: false
 
     - name: "ranger"
-      provision: true
+      provision: false
 
   ssh:
     sdp_admin_publickey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtTDhaa9ldeOti2QpPjipKw4XITgoLGInLlRyS7fE2gSehL+FO75OD7LqSvKWMy7jyBuGiHi/IeneCQHgU/lq7SHSJlb09y7DfaqrR2L7Q9Yl93vPMJZIi7ujE3m1zupbFYDNK2rMAOR2tftqqn0S+iOLKvlhKH+2xZnXhI45u+JmFzOk8rgmFXnrtSUpBEDJkWZcFavoQKsVIkeU5N6/QshfoUB6qafcFfBCxY0Ix4LfGKhLh8qaUdHomZzAfo/FWvD6QIz5y/h8+YKqKzpN0Hc9Qv2s4VKkZrNODXhejUBl3onR1UzrqbD2rD/fvIx34rqbbtHoEgAxgc3dHu5kV sdp-admin@vm-dev-jumpbox
@@ -59,32 +64,32 @@ cloud_config:
 
         
   storage_account:
-    name: sadoppersecupisit
+    name: sajacobsecupiuat
     type: "Standard_LRS"
   
   azkeyvault:
     name: kv-dp-hdi-prd
     uri: https://kv-dp-hdi-prd.vault.azure.net/
-    resource_group: 'automation-sdp-prd-rg'
-    subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
-    
     
   network:
-    name: vnet-dopper-sit
-    address_prefix: "10.250.1.0/24"
+    name: vnet-jacob-uat
+    address_prefix: "10.250.2.0/24"
       
   subnet:
-    - name: subnet-dopper-sit01
-      address_prefix: "10.250.1.0/26"
+    - name: subnet-jacob-uat01
+      address_prefix: "10.250.2.0/26"
 
-    - name: subnet-dopper-sit02
-      address_prefix: "10.250.1.64/26"
+    - name: subnet-jacob-uat02
+      address_prefix: "10.250.2.64/26"
 
-    - name: subnet-dopper-sit03
-      address_prefix: "10.250.1.128/26"
+  adls_whitelist:
+    - name: Liberty_Office
+      ip: 213.46.252.136
+    - name: Jenkins_Machine
+      ip: 51.105.193.222
       
   security_groups:
-    name: nsg-dopper-sit
+    name: nsg-jacob-uat
     rules:
       inbound:
         allow_ssh_inbound:
@@ -112,32 +117,32 @@ cloud_config:
       
   peering:
     vnet_sdp_internal:
-      initial_peering_name: vnet-dopper-sit-to-vnet-sdp-internal
+      initial_peering_name: vnet-jacob-uat-to-vnet-sdp-internal
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
       remote_resource_group: 'access-sdp-jumpbox-rg'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: vnet-sdp-internal-to-vnet-dopper-sit
+      connect_peering_name: vnet-sdp-internal-to-vnet-jacob-uat
 
     vnet_sdp_external:
-      initial_peering_name: vnet-dopper-sit-to-vnet-sdp-external
+      initial_peering_name: vnet-jacob-uat-to-vnet-sdp-external
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-external'
       remote_resource_group: 'access-sdp-jumpbox-rg'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: vnet-sdp-external-to-vnet-dopper-sit
+      connect_peering_name: vnet-sdp-external-to-vnet-jacob-uat
 
     vnet_cicd_prd:
-      initial_peering_name: vnet-dopper-sit-to-vnet-cicd-prd
+      initial_peering_name: vnet-jacob-uat-to-vnet-cicd-prd
       remote_virtual_network: '/subscriptions/fd478270-bd64-4cf3-bb8b-53016bb2ffd6/resourceGroups/automation-cicd-prd-rg/providers/Microsoft.Network/virtualNetworks/vnet-cicd-prd'
       remote_resource_group: 'automation-cicd-prd-rg'
       remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
-      connect_peering_name: vnet-cicd-prd-to-vnet-dopper-sit
+      connect_peering_name: vnet-cicd-prd-to-vnet-jacob-uat
 
     vnet_ad_domain:
-      initial_peering_name: vnet-dopper-sit-to-Liberty-Global-AD-domain-services
+      initial_peering_name: vnet-jacob-uat-to-Liberty-Global-AD-domain-services
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/Liberty-Global-Shared-Resources/providers/Microsoft.Network/virtualNetworks/Liberty-Global-AD-domain-services'
       remote_resource_group: 'Liberty-Global-Shared-Resources'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-dopper-sit
+      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-jacob-uat
 
   vm:
     managed_disk_type: Standard_LRS
@@ -148,9 +153,9 @@ cloud_config:
       version: latest
       
   tags:
-    Env: sit 
-    Project: dopper
-    Phase: integration
+    Env: uat 
+    Project: jacob
+    Phase: piimanagement
     Country: nl
     Unit: datasolutions
 

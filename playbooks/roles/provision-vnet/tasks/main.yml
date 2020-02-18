@@ -1,10 +1,25 @@
 ---
 # tasks file for provision-vnet
-- name: Create Virtual Network
+- name: Create HDI Virtual Network
+  vars:
+    dns_servers:      
+      - "10.90.80.4"
+      - "10.90.80.5"      
   include_tasks: create-vnet.yml
+  tags: hdi
+  
+- name: Create HDF Virtual Network
+  include_tasks: create-vnet.yml
+  tags: dataproject
 
 - name: Create HDI Subnets
   include_tasks: create-subnet.yml
+  vars:
+    service_endpoints:
+      - service:
+          Microsoft.Sql
+      - service:
+          Microsoft.AzureActiveDirectory      
   loop: "{{ cloud_config.subnet }}"
   loop_control:
     loop_var: subnet

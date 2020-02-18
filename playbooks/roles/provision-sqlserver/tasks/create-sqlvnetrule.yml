@@ -1,0 +1,12 @@
+---
+# tasks file for provision-sql-server
+  - name: Create (or update) SQL Server VNET Rule
+    vars:
+      subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
+      tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+      secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+      client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"    
+    shell: |
+      az login --service-principal -u {{ client_id | quote }} -p {{ secret | quote }} -t {{ tenant | quote }}
+      az account set --subscription {{ subscription_id | quote }}
+      az sql server vnet-rule create --name "{{ subnet.name }}" --resource-group "{{ cloud_config.resource_group }}" --server "{{ cloud_config.sql_server.name }}" --subnet "{{ subnet.name }}" --vnet "{{ cloud_config.network.name }}"
