@@ -4,7 +4,7 @@
   gather_facts: false
   become: yes
   
-- import_playbook: "set_ambari_variables.yml"
+- import_playbook: "set-ambari-variables.yml"
   tags: always
 
   #roles:

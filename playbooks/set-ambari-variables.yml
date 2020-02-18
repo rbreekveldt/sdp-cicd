@@ -5,46 +5,9 @@
   gather_facts: True
   
   tasks:
-  - name: Rool over roles
-    debug:
-      #msg: "===={{ inventory_hostname }}=== {{ hostvars[local_loop].ansible_host }}---- {{ hostvars[local_loop].ansible_hostname }}"
-      msg: "{{ hostvars[local_loop].tags.role }}"
-    loop_control:
-      loop_var: local_loop
-    with_items: "{{ hostvars }}"
-       
-  #   - name: Add nodes to the hadoop-cluster group and groups representing the host_groups
-  #     include_tasks: "roles/add_nodes_azure/tasks/main.yml"
-  #     with_items: "{{ hostvars }}"
-       
-  #   - name: Initialize the ambari_groups list
-  #     set_fact:
-  #       ambari_groups: []
-
-#     - name: Rool over roles
-#       debug:
-#         msg: "{{ hostvars[local_loop].ansible_host }}"
-#       loop_control:
-#         loop_var: local_loop
-#       #with_items: "{{ groups['all'] }}"
-#       with_items: "{{ hostvars }}"
-
-# #    Add alle nifi nodes in special fact of this resource group
-#     - name: Add nodes to the hadoop-cluster group and groups representing the host_groups
-#       add_host:
-#         name: "{{  hostvars[local_loop].ansible_host }}"
-#         ansible_host: "{{ (outer_loop.public_ip|default(false)== true) | ternary(hostvars[local_loop].public_ip,hostvars[local_loop].private_ip) }}"
-#         ansible_user: "{{ cloud_config.admin_username|default('root') }}"
-#         ansible_ssh_private_key_file: "{{ cloud_config.ssh.sdp_admin_publickey }}"
-#         ansible_become_user: root
-#         groups: hadoop-cluster, {{ outer_loop.host_group }}
-#       loop_control:
-#         loop_var: local_loop
-#       with_items: "{{ hostvars }}"
-
-    # - name: Initialize the ambari_groups list
-    #   set_fact:
-    #     ambari_groups: []
+  - name: Initialize the ambari_groups list
+    set_fact:
+     ambari_groups: []
 
     # - block:
     #     - name: Populate the ambari_groups list (dynamic blueprint)
@@ -109,7 +72,7 @@
     #     msg: "The 'ambari-server' Ansible inventory group is required before continuing. Check the inventory for possible issues."
     #   when: groups['ambari-server'] is not defined or (groups['ambari-server'] is defined and groups['ambari-server']|length == 0)
 
-# - name: Create the Ansible helper variables for the ambari-server
+# - name: Create the Ansible help-er variables for the ambari-server
 #   hosts: ambari-server
 #   gather_facts: False
 #   tasks:
