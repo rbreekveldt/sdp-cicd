@@ -1,0 +1,53 @@
+---
+# tasks file for azure-keyvault
+- name: generate a self signed certificate
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    - dnsname: "{{ cloud_config.hdi_cluster.dns_name }}" 
+    - environment_path: "../../../../environments/{{ cloud_config.data_domain }}-{{ cloud_config.resource_group_phase }}-{{ cloud_config.project_name }}-{{ cloud_config.application_name }}-{{ cloud_config.env_type }}"
+    - crtpath: "{{ environment_path }}/{{ cloud_config.hdi_cluster.name }}_certfile.crt"
+    - pempath: "{{ environment_path }}/{{ cloud_config.hdi_cluster.name }}_certfile.pem"
+    - csrpath: "{{ environment_path }}/{{ cloud_config.hdi_cluster.name }}_certfile.csr"
+    - pfxpath: "{{ environment_path }}/{{ cloud_config.hdi_cluster.name }}_certfile.pfx"
+      #    - password: "{{ lookup('password', '/dev/null length=12 chars=ascii_letters,digits,hexdigits,punctuation') }}"
+  tasks:
+    - name: Generate password
+      set_fact:
+        password: "{{ lookup('password', '/dev/null length=12 chars=ascii_letters,digits,hexdigits,punctuation') }}"      
+    - name: Generate the private key file to sign the CSR
+      openssl_privatekey:
+        path: "{{ pempath }}"
+        passphrase: "{{ password }}"
+        cipher: aes256
+    - name: Generate the CSR file signed with the private key 
+      openssl_csr:
+        path: "{{ csrpath }}"
+        privatekey_path: "{{ pempath }}"
+        privatekey_passphrase: "{{ password }}"
+        common_name: "{{ dnsname }}"      
+    - name: Sign the CSR file as a CA to turn it into a certificate
+      openssl_certificate:
+        selfsigned_not_after: +900d
+        path: "{{ crtpath }}"
+        privatekey_path: "{{ pempath }}"
+        privatekey_passphrase: "{{ password }}"
+        csr_path: "{{ csrpath }}"
+        provider: selfsigned
+    - name: Convert the signed certificate into a PKCS12 file with the attached private key
+      openssl_pkcs12:
+        action: export
+        path: "{{ pfxpath }}"
+        name: "{{ dnsname }}"
+        privatekey_path: "{{ pempath }}"
+        privatekey_passphrase: "{{ password }}"
+        passphrase: "{{ password }}"
+        certificate_path: "{{ crtpath}}"
+        state: present
+    - name: Convert PKCS12 file to PEM
+      openssl_pkcs12:
+        action: parse
+        passphrase: "{{ password }}"
+        src: "{{ pfxpath }}"
+        path: "{{ environment_path }}/pfx.pem"

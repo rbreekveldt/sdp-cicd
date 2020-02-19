@@ -35,15 +35,15 @@
     path: "{{ lookup('env', 'WORKSPACE') }}/playbooks/roles/calculate-vnet-prefix/files/prefixfile"
     state: touch
 
-- name: Distillate all subnet prexies already taken
-  include_tasks: distillate-subnet-prexies.yml
+- name: Distillate all subnet prefixes already taken
+  include_tasks: distillate-subnet-prefixes.yml
   vars:
     remote_address_space: "{{ peering.remote_address_space }}"
   loop: "{{ (vnet_internal_result.vnetpeerings + vnet_ad_result.vnetpeerings) |list|flatten(levels=1)|unique }}"
   loop_control:
     loop_var: peering
 
-- name: find next subnet prefix
+- name: Find next subnet prefix
   command: "python calculate_vnet_prefix.py"
   args:
     chdir: "{{ lookup('env', 'WORKSPACE') }}/playbooks/roles/calculate-vnet-prefix/files"
@@ -53,7 +53,7 @@
   debug:
      msg: "{{ newsubnetprefix.stdout_lines[0] }}"
 
-- name: replace anchore in all file of this data project
+- name: Replace anchore in all file of this data project
   replace:
     path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
     replace: "{{ newsubnetprefix.stdout_lines[0] }}"

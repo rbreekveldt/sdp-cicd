@@ -10,6 +10,8 @@ pipeline {
             choice(name: 'data_domain', choices: 'Please select\ndp\nautomation\naccess\nmonitoring', description: 'Data Domain')
             choice(name: 'resource_group_phase', choices: 'Please select\npiimanagement\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
             string(name: 'project_name', defaultValue:'', description: 'Specify project name')
+            string(name: 'cluster_name', defaultValue:'', description: 'Specify cluster name')
+            string(name: 'short_cluster_name', defaultValue:'', description: 'Specify short cluster name for Managed Identity')
             choice(name: 'application_name', choices: 'Please select\nsecupi\nhdp\ndatagateway', description: 'Application name')
             choice(name: 'env_type', choices: 'Please select\ndev\nsit\nuat\nprd', description: 'Environment type to provision')
             string(name: 'project_description', defaultValue:'', description: 'Specify project description')
@@ -36,9 +38,54 @@ pipeline {
                  }
             }
         }
-        stage ('Provision HDI Infrastructure') {
+        stage ('Provision HDI Infrastructure for Project Azure Governance Testing') {
+            when {
+                expression { params.subscription == 'Project Azure governance testing' }
+            }
             steps {
-            withCredentials([azureServicePrincipal(credentialsId: '1683b46e-b612-4f6d-a717-9baed4b0dffb',
+            withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting',
+                                                  subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                  clientIdVariable: 'AZURE_CLIENT_ID',
+                                                  clientSecretVariable: 'AZURE_SECRET',
+                                                  tenantIdVariable: 'AZURE_TENANT')]) {
+                 ansiblePlaybook extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
+                 }
+            }
+        }
+        stage ('Provision HDI Infrastructure for Non-Prod Data and Processing') {
+            when {
+                expression { params.subscription == 'Non-Prod Data and Processing' }
+            }
+            steps {
+            withCredentials([azureServicePrincipal(credentialsId: 'SPNonProdDataAndProcessing',
+                                                  subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                  clientIdVariable: 'AZURE_CLIENT_ID',
+                                                  clientSecretVariable: 'AZURE_SECRET',
+                                                  tenantIdVariable: 'AZURE_TENANT')]) {
+                 ansiblePlaybook extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
+                 }
+            }
+        }
+        stage ('Provision HDI Infrastructure for Prod Data and Processing') {
+            when {
+                expression { params.subscription == 'Prod Data and Processing' }
+            }
+            steps {
+            withCredentials([azureServicePrincipal(credentialsId: 'SPProdDataAndProcessing',
+                                                  subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                  clientIdVariable: 'AZURE_CLIENT_ID',
+                                                  clientSecretVariable: 'AZURE_SECRET',
+                                                  tenantIdVariable: 'AZURE_TENANT')]) {
+                 ansiblePlaybook extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
+                 }
+            }
+        }
+        stage ('Provision HDI Infrastructure for Project CPD') {
+            when {
+                expression { params.subscription == 'Project CPD' }
+            }
+            steps {
+            withCredentials([azureServicePrincipal(credentialsId: 'SPCpd',
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',

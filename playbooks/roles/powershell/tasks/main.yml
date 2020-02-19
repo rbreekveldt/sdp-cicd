@@ -1,0 +1,37 @@
+---
+# tasks file for powershell
+- name: Set Ambari Password
+  set_fact:
+    ambariPwd: "{{ lookup('password', '/dev/null length=12 chars=ascii_letters,digits,hexdigits,punctuation') }}"
+
+- name: Set SSH Password
+  set_fact:
+    SShPwd: "{{ lookup('password', '/dev/null length=12 chars=ascii_letters,digits,hexdigits,punctuation') }}"
+
+- name: Set Cert Password
+  set_fact:
+    certPassword: "{{ lookup('password', '/dev/null length=12 chars=ascii_letters,digits,hexdigits,punctuation') }}"
+
+- name: Execute Powershellscript
+  vars:
+    - clusterName: "{{ cloud_config.hdi_cluster.name }}"
+    - clusterShortName: "{{ cloud_config.hdi_cluster.short_name }}"  
+    - subscriptionId: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
+    - certificateFileDir: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}" 
+    - KeyVaultName: "{{ cloud_config.azkeyvault.name }}" 
+    - dataLakeStorageGen1Name: "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}"
+    - subscriptionId_DataLake: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
+    - subscriptionId_KeyVault: fd478270-bd64-4cf3-bb8b-53016bb2ffd6
+    - ResourceGroupName: "{{ cloud_config.resource_group }}"
+    - tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    - secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    - client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"  
+  shell: |
+    pwsh '{{ lookup('env', 'WORKSPACE') }}/playbooks/roles/powershell/files/hdiprerequisite.ps1' -subscriptionId:{{ subscriptionId }} -certificateFileDir:'{{ certificateFileDir }}' -clusterName:{{ clusterName }} -clusterShortName:{{ clusterShortName }} -certPassword:'{{ certPassword }}' -KeyVaultName:{{ KeyVaultName }} -dataLakeStorageGen1Name:{{ dataLakeStorageGen1Name }} -SShPwd:'{{ SShPwd }}' -ambariPwd:'{{ ambariPwd }}' -ResourceGroupName:{{ ResourceGroupName }} -subscriptionId_DataLake:{{ subscriptionId_DataLake }} -subscriptionId_KeyVault:{{ subscriptionId_KeyVault }} -tenant:'{{ tenant }}' -secret:'{{ secret }}' -client_id:'{{ client_id }}'
+  args:
+    executable: /usr/bin/pwsh
+  register: result
+
+- name: Outcome of Powershellscript
+  debug:
+    msg: "{{ result }}"        
