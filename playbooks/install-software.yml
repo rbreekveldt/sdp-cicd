@@ -1,11 +1,12 @@
 ---
 - name: Install Software of Data cluster
-  hosts: localhost
+  hosts: local
   gather_facts: false
   any_errors_fatal: true
   become: yes
 
 # Execute common task on all vms
+- hosts: all
   roles:
     - common
 
