@@ -1,0 +1,27 @@
+---
+# tasks file for provision-sql-server
+- name: Generate password
+  include_role: 
+    name: azure-keyvault
+    tasks_from: generate-secret.yml
+    
+- block:
+  - name: Create SQL Server
+    include_tasks: create-sqlserver.yml 
+  
+  - name: Store password
+    include_role:
+      name: azure-keyvault
+      tasks_from: create-secret.yml
+
+  - name: Create SQL Database 
+    include_tasks: create-sqldatabase.yml
+    when: item.provision
+    loop: "{{ cloud_config.sql_db }}"
+
+  - name: Create SQL VNET rule
+    include_tasks: create-sqlvnetrule.yml
+    loop: "{{ cloud_config.subnet }}"
+    loop_control:
+      loop_var: subnet       
+      

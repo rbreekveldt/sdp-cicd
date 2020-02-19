@@ -1,0 +1,10 @@
+---
+# vars file for sftp-mockup-server
+sftp_users:
+  - name: sdp-user
+    password: "123Sdp!"
+  - name: hakan
+    password: "123Sdp!"
+ 
+sftp_directories: '/data'
+sftp_group: sftpusers

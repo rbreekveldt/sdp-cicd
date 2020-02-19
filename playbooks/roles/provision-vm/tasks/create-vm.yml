@@ -1,0 +1,48 @@
+---
+# tasks file for create-vm
+
+- block:
+  - name: Create NIC {{ functionality }} (with private IP only)
+    azure_rm_networkinterface:
+      resource_group: "{{ cloud_config.resource_group }}"
+      name: "nic-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
+      tags: "{{ cloud_config.tags }}"
+      virtual_network_name: "{{ cloud_config.network.name }}"
+      subnet_name: "{{ cloud_config.subnet.name }}"
+      security_group_name: "{{ cloud_config.security_groups.name }}"
+      ip_configurations:
+        - name: "ipconfig-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
+          primary: True
+    async: 1000
+    poll: 0
+    register: private_nic
+
+  - name: Wait for NIC to be built
+    async_status:
+      jid: "{{ private_nic.ansible_job_id }}"
+    register: job_result
+    until: job_result.finished
+    retries: 120
+
+- name: Create {{ functionality }}{{ number }} node
+  azure_rm_virtualmachine:
+    resource_group: "{{ cloud_config.resource_group }}"
+    managed_disk_type: "{{ cloud_config.vm.managed_disk_type }}"
+    os_disk_name: "disk-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}-os"
+    name: "vm-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
+    tags: "{{ my_tags }}"
+    image:
+      offer: "{{ cloud_config.vm.image.offer }}"
+      publisher: "{{ cloud_config.vm.image.publisher }}"
+      sku: "{{ cloud_config.vm.image.sku }}"
+      version: "{{ cloud_config.vm.image.version }}"
+    vm_size: "{{ flavor }}"
+    network_interface_names: "nic-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
+    ssh_password_enabled: false
+    admin_username: "{{ cloud_config.admin_username }}"
+    ssh_public_keys:
+      - path: "/home/{{ cloud_config.admin_username }}/.ssh/authorized_keys"
+        key_data: "{{ cloud_config.ssh.sdp_admin_publickey }}"
+      - path: "/home/{{ cloud_config.admin_username }}/.ssh/authorized_keys"
+        key_data: "{{ cloud_config.ssh.jenkins_publickey }}"
+    state: present

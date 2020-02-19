@@ -1,0 +1,9 @@
+---
+# tasks file for provision-sql-server
+- name: Create (or update) SQL Server
+  azure_rm_sqlserver:
+    resource_group: "{{ cloud_config.resource_group }}"
+    name: "{{ cloud_config.sql_server.name }}"      
+    location: "{{ cloud_config.location }}"
+    admin_username: "{{ cloud_config.sql_server.admin_username }}"
+    admin_password: "{{ secret_result }}"

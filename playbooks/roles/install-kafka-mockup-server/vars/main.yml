@@ -1,0 +1,8 @@
+---
+# vars file for kafka-mockup-server
+kafka_download_url: https://www.apache.org/dist/kafka
+kafka_version: 2.4.0
+kafka_file: kafka_2.13-2.4.0.tgz
+kafka_topics:
+- test-topic-1
+- test-topic-2

@@ -1,0 +1,10 @@
+---
+# tasks file for provision-vnet
+- name: Create {{ cloud_config.network.name }} Virtual Network
+  azure_rm_virtualnetwork:
+    resource_group: "{{ cloud_config.resource_group }}"
+    name: "{{ cloud_config.network.name }}"
+    tags: "{{ cloud_config.tags }}"
+    address_prefixes_cidr: "{{ cloud_config.network.address_prefix }}"
+    dns_servers: "{{ dns_servers|default(omit) }}"
+  register: vnet_result

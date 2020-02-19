@@ -1,0 +1,19 @@
+---
+# tasks file for provision-serviceprincipal
+- name: Create Application
+  vars:
+    subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
+    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+  shell: |
+    az login --service-principal -u {{ client_id | quote }} -p {{ secret | quote }} -t {{ tenant | quote }}
+    az account set --subscription {{ subscription_id | quote }}
+    az ad app create --display-name $certName --key-value $certValue --end-date $certEndDate --end-date $certStartDate --identifier-uris "https://$clusterName.azurehdinsight.net"
+  register: application
+
+- name: Create Service Principal
+  shell: |
+    az ad sp create --id "{{ application.ApplicationId }}"
+
+-

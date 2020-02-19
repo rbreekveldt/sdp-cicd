@@ -1,0 +1,77 @@
+---  
+# tasks file for sftp-mockup-server
+     
+# A working chrooted SFTP setup requires root:sftgroup ownership of a user's home directory.
+- name: SFTP-Server | Correct ownership and permission of home directories
+  file:
+    path: "{{ sftp_directories }}"
+    owner: root
+    mode: 0701
+    state: directory
+    recurse: yes
+     
+- name: SFTP-Server | Correct ownership and permission of home directories
+  file:
+    path: "{{ sftp_directories }}/sftp"
+    owner: root
+    state: directory
+    recurse: yes
+     
+# Creates group for SFTP users.         
+- name: SFTP-Server | Create sftp user group
+  group:
+    name: "{{ sftp_group_name }}"
+    state: present
+     
+# Create each SFTP user with NO home directory, and add to SFTP group.
+- name: SFTP-Server | Create sftp users
+  user:
+    name: "{{ item.name }}"
+    group: "{{ sftp_group }}"
+    append: "yes"
+    shell: "/sbin/nologin"
+    home: "/{{ item.name }}"
+    create_home: yes
+    state: present
+    password: "{{ item.password | password_hash('sha512') }}"
+  with_items: "{{ sftp_users }}"
+     
+- name: SFTP-Server | Create working directory for each user
+  file:
+    path: "{{ sftp_directories }}/{{ item.name }}"
+    owner: "root"
+    group: "{{ sftp_group }}"
+    state: directory
+    recurse: yes
+  with_items: "{{ sftp_users }}"
+     
+- name: SFTP-Server | Change directory modeCreate working directory for each user
+  file:
+    path: "{{ sftp_directories }}/{{ item.name }}/work"
+    owner: "{{ item.name }}"
+    group: "{{ sftp_group }}"
+    state: directory
+    recurse: yes
+  with_items: "{{ sftp_users }}"
+    
+    
+- name: SFTP-Server | Correct ownership and permission of home directories
+  file:
+    path: "/data/sftp"
+    owner: root
+    state: directory
+    recurse: yes
+  with_items: "{{ sftp_users }}"
+    
+- name: SFTP-Server | Add sshd_config block
+  blockinfile:
+    dest: /etc/ssh/sshd_config
+    marker: '# {mark} SFTP-Server {{ sftp_group_name }} block'
+    block: |
+      Match Group {{ sftp_group }}
+          ChrootDirectory /data/%u
+          AllowTCPForwarding no
+          X11Forwarding no
+          ForceCommand internal-sftp
+          PasswordAuthentication {{ sftp_allow_passwords | ternary('yes', 'no') }}
+  notify: SFTP-Server | Restart sshd

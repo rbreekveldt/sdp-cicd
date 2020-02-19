@@ -1,0 +1,17 @@
+---
+# tasks file for provision-managed-identity
+- name: Create Managed Identity
+  vars:
+    subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
+    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+  shell: |
+    az login --service-principal -u {{ client_id | quote }} -p {{ secret | quote }} -t {{ tenant | quote }}
+    az account set --subscription {{ subscription_id | quote }}
+    az identity create -g "{{ cloud_config.resource_group }}" -n "mi-{{ cloud_config.hdi_cluster.short_name }}" --tags "{{ cloud_config.tags }}"
+
+    # Below needs jinja filtering on output value
+    #- name: Get Managed Identity
+    #shell: az identity show --name  "mi-{{ cloud_config.resource_group_phase }}-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}" --resource-group "{{ cloud_config.resource_group }}"
+    #register: identity

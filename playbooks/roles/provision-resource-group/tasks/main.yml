@@ -1,0 +1,11 @@
+---
+# tasks file for provision-resource-group
+- name: Build {{ cloud_config.resource_group }} Resource Group
+  azure_rm_resourcegroup:
+    name: "{{ cloud_config.resource_group }}"
+    tags: "{{ cloud_config.tags }}"
+    location: "{{ cloud_config.location }}"
+    state: present
+    force: yes
+  ignore_errors: yes
+    

@@ -1,0 +1,11 @@
+---
+- name: Install Ambari cluster
+  hosts: all
+  gather_facts: false
+  become: yes
+  
+- import_playbook: "set_ambari_variables.yml"
+  tags: always
+
+  #roles:
+  #  - install-ambari-cluster

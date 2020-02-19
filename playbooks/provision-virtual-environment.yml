@@ -1,0 +1,38 @@
+---
+#Start point of provisioning virtual environment
+#- import_playbook: "set-azure-credentials.yml"
+- name: Provision virtual environment
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  tasks:
+    - include_role:
+        name: "{{ role }}"
+      loop:
+        - provision-resource-group
+        - provision-security-groups
+        - provision-vnet
+        - provision-peering
+      loop_control:
+        loop_var: role        
+  
+    - include_role: 
+        name: "{{ role }}"
+      loop:
+        - provision-storageaccount
+        - provision-vm
+      loop_control:
+        loop_var: role        
+      tags: dataproject
+
+    - include_role:
+        name: "{{ role }}"
+      loop:
+        - provision-sqlserver
+        - provision-datalakestore
+        - provision-managed-identity
+        - provision-roleassignment
+        - powershell  
+      loop_control:
+        loop_var: role        
+      tags: hdi    

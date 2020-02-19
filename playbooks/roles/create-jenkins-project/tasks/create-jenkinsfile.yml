@@ -1,0 +1,9 @@
+---
+- name: Create Jenkins file
+  template:
+    dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/Jenkinsfile"
+    src: Jenkinsfile.j2
+    force: yes 
+    output_encoding: utf-8
+    mode: 0644
+    owner: "{{ lookup('env', 'USER') }}"

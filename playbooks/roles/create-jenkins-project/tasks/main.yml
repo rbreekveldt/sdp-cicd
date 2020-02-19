@@ -1,0 +1,9 @@
+- name: Create Project directory structure
+  import_tasks: create-project-directory.yml
+
+- name: Create Jenkins job
+  import_tasks: create-job.yml
+
+- name: Create Jenkins config 
+  import_tasks: create-jenkinsfile.yml
+
