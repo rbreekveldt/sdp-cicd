@@ -24,12 +24,12 @@ pipeline {
     stages {
         stage ('Git checkout and switch to Master') {
             steps {
-                sh 'git checkout --track origin/hdivnet'
+                sh 'git checkout --track origin/master'
             }
         }
         stage ('Create HDI environment configuration') {
             steps {
-            withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting',
+            withCredentials([azureServicePrincipal(credentialsId: '1683b46e-b612-4f6d-a717-9baed4b0dffb',
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',

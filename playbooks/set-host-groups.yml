@@ -1,0 +1,16 @@
+---   
+# Distribute host to different hostgroups to further installation
+- name: Create the required hosts groups
+  hosts: all
+  gather_facts: False
+  tasks: 
+  - name: Add nodes to the hadoopcluster group and groups representing the host_groups
+    add_host:
+      name: "{{ hostvars[item].ansible_host }}"
+      groups: hadoopcluster
+      ansible_host: "{{ hostvars[item].private_ipv4_addresses }}"
+      ansible_user: "{{ cloud_config.admin_username|default('root') }}"
+      ansible_ssh_private_key_file: "{{ cloud_config.ssh.sdp_admin_publickey }}"
+      ansible_become_user: sdp_admin
+    when: (( hostvars[item].tags.role == 'nifi_worker') or (hostvars[item].tags.role == 'ambari_mgmt'))
+    with_items: "{{ ansible_play_hosts_all }}"

@@ -123,6 +123,7 @@ cloud_config:
 #                                                                                     #
 #                                                                                     #
 #######################################################################################
+  
   security_groups:
     name: nsg-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
     rules:

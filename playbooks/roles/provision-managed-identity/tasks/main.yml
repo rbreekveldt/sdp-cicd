@@ -15,3 +15,4 @@
     #- name: Get Managed Identity
     #shell: az identity show --name  "mi-{{ cloud_config.resource_group_phase }}-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}" --resource-group "{{ cloud_config.resource_group }}"
     #register: identity
+    az identity create -g "{{ cloud_config.resource_group }}" -n "mi-{{ cloud_config.resource_group_phase }}-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}" --tags "{{ cloud_config.tags }}"
