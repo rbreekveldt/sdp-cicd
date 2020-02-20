@@ -31,9 +31,9 @@ pipeline {
                     // Missing credential_ID's in Jenkins
                     if ( "${params.subscription}".equals('Project Azure governance testing' ))
                     {env.CREDENTIAL_ID = 'SPAzureGovernanceTesting'}
-                    if ( "${params.subscription}".equals('Non-Prod Data and Processing'))
+                    else if ( "${params.subscription}".equals('Non-Prod Data and Processing'))
                     {env.CREDENTIAL_ID = 'SPNonProdDataAndProcessing'}
-                    if ( "${params.subscription}".equals('Prod Data and Processing'))
+                    else if ( "${params.subscription}".equals('Prod Data and Processing'))
                     {env.CREDENTIAL_ID = 'SPProdDataAndProcessing'}
                     else {env.CREDENTIAL_ID = 'SPCpd'}
 
