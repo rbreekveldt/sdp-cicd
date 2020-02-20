@@ -24,13 +24,13 @@ pipeline {
     }
 
     stages {
-
+//*
         stage('set subscription id') {
             steps {
                 script {
-                    // Missing credential_ID's
+                    // Missing credential_ID's in Jenkins
                     if (expression { params.subscription == 'Project Azure governance testing' })
-                    {env.CREDENTIAL_ID = credentials('SPAzureGovernanceTesting')}
+                    {env.CREDENTIAL_ID = 'SPAzureGovernanceTesting'}
                     if (expression { params.subscription == 'Non-Prod Data and Processing' })
                     {env.CREDENTIAL_ID = credentials('SPNonProdDataAndProcessing')}
                     if (expression { params.subscription == 'Prod Data and Processing' })
@@ -40,6 +40,7 @@ pipeline {
                 }
             }
         }
+        *//
         stage ('print CredentialID'){
             steps {sh 'printenv'}
         }
@@ -64,7 +65,7 @@ pipeline {
 
             steps {
 
-                withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting',
+                withCredentials([azureServicePrincipal(credentialsId: credentials(params.subscription) ,
                         subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                         clientIdVariable: 'AZURE_CLIENT_ID',
                         clientSecretVariable: 'AZURE_SECRET',
