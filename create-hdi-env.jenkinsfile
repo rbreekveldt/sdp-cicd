@@ -28,14 +28,14 @@ pipeline {
         stage('set subscription id') {
             steps {
                 script {
-
+                    // Missing credential_ID's
                     if (expression { params.subscription == 'Project Azure governance testing' })
-                    {env.CREDENTIAL_ID ='SPAzureGovernanceTesting'}
+                    {env.CREDENTIAL_ID = credentials('SPAzureGovernanceTesting')}
                     if (expression { params.subscription == 'Non-Prod Data and Processing' })
-                    {env.CREDENTIAL_ID ='SPNonProdDataAndProcessing'}
+                    {env.CREDENTIAL_ID = credentials('SPNonProdDataAndProcessing')}
                     if (expression { params.subscription == 'Prod Data and Processing' })
-                    {env.CREDENTIAL_ID ='SPProdDataAndProcessing'}
-                    else {env.CREDENTIAL_ID ='SPCpd'}
+                    {env.CREDENTIAL_ID = credentials('SPProdDataAndProcessing')}
+                    else {env.CREDENTIAL_ID = credentials('SPCpd')}
 
                 }
             }
