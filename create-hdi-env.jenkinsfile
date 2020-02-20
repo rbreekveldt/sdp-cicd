@@ -62,8 +62,8 @@ pipeline {
                 expression { params.subscription == 'Project Azure governance testing' }
             }
             steps {
-            
-            withCredentials([azureServicePrincipal(credentialsId: ${env.CREDENTIAL_ID},
+
+            withCredentials([azureServicePrincipal(credentialsId: 'CREDENTIAL_ID',
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
