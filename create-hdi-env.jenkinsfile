@@ -28,7 +28,7 @@ pipeline {
         stage('set subscription id') {
             steps {
             script {
-                if (params.subscription =='Non-Prod Data and Processing')
+                if (${params.subscription} =='Non-Prod Data and Processing')
                      {env.CREDENTIAL_ID ='SPNonProdDataAndProcessing'}
                 if (params.subscription =='Project Azure governance testing')
                      {env.CREDENTIAL_ID ='SPAzureGovernanceTesting'}
