@@ -7,7 +7,7 @@ pipeline {
     agent any
     //  why does subscription have more functionalities then accounted for to run playbooks?
     parameters{
-        choice(name: 'subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProject CPD\n'', description: 'Subscription to provision')
+        choice(name: 'subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProject CPD', description: 'Subscription to provision')
         choice(name: 'data_domain', choices: 'Please select\ndp\nautomation\naccess\nmonitoring', description: 'Data Domain')
         choice(name: 'resource_group_phase', choices: 'Please select\npiimanagement\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
         string(name: 'project_name', defaultValue:'', description: 'Specify project name')
