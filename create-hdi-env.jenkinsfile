@@ -5,6 +5,7 @@ def skipRemainingStages = "true"
 
 pipeline {
     agent any
+    //  why does subscription have more functionalities then accounted for to run playbooks?
     parameters{
             choice(name: 'subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProject CPD\nProject Audience Measurement', description: 'Subscription to provision')
             choice(name: 'data_domain', choices: 'Please select\ndp\nautomation\naccess\nmonitoring', description: 'Data Domain')
@@ -21,7 +22,26 @@ pipeline {
             booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
             booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
        }
+
     stages {
+
+        stage('set subscription id') {
+            steps {
+            script {
+                if (params.subscription == 'Non-Prod Data and Processing')
+                     {env.CREDENTIAL_ID = 'SPNonProdDataAndProcessing'}
+                if (params.subscription == 'Project Azure governance testing')
+                     {env.CREDENTIAL_ID = 'SPAzureGovernanceTesting'}
+                if (params.subscription == 'Prod Data and Processing')
+                     {env.CREDENTIAL_ID = 'SPNonProdDataAndProcessing'}
+                if ( params.subscription == 'Project CPD' )
+                     {env.CREDENTIAL_ID = 'SPCpd'}
+                else {env.CREDENTIAL_ID =''}
+                               }
+                            }
+                        }
+
+
         stage ('Git checkout and switch to Master') {
             steps {
                 sh 'git checkout --track origin/master'
@@ -43,7 +63,10 @@ pipeline {
                 expression { params.subscription == 'Project Azure governance testing' }
             }
             steps {
-            withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting',
+                when {
+                    expression { env.CREDENTIAL_ID !==''}
+                }
+            withCredentials([azureServicePrincipal(credentialsId: ${env.CREDENTIAL_ID},
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
@@ -52,47 +75,6 @@ pipeline {
                  }
             }
         }
-        stage ('Provision HDI Infrastructure for Non-Prod Data and Processing') {
-            when {
-                expression { params.subscription == 'Non-Prod Data and Processing' }
-            }
-            steps {
-            withCredentials([azureServicePrincipal(credentialsId: 'SPNonProdDataAndProcessing',
-                                                  subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
-                                                  clientIdVariable: 'AZURE_CLIENT_ID',
-                                                  clientSecretVariable: 'AZURE_SECRET',
-                                                  tenantIdVariable: 'AZURE_TENANT')]) {
-                 ansiblePlaybook extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
-                 }
-            }
-        }
-        stage ('Provision HDI Infrastructure for Prod Data and Processing') {
-            when {
-                expression { params.subscription == 'Prod Data and Processing' }
-            }
-            steps {
-            withCredentials([azureServicePrincipal(credentialsId: 'SPProdDataAndProcessing',
-                                                  subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
-                                                  clientIdVariable: 'AZURE_CLIENT_ID',
-                                                  clientSecretVariable: 'AZURE_SECRET',
-                                                  tenantIdVariable: 'AZURE_TENANT')]) {
-                 ansiblePlaybook extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
-                 }
-            }
-        }
-        stage ('Provision HDI Infrastructure for Project CPD') {
-            when {
-                expression { params.subscription == 'Project CPD' }
-            }
-            steps {
-            withCredentials([azureServicePrincipal(credentialsId: 'SPCpd',
-                                                  subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
-                                                  clientIdVariable: 'AZURE_CLIENT_ID',
-                                                  clientSecretVariable: 'AZURE_SECRET',
-                                                  tenantIdVariable: 'AZURE_TENANT')]) {
-                 ansiblePlaybook extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
-                 }
-            }
-        }
+
     }
 }    
