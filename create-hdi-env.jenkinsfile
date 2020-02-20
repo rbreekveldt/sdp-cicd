@@ -28,15 +28,16 @@ pipeline {
         stage('set subscription id') {
             steps {
             script {
-                if (params.subscription == 'Non-Prod Data and Processing')
-                     {env.CREDENTIAL_ID = 'SPNonProdDataAndProcessing'}
-                if (params.subscription == 'Project Azure governance testing')
-                     {env.CREDENTIAL_ID = 'SPAzureGovernanceTesting'}
-                if (params.subscription == 'Prod Data and Processing')
-                     {env.CREDENTIAL_ID = 'SPNonProdDataAndProcessing'}
-                else {env.CREDENTIAL_ID = 'SPCpd'}
+                if (params.subscription =='Non-Prod Data and Processing')
+                     {env.CREDENTIAL_ID ='SPNonProdDataAndProcessing'}
+                if (params.subscription =='Project Azure governance testing')
+                     {env.CREDENTIAL_ID ='SPAzureGovernanceTesting'}
+                if (params.subscription =='Prod Data and Processing')
+                     {env.CREDENTIAL_ID ='SPNonProdDataAndProcessing'}
+                else {env.CREDENTIAL_ID ='SPCpd'}
 
                                }
+                    {sh 'printenv'}
                             }
                         }
 
@@ -58,7 +59,7 @@ pipeline {
             }
         }
         stage ('Provision HDI Infrastructure for Project Azure Governance Testing') {
-        
+
             steps {
 
             withCredentials([azureServicePrincipal(credentialsId: env.CREDENTIAL_ID,
