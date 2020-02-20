@@ -58,9 +58,7 @@ pipeline {
             }
         }
         stage ('Provision HDI Infrastructure for Project Azure Governance Testing') {
-            when {
-                expression { params.subscription == 'Project Azure governance testing' }
-            }
+        
             steps {
 
             withCredentials([azureServicePrincipal(credentialsId: env.CREDENTIAL_ID,
