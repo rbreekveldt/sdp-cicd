@@ -24,7 +24,7 @@ pipeline {
     }
 
     stages {
-//*
+
         stage('set subscription id') {
             steps {
                 script {
@@ -40,7 +40,7 @@ pipeline {
                 }
             }
         }
-        *//
+
         stage ('print CredentialID'){
             steps {sh 'printenv'}
         }
@@ -65,7 +65,7 @@ pipeline {
 
             steps {
 
-                withCredentials([azureServicePrincipal(credentialsId: credentials(params.subscription) ,
+                withCredentials([azureServicePrincipal(credentialsId: env.CREDENTIAL_ID ,
                         subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                         clientIdVariable: 'AZURE_CLIENT_ID',
                         clientSecretVariable: 'AZURE_SECRET',
