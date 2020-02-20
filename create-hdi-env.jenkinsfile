@@ -34,9 +34,8 @@ pipeline {
                      {env.CREDENTIAL_ID = 'SPAzureGovernanceTesting'}
                 if (params.subscription == 'Prod Data and Processing')
                      {env.CREDENTIAL_ID = 'SPNonProdDataAndProcessing'}
-                if ( params.subscription == 'Project CPD' )
-                     {env.CREDENTIAL_ID = 'SPCpd'}
-                else {env.CREDENTIAL_ID =''}
+                else {env.CREDENTIAL_ID = 'SPCpd'}
+
                                }
                             }
                         }
