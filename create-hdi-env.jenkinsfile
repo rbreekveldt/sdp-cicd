@@ -37,10 +37,11 @@ pipeline {
                 else {env.CREDENTIAL_ID ='SPCpd'}
 
                                }
-                    {sh 'printenv'}
                             }
                         }
-
+        stage ('print CredentialID'){
+            steps {sh 'printenv'}
+        }
 
         stage ('Git checkout and switch to Master') {
             steps {
