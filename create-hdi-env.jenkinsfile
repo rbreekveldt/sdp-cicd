@@ -7,7 +7,7 @@ pipeline {
     agent any
     //  why does subscription have more functionalities then accounted for to run playbooks?
     parameters{
-        choice(name: 'subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProject CPD\nProject Audience Measurement', description: 'Subscription to provision')
+        choice(name: 'subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProject CPD\n'', description: 'Subscription to provision')
         choice(name: 'data_domain', choices: 'Please select\ndp\nautomation\naccess\nmonitoring', description: 'Data Domain')
         choice(name: 'resource_group_phase', choices: 'Please select\npiimanagement\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
         string(name: 'project_name', defaultValue:'', description: 'Specify project name')
@@ -29,11 +29,11 @@ pipeline {
             steps {
                 script {
                     // Missing credential_ID's in Jenkins
-                    if (expression { params.subscription == 'Project Azure governance testing' })
-                    {env.CREDENTIAL_ID = 'SPAzureGovernanceTesting'}
-                    if (expression { params.subscription == 'Non-Prod Data and Processing' })
+                    if ( params.subscription.equals('Project Azure governance testing' ))
+                    {env.CREDENTIAL_ID = 'Non-Prod Data and Processing'}
+                    if ( params.subscription.equals('Project CPD' ))
                     {env.CREDENTIAL_ID = 'SPNonProdDataAndProcessing'}
-                    if (expression { params.subscription == 'Prod Data and Processing' })
+                    if ( params.subscription.equals('Prod Data and Processing') )
                     {env.CREDENTIAL_ID = 'SPProdDataAndProcessing'}
                     else {env.CREDENTIAL_ID = 'SPCpd'}
 
