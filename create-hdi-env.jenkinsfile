@@ -45,7 +45,7 @@ pipeline {
             steps {sh 'printenv'}
         }
 
-    /*    stage ('Git checkout and switch to Master') {
+       stage ('Git checkout and switch to Master') {
             steps {
                 sh 'git checkout --track origin/mkok'
             }
@@ -75,6 +75,6 @@ pipeline {
                 }
             }
         }
-	*/
+	
     }
 }
