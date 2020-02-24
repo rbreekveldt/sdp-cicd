@@ -129,3 +129,30 @@ oraclejdk_options:                                        # only used when java 
   tarball_location: '/tmp/jdk-8u181-linux-x64.tar.gz'     # the location of the tarball on the remote system or on the Ansible controller
   jce_location: '/tmp/jce_policy-8.zip'                   # the location of the JCE package on the remote system or on the Ansible controller
   remote_files: no                                        # set to yes to indicate the files are already on the remote systems, otherwise they will be copied by Ansible from the Ansible controller
+
+###################################
+## Nifi Blueprint configuration  ##
+##################################
+blueprint_name: '{{ cloud_config.project_name }}_blueprint'                  # the name of the blueprint as it will be stored in Ambari
+blueprint_file: 'blueprint_dynamic.j2'                          # the blueprint JSON file - 'blueprint_dynamic.j2' is a Jinja2 template that generates the required JSON
+blueprint_dynamic:                                              # properties for the dynamic blueprint - these are only used by the 'blueprint_dynamic.j2' template to generate the JSON
+  - host_group: "hdf-management"
+    clients: ['ZOOKEEPER_CLIENT', 'INFRA_SOLR_CLIENT']
+    services:
+      - AMBARI_SERVER
+      - INFRA_SOLR
+      - NIFI_REGISTRY_MASTER
+      - NIMBUS
+      - DRPC_SERVER
+      - STORM_UI_SERVERl
+      - METRICS_COLLECTOR
+      - METRICS_GRAFANA
+      - METRICS_MONITOR
+  - host_group: "hdf-worker"
+    clients: ['ZOOKEEPER_CLIENT', 'INFRA_SOLR_CLIENT']
+    services:
+      - ZOOKEEPER_SERVER
+      - NIFI_MASTER
+      - KAFKA_BROKER
+      - SUPERVISOR
+      - METRICS_MONITOR

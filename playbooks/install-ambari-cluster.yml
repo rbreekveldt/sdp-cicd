@@ -1,6 +1,6 @@
 ---
 - name: Install Ambari cluster
-  hosts: all
+  hosts: nifi,ambari
   gather_facts: false
   become: yes
   
