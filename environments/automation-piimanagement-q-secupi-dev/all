@@ -73,14 +73,14 @@ cloud_config:
     
   network:
     name: vnet-q-dev
-    address_prefix: "10.250.3.0/24"
+    address_prefix: "10.250.4.0/24"
       
   subnet:
     - name: subnet-q-dev01
-      address_prefix: "10.250.3.0/26"
+      address_prefix: "10.250.4.0/26"
 
     - name: subnet-q-dev02
-      address_prefix: "10.250.3.64/26"
+      address_prefix: "10.250.4.64/26"
 
 #######################################################################################
 #                                                                                     #
