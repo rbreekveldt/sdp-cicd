@@ -7,5 +7,16 @@
 - import_playbook: "set-ambari-variables.yml"
   tags: always
 
-  #roles:
-  #  - install-ambari-cluster
+- name: Apply the ambari-agent role to the hadoopcluster group
+  hosts: nifi
+  any_errors_fatal: true
+  become: yes
+  roles:
+    - ambari-agent
+
+# - name: Apply the ambari-server role to the ambari-server group
+#   hosts: ambari-server
+#   any_errors_fatal: true
+#   become: yes
+#   roles:
+#     - ambari-server
