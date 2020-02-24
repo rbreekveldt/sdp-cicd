@@ -66,7 +66,7 @@ pipeline {
 
             steps {
 
-                withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}" ,
+                withCredentials([azureServicePrincipal(credentialsId: "${subscription}" ,
                         subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                         clientIdVariable: 'AZURE_CLIENT_ID',
                         clientSecretVariable: 'AZURE_SECRET',
