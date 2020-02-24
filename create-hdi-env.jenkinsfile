@@ -41,17 +41,17 @@ pipeline {
             }
         }
 
-        stage ('print CredentialID'){
-            steps {sh 'printenv'}
-        }
-
        stage ('Git checkout and switch to Master') {
             steps {
-                sh 'git checkout --track origin/mkok'
+            
+                sh 'git checkout --track origin/master'
             }
         }
+        
         stage ('Create HDI environment configuration') {
+        
             steps {
+            
                 withCredentials([azureServicePrincipal(credentialsId: '1683b46e-b612-4f6d-a717-9baed4b0dffb',
                         subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                         clientIdVariable: 'AZURE_CLIENT_ID',
@@ -71,7 +71,7 @@ pipeline {
                         clientIdVariable: 'AZURE_CLIENT_ID',
                         clientSecretVariable: 'AZURE_SECRET',
                         tenantIdVariable: 'AZURE_TENANT')]) {
-                    ansiblePlaybook extras: "-vvvv -e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
+                    ansiblePlaybook extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
                 }
             }
         }
