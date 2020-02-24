@@ -29,23 +29,23 @@
     when: groups[item] is not defined or groups[item]|length == 0
     with_items: "{{ ambari_groups }}"
 
-  - name: Add nodes to the ambari-server group
+  - name: Add nodes to the ambariserver group
     add_host:
       name: "{{ groups[ambari_groups|first]|first }}"
-      groups: "ambari-server"
+      groups: "ambariserver"
 
-  - name: Fail if no Ansible inventory group called 'hadoop-cluster' exists
+  - name: Fail if no Ansible inventory group called 'hadoopcluster' exists
     fail:
-      msg: "The 'hadoop-cluster' Ansible inventory group is required before continuing. Check the inventory for possible issues."
-    when: groups['hadoop-cluster'] is not defined or (groups['hadoop-cluster'] is defined and groups['hadoop-cluster']|length == 0)
+      msg: "The 'hadoopcluster' Ansible inventory group is required before continuing. Check the inventory for possible issues."
+    when: groups['hadoopcluster'] is not defined or (groups['hadoopcluster'] is defined and groups['hadoopcluster']|length == 0)
 
-  - name: Fail if no Ansible inventory group called 'ambari-server' exists
+  - name: Fail if no Ansible inventory group called 'ambariserver' exists
     fail:
-      msg: "The 'ambari-server' Ansible inventory group is required before continuing. Check the inventory for possible issues."
-    when: groups['ambari-server'] is not defined or (groups['ambari-server'] is defined and groups['ambari-server']|length == 0)
+      msg: "The 'ambariserver' Ansible inventory group is required before continuing. Check the inventory for possible issues."
+    when: groups['ambariserver'] is not defined or (groups['ambariserver'] is defined and groups['ambariserver']|length == 0)
 
-- name: Create the Ansible help-er variables for the ambari-server
-  hosts: ambari-server
+- name: Create the Ansible help-er variables for the ambariserver
+  hosts: ambariserver
   gather_facts: False
   tasks:
     - name: Initialize the control variables
@@ -248,7 +248,7 @@
 
 
 # - name: Create the Ansible helper variables for all nodes
-#   hosts: hadoop-cluster
+#   hosts: hadoopcluster
 #   gather_facts: False
 #   tasks:
 #     - block:
@@ -274,12 +274,12 @@
 
 #     - name: Set the install_hdp variable to all nodes
 #       set_fact:
-#         install_hdp: "{{ hostvars[groups['ambari-server']|first]['install_hdp'] }}"
+#         install_hdp: "{{ hostvars[groups['ambariserver']|first]['install_hdp'] }}"
 
 #     - name: Set the install_hdf variable to all nodes
 #       set_fact:
-#         install_hdf: "{{ hostvars[groups['ambari-server']|first]['install_hdf'] }}"
+#         install_hdf: "{{ hostvars[groups['ambariserver']|first]['install_hdf'] }}"
 
 #     - name: Set the install_hdpsearch variable to all nodes
 #       set_fact:
-#         install_hdpsearch: "{{ hostvars[groups['ambari-server']|first]['install_hdpsearch'] }}"
+#         install_hdpsearch: "{{ hostvars[groups['ambariserver']|first]['install_hdpsearch'] }}"

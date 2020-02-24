@@ -14,9 +14,9 @@
   roles:
     - ambari-agent
 
-# - name: Apply the ambari-server role to the ambari-server group
-#   hosts: ambari-server
+# - name: Apply the ambariserver role to the ambariserver group
+#   hosts: ambariserver
 #   any_errors_fatal: true
 #   become: yes
 #   roles:
-#     - ambari-server
+#     - ambariserver
