@@ -1,11 +1,22 @@
 ---
 - name: Install Ambari cluster
-  hosts: all
+  hosts: nifi,ambari
   gather_facts: false
   become: yes
   
 - import_playbook: "set-ambari-variables.yml"
   tags: always
 
-  #roles:
-  #  - install-ambari-cluster
+- name: Apply the ambari-agent role to the hadoopcluster group
+  hosts: nifi
+  any_errors_fatal: true
+  become: yes
+  roles:
+    - ambari-agent
+
+# - name: Apply the ambariserver role to the ambariserver group
+#   hosts: ambariserver
+#   any_errors_fatal: true
+#   become: yes
+#   roles:
+#     - ambariserver
