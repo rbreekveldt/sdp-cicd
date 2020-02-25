@@ -1,11 +1,11 @@
 ---
 cloud_config:
-  project_name: q
+  project_name: kkkk
   env_type: dev
-  resource_group_phase: piimanagement
+  resource_group_phase: curation
   application_name: secupi
-  data_domain: automation
-  resource_group: automation-piimanagement-q-secupi-dev-rg
+  data_domain: dp
+  resource_group: dp-curation-kkkk-secupi-dev-rg
   location: "westeurope"
   admin_username: "sdp-admin"
 
@@ -44,8 +44,8 @@ cloud_config:
       role: nifi_worker
   
   sql_server:
-    name: dbsqlserverpiimanagementqdev
-    secret_name: dbsqlserverpiimanagementqdev-db-pwd
+    name: dbsqlservercurationkkkkdev
+    secret_name: dbsqlservercurationkkkkdev-db-pwd
     admin_username: dev-admin
   
   sql_db:
@@ -64,7 +64,7 @@ cloud_config:
 
         
   storage_account:
-    name: saqsecupidev
+    name: sakkkksecupidev
     type: "Standard_LRS"
   
   azkeyvault:
@@ -72,14 +72,14 @@ cloud_config:
     uri: https://kv-dp-hdi-prd.vault.azure.net/
     
   network:
-    name: vnet-q-dev
+    name: vnet-kkkk-dev
     address_prefix: "10.250.3.0/24"
       
   subnet:
-    - name: subnet-q-dev01
+    - name: subnet-kkkk-dev01
       address_prefix: "10.250.3.0/26"
 
-    - name: subnet-q-dev02
+    - name: subnet-kkkk-dev02
       address_prefix: "10.250.3.64/26"
 
 #######################################################################################
@@ -111,9 +111,9 @@ cloud_config:
   ad_role_definition_id: /subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/providers/Microsoft.Authorization/roleDefinitions/8d8d5a11-05d3-4bda-a417-a08778121c7c
       
   hdi_cluster:
-    name: q 
-    dns_name: q.azurehdinsight.net
-    short_name: q
+    name: kkkk 
+    dns_name: kkkk.azurehdinsight.net
+    short_name: kkkk
 #######################################################################################
 #                                                                                     #
 #                                                                                     #
@@ -125,7 +125,7 @@ cloud_config:
 #######################################################################################
   
   security_groups:
-    name: nsg-q-dev
+    name: nsg-kkkk-dev
     rules:
       inbound:
         allow_ssh_inbound:
@@ -153,32 +153,32 @@ cloud_config:
       
   peering:
     vnet_sdp_internal:
-      initial_peering_name: vnet-q-dev-to-vnet-sdp-internal
+      initial_peering_name: vnet-kkkk-dev-to-vnet-sdp-internal
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
       remote_resource_group: 'access-sdp-jumpbox-rg'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: vnet-sdp-internal-to-vnet-q-dev
+      connect_peering_name: vnet-sdp-internal-to-vnet-kkkk-dev
 
     vnet_sdp_external:
-      initial_peering_name: vnet-q-dev-to-vnet-sdp-external
+      initial_peering_name: vnet-kkkk-dev-to-vnet-sdp-external
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-external'
       remote_resource_group: 'access-sdp-jumpbox-rg'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: vnet-sdp-external-to-vnet-q-dev
+      connect_peering_name: vnet-sdp-external-to-vnet-kkkk-dev
 
     vnet_cicd_prd:
-      initial_peering_name: vnet-q-dev-to-vnet-cicd-prd
+      initial_peering_name: vnet-kkkk-dev-to-vnet-cicd-prd
       remote_virtual_network: '/subscriptions/fd478270-bd64-4cf3-bb8b-53016bb2ffd6/resourceGroups/automation-cicd-prd-rg/providers/Microsoft.Network/virtualNetworks/vnet-cicd-prd'
       remote_resource_group: 'automation-cicd-prd-rg'
       remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
-      connect_peering_name: vnet-cicd-prd-to-vnet-q-dev
+      connect_peering_name: vnet-cicd-prd-to-vnet-kkkk-dev
 
     vnet_ad_domain:
-      initial_peering_name: vnet-q-dev-to-Liberty-Global-AD-domain-services
+      initial_peering_name: vnet-kkkk-dev-to-Liberty-Global-AD-domain-services
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/Liberty-Global-Shared-Resources/providers/Microsoft.Network/virtualNetworks/Liberty-Global-AD-domain-services'
       remote_resource_group: 'Liberty-Global-Shared-Resources'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-q-dev
+      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-kkkk-dev
   
   vm:
     managed_disk_type: Standard_LRS
@@ -190,10 +190,10 @@ cloud_config:
       
   tags:
     Env: dev 
-    Project: q
-    Phase: piimanagement
+    Project: kkkk
+    Phase: curation
     Country: nl
-    Unit: consumeranalytics
+    Unit: datacentertechnology
 
 ########################
 ## java configuration ##
