@@ -227,6 +227,3 @@ $path_exist = Test-AzureRmDataLakeStoreItem -AccountName $dataLakeStorage -Path 
 if ( !$path_exist ){
 	New-AzureRmDataLakeStoreItem  -AccountName $dataLakeStorage -Path $data_path -Folder
 }
-
-#Grant Permission on the SDP data folder
-Set-AzureRmDataLakeStoreItemAclEntry -AccountName $dataLakeStorageGen1Name -Path $path_adls -Acl $newFullAcl -Recurse
