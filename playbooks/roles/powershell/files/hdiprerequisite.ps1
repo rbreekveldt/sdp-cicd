@@ -148,9 +148,10 @@ echo "LOG:Certificate Created"
 ##$certificatePFX = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($certFilePath, $certPasswordSecureString)
 $keyValue = [System.Convert]::ToBase64String((Get-Content $certFilePath -AsByteStream))
 $certValue = [System.Convert]::ToBase64String($cert.GetRawCertData())
-echo $certName $certValue $certEndDate $certStartDate
-$application= New-AzureRMADApplication -DisplayName $certName -CertValue $certValue -EndDate $certEndDate -StartDate $certStartDate -IdentifierUris "https://$clusterName.azurehdinsight.net" 
+#echo $certName $certValue $certEndDate $certStartDate
+$application = New-AzureRMADApplication -DisplayName $certName -CertValue $certValue -EndDate $certEndDate -StartDate $certStartDate -IdentifierUris "https://$clusterName.azurehdinsight.net" 
 $servicePrincipal = New-AzureRmADServicePrincipal -ApplicationId $application.ApplicationId
+echo $application
 echo $servicePrincipal
 echo "Service Principal Created"
 ####################################### 
