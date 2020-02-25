@@ -95,8 +95,8 @@ Enable-AzureRmAlias
 # Log in to your Azure account 
 ##TO_DO: Use a service principal to automate this
 
-$applicationId = $client_id
-$securePassword = $secret | ConvertTo-SecureString -AsPlainText -Force
+$applicationId = "64d704d4-7816-4ab7-9f26-732795a8ca2d"
+$securePassword = "S7*1ik-DX.7K.oW255rg[YbIOCd9ddwD" | ConvertTo-SecureString -AsPlainText -Force
 $credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $applicationId, $securePassword
 Connect-AzureRmAccount -ServicePrincipal -Credential $credential -TenantId $tenant
 
