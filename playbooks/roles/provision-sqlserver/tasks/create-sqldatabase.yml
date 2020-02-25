@@ -1,10 +1,21 @@
 ---
 # tasks file for provision-sql-server
 - name: Create SQL Database
-  azure_rm_sqldatabase:
-    resource_group: "{{ cloud_config.resource_group }}"
-    server_name: "dbsqlserver{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}"
-    name: "dbsql{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}{{ item.name }}"
-    location: "{{ cloud_config.location }}"
-    create_mode: default
-    edition: basic
+  vars:
+    subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
+    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"    
+  shell: |
+    az login --service-principal -u {{ client_id | quote }} -p {{ secret | quote }} -t {{ tenant | quote }}
+    az account set --subscription {{ subscription_id | quote }}
+    az sql db create -g "{{ cloud_config.resource_group }}" -s "dbsqlserver{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}" -n "dbsql{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}{{ item.name }}" -e Basic
+
+
+    #  azure_rm_sqldatabase:
+    #    resource_group: "{{ cloud_config.resource_group }}"
+    #    server_name: "dbsqlserver{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}"
+    #    name: "dbsql{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}{{ item.name }}"
+    #    location: "{{ cloud_config.location }}"
+    #    create_mode: default
+    #    edition: basic
