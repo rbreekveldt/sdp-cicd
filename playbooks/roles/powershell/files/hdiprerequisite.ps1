@@ -162,7 +162,7 @@ Set-AzureRmContext -SubscriptionId $subscriptionId_KeyVault
 
 # Store Service Principal ApplicationId
 $applicationIdSecureString = ConvertTo-SecureString $servicePrincipal.ApplicationId -AsPlainText -Force
-$secret1 = Set-AzureKeyVaultSecret -VaultName $KeyVaultName -Name "${clusterName}-AppId" -SecretValue $ApplicationIdSecureString
+$secret1 = Set-AzureKeyVaultSecret -VaultName $KeyVaultName -Name "${clusterName}-AppId" -SecretValue $applicationIdSecureString
  
 # Store Servive Principal Id
 $idSecureString = ConvertTo-SecureString $servicePrincipal.Id -AsPlainText -Force
@@ -185,12 +185,17 @@ $ambariPwdSecureString = ConvertTo-SecureString $ambariPwd -AsPlainText -Force
 $secret6 = Set-AzureKeyVaultSecret -VaultName $KeyVaultName -Name "${clusterName}-Pwd" -SecretValue $ambariPwdSecureString
 
 echo $secret1 
+echo "LOG:Service Principal ApplicationId stored"
 echo $secret2 
+echo "LOG:Service Principal ID stored"
 echo $secret3 
+echo "LOG:Certificate Service Principal ID stored"
 echo $secret4 
+echo "LOG:Certificate Password Service Principal ID stored"
 echo $secret5 
+echo "LOG:SSH password stored"
 echo $secret6 
-echo "LOG:All secrets stored in Key Vault"
+echo "LOG:Ambari Password stored"
 
 ####################################### 
 ###  Grant permission to Service    ###
