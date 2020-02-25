@@ -9,7 +9,7 @@
     - include_role:
         name: "{{ role }}"
       loop:
-              #  - provision-resource-group
+        - provision-resource-group
               #  - provision-security-groups
               #  - provision-vnet
               #  - provision-peering
