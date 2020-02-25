@@ -10,9 +10,9 @@
         name: "{{ role }}"
       loop:
         - provision-resource-group
-              #  - provision-security-groups
-              #  - provision-vnet
-              #  - provision-peering
+        - provision-security-groups
+        - provision-vnet
+        - provision-peering
       loop_control:
         loop_var: role        
   
@@ -28,10 +28,10 @@
     - include_role:
         name: "{{ role }}"
       loop:
-              #  - provision-sqlserver
-              #  - provision-datalakestore
-              #  - provision-managed-identity
-              #  - provision-roleassignment
+        - provision-sqlserver
+        - provision-datalakestore
+        - provision-managed-identity
+        - provision-roleassignment
         - powershell  
       loop_control:
         loop_var: role        
