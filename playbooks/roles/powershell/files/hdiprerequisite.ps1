@@ -108,6 +108,7 @@ Connect-AzureRmAccount -ServicePrincipal -Credential $credential -TenantId $tena
 #######################################################
 
 ## below is used to set identity id for managed identy to assign role to AD
+Set-AzureRmContext -SubscriptionId $subscriptionId
 $identity = Get-AzureRmUserAssignedIdentity -ResourceGroupName $ResourceGroupName -Name "mi-${ClusterShortName}"
 #Start-Sleep -Seconds 300
 #Assign Permissions to Identity
