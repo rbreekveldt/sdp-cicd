@@ -100,7 +100,7 @@ $securePassword = $secret | ConvertTo-SecureString -AsPlainText -Force
 $credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $applicationId, $securePassword
 Connect-AzureRmAccount -ServicePrincipal -Credential $credential -TenantId $tenant
 
-echo  $subscriptionId $certificateFileDir $clusterName $clusterShortname $certPassword $KeyVaultName $dataLakeStorageGen1Name $SShPwd $ambariPwd $ResourceGroupName $subscriptionId_DataLake $subscriptionId_KeyVault
+#echo  $subscriptionId $certificateFileDir $clusterName $clusterShortname $certPassword $KeyVaultName $dataLakeStorageGen1Name $SShPwd $ambariPwd $ResourceGroupName $subscriptionId_DataLake $subscriptionId_KeyVault
 
 #######################################################
 ###          Create Managed Identity 		    ###
@@ -140,7 +140,7 @@ $duration = [timespan]::FromDays(900)
 $cert = New-SelfSignedCertificate -OutCertPath $certFilePath -NotBefore  $certStartDate -CommonName $certName -Duration $duration -Passphrase $certPasswordSecureString -CertificateFormat 'pfx'
 $certThumbprint = $cert.Thumbprint
 echo $cert
-
+echo "LOG:Certificate Created"
 ####################################### 
 ### 	Create Service Principal    ###
 ###	using the Certficate	    ###
@@ -152,6 +152,7 @@ echo $certName $certValue $certEndDate $certStartDate
 $application= New-AzureRMADApplication -DisplayName $certName -CertValue $certValue -EndDate $certEndDate -StartDate $certStartDate -IdentifierUris "https://$clusterName.azurehdinsight.net" 
 $servicePrincipal = New-AzureRmADServicePrincipal -ApplicationId $application.ApplicationId
 echo $servicePrincipal
+echo "Service Principal Created"
 ####################################### 
 ### 	Store secret into	    ###
 ###         Key Vault	            ###
@@ -182,7 +183,13 @@ $secret5 = Set-AzureKeyVaultSecret -VaultName $KeyVaultName -Name "${clusterName
 # Store Password for Ambari
 $ambariPwdSecureString = ConvertTo-SecureString $ambariPwd -AsPlainText -Force
 $secret6 = Set-AzureKeyVaultSecret -VaultName $KeyVaultName -Name "${clusterName}-Pwd" -SecretValue $ambariPwdSecureString
- 
+
+echo $secret1 
+echo $secret2 
+echo $secret3 
+echo $secret4 
+echo $secret5 
+echo $secret6 
 echo "LOG:All secrets stored in Key Vault"
 
 ####################################### 

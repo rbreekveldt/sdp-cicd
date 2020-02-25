@@ -34,4 +34,4 @@
 
 - name: Outcome of Powershellscript
   debug:
-    msg: "{{ result }}"        
+    msg: "{{ result.stdout_lines }}"        
