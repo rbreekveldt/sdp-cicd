@@ -29,9 +29,9 @@
         name: "{{ role }}"
       loop:
         - provision-sqlserver
-        - provision-datalakestore
-        - provision-managed-identity
-        - provision-roleassignment
+          #- provision-datalakestore
+          #- provision-managed-identity
+          #- provision-roleassignment
           #   - powershell  
       loop_control:
         loop_var: role        
