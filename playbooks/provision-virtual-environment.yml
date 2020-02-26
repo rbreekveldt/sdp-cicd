@@ -32,7 +32,7 @@
         - provision-datalakestore
         - provision-managed-identity
         - provision-roleassignment
-        - powershell  
+          #   - powershell  
       loop_control:
         loop_var: role        
       tags: hdi    
