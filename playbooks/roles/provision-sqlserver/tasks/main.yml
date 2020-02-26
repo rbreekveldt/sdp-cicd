@@ -14,6 +14,9 @@
       name: azure-keyvault
       tasks_from: create-secret.yml
 
+  - name: Enable Azure Services on SQL server
+    include_tasks: enable-azure-services.yml 
+  
   - name: Create SQL Database 
     include_tasks: create-sqldatabase.yml
     when: item.provision
