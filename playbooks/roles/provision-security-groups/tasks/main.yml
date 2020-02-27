@@ -18,14 +18,13 @@
 - name: Get list of Whitelist IP's
   include_vars:
     dir: vars
+  loop: "{{ whitelist }}"
+  register: ip_whitelist  
   tags: hdi    
 
 - name: debug whitelist
-  loop: "{{ whitelist.ip }}"
-  loop_control:
-    loop_var: whitelist_ip        
   debug:
-    msg: "{{ whitelist_ip.ip }}"
+    msg: "{{ ip_whitelist.ip }}"
 
     #- name: Whitelist IP's
     #include_tasks: create-nsg.yml
