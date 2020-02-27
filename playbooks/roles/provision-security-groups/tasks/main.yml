@@ -26,7 +26,11 @@
   debug: 
     msg: "{{ item.ip }}"  
   register: ip_whitelist
-    
+  
+- name: debug ip_whitelist
+  debug:
+    msg: "{{ ip_whitelist }}"
+
 - name: Whitelist IP's
   include_tasks: create-nsg.yml
   vars:
