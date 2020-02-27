@@ -3,7 +3,7 @@
 - name: Create HDI security group
   include_tasks: create-nsg.yml
   vars:
-    - inbound_rules 
+    inbound_rules: 
       rule_name: "{{ inbound_rule.name }}"
       protocol: "{{ inbound_rule.protocol }}"
       priority: "{{ inbound_rule.priority }}"
