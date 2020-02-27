@@ -29,7 +29,7 @@
   loop: "{{ whitelist }}"
   loop_control:
     loop_var: ip_whitelist        
-  register: ip_whitelist 
+  register: whitelist_ip 
 
     #- name: Whitelist IP's
     #include_tasks: create-nsg.yml
