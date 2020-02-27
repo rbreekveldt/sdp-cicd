@@ -2,13 +2,14 @@
 # tasks file for provision-security-groups
 - name: Create HDI security group
   include_tasks: create-nsg.yml
-    rules:
-      - name: "{{ inbound_rule.name }}"
-        protocol: "{{ inbound_rule.protocol }}"
-        priority: "{{ inbound_rule.priority }}"
-        source_address_prefix: "{{ inbound_rule.source }}"
-        destination_address_prefix: "{{ inbound_rule.destination }}"
-        destination_port_range: "{{ inbound_rule.port }}"
+  vars:
+    - inbound_rules 
+      rule_name: "{{ inbound_rule.name }}"
+      protocol: "{{ inbound_rule.protocol }}"
+      priority: "{{ inbound_rule.priority }}"
+      source_address_prefix: "{{ inbound_rule.source }}"
+      destination_address_prefix: "{{ inbound_rule.destination }}"
+      destination_port_range: "{{ inbound_rule.port }}"
   loop: "{{ cloud_config.security_groups.rules.inbound }}"
   loop_control:
     loop_var: inbound_rule
