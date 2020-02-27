@@ -21,7 +21,7 @@
   tags: hdi    
 
 - name: debug whitelist
-  loop: "{{ whitelist }}"
+  loop: "{{ whitelist.ip }}"
   loop_control:
     loop_var: whitelist_ip        
   debug:
