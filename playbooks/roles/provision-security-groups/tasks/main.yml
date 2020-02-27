@@ -28,7 +28,7 @@
   loop: "{{ cloud_config.security_groups.rules.inbound }}"
   loop_control:
     loop_var: inbound_rule
-  when: cloud_config.security_groups.rules.inbound == "Allow_Acces"   
+  when: cloud_config.security_groups.rules.inbound.value == "Allow_Acces"   
   tags: hdi
 
     
