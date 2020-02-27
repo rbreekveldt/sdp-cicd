@@ -128,28 +128,21 @@ cloud_config:
     name: nsg-jaguar-sit
     rules:
       inbound:
-        allow_ssh_inbound:
-          name: Allow_SSH
+        - name: Allow_Acces
           protocol: Tcp
-          port: 22
+          port: 
+            - 22
+            - 443
           priority: 100
           source: VirtualNetwork
           destination: VirtualNetwork
 
-        allow_ping_inbound:  
-          name: Allow_Ping
-          protocol: Udp
-          port: 7
-          priority: 101
-          source: VirtualNetwork
-          destination: VirtualNetwork
-
-        allow_icmp_inbound:
-          name: Allow_Icmp
-          protocol: Icmp
+        - name: Allow_HDInsight
+          protocol: Tcp 
           priority: 102
-          source: VirtualNetwork
+          source: HDInsight.WestEurope
           destination: VirtualNetwork
+          port: 443
       
   peering:
     vnet_sdp_internal:
