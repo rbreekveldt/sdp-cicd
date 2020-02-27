@@ -20,9 +20,11 @@
     dir: vars
   tags: hdi    
 
-- name: debug whitelist
+- name: filter whitelist
   loop: "{{ whitelist }}"
   register: ip_whitelist
+  
+- name: debug whitelist
   debug:
     msg: "{{ ip_whitelist.ip }}"
 
