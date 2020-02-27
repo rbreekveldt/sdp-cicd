@@ -24,9 +24,12 @@
   include_tasks: create-nsg.yml
   vars:
     inbound_rules: 
-     - name: "{{ inbound_rule.name }}"
-       priority: "{{ inbound_rule.priority }}"
-       source_address_prefix: "{{ whitelist }}"
+      - name: "{{ inbound_rule.name }}"
+        protocol: "{{ inbound_rule.protocol }}"
+        priority: "{{ inbound_rule.priority }}"
+        source_address_prefix: "{{ whitelist }}"
+        destination_address_prefix: "{{ inbound_rule.destination }}"
+        destination_port_range: "{{ inbound_rule.port }}"
   loop: "{{ cloud_config.security_groups.rules.inbound }}"
   loop_control:
     loop_var: inbound_rule
@@ -35,3 +38,4 @@
     
 - name: Create Data Project security group
   include_tasks: create-nsg.yml
+  tags: dataproject
