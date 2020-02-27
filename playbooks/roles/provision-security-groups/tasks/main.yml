@@ -17,6 +17,8 @@
 
 - name: Whitelist IP's
   include_tasks: create-nsg.yml
+  set_fact:
+    inbound_rule: "{{ cloud_config.security_groups.rules.inbound }}"        
   vars:
     inbound_rules: 
       - name: "{{ inbound_rule.name }}"
@@ -25,9 +27,9 @@
         source_address_prefix: "{{ whitelist.split()[1] }}"
         destination_address_prefix: "{{ inbound_rule.destination }}"
         destination_port_range: "{{ inbound_rule.port }}"
-  loop: "{{ query(cloud_config.security_groups.rules.inbound[0]) }}"
-  loop_control:
-    loop_var: inbound_rule
+        # loop: "{{ query(cloud_config.security_groups.rules.inbound[0]) }}"
+        #loop_control:
+        #loop_var: inbound_rule      
   tags: hdi
 
     
