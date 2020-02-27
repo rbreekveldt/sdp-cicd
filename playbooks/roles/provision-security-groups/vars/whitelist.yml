@@ -1,13 +1,13 @@
 whitelist: 
-  - name: Liberty Global Schiphol-Rijk office 
-    ip: 213.46.252.136
-  - name: Devoteam Zaventem office
-    ip: 213.224.49.90
-  - name: Devoteam Den Haag office 
-    ip: 85.146.248.42
-  - name: Devoteam Amsterdam office
-    ip: 31.161.50.42
-  - name: Chellappan
-    ip: 84.81.185.32
-  - name: Jenkins
-    ip: 51.105.193.222
+#- name: Liberty Global Schiphol-Rijk office 
+  ip: 213.46.252.136
+#- name: Devoteam Zaventem office
+  ip: 213.224.49.90
+#- name: Devoteam Den Haag office 
+  ip: 85.146.248.42
+#- name: Devoteam Amsterdam office
+  ip: 31.161.50.42
+#- name: Chellappan
+  ip: 84.81.185.32
+#- name: Jenkins
+  ip: 51.105.193.222
