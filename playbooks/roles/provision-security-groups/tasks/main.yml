@@ -15,10 +15,12 @@
     loop_var: inbound_rule
   tags: hdi
 
-- name: Whitelist IP's
-  include_tasks: create-nsg.yml
+- name: Get list of Whitelist IP's
   include_vars:
     dir: vars        
+
+- name: Whitelist IP's
+  include_tasks: create-nsg.yml
   vars:
     inbound_rules: 
       - name: "{{ inbound_rule.name }}"
