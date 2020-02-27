@@ -1,0 +1,7 @@
+---
+# tasks file for provision-security-groups
+- name: Create security groups
+  azure_rm_securitygroup:
+      resource_group: "{{ cloud_config.resource_group }}"
+      name: "{{ cloud_config.security_groups.name }}"
+      tags: "{{ cloud_config.tags }}"
