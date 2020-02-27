@@ -19,25 +19,18 @@
   include_vars:
     dir: vars
   tags: hdi
-  register: test
 
 - name: Filter IP's
-  loop: "{{ whitelist }}"
   debug: 
-    msg: "{{ item.ip }}"  
-  register: ip_whitelist
+    msg: "{{ whitelist.ip }}"  
   
-- name: debug ip_whitelist
-  debug:
-    msg: "{{ ip_whitelist }}"
-
 - name: Whitelist IP's
   include_tasks: create-nsg.yml
   vars:
     inbound_rules: 
      - name: "{{ inbound_rule.name }}"
        priority: "{{ inbound_rule.priority }}"
-       source_address_prefix: "{{ ip_whitelist }}"
+       source_address_prefix: "{{ whitelist.ip }}"
   loop: "{{ cloud_config.security_groups.rules.inbound }}"
   loop_control:
     loop_var: inbound_rule
