@@ -22,7 +22,7 @@
 
 - name: debug whitelist
   debug:
-    msg: "{{ whitelist.split(":")[0] }}"
+    msg: "{{ whitelist }}"
 
     #- name: Whitelist IP's
     #include_tasks: create-nsg.yml
