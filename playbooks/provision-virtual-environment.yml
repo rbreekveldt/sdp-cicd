@@ -9,10 +9,10 @@
     - include_role:
         name: "{{ role }}"
       loop:
-              #- provision-resource-group
+        - provision-resource-group
         - provision-security-groups
-          #- provision-vnet
-          #- provision-peering
+        - provision-vnet
+        - provision-peering
       loop_control:
         loop_var: role        
   
@@ -25,14 +25,14 @@
         loop_var: role        
       tags: dataproject
 
-      #- include_role:
-      # name: "{{ role }}"
-      #loop:
-      # - provision-sqlserver
-          #- provision-datalakestore
-          #- provision-managed-identity
-          #- provision-roleassignment
-          #   - powershell  
-          #loop_control:
-          #loop_var: role        
-          #tags: hdi    
+    - include_role:
+      name: "{{ role }}"
+      loop:
+        - provision-sqlserver
+        - provision-datalakestore
+        - provision-managed-identity
+        - provision-roleassignment
+        - powershell  
+      loop_control:
+        loop_var: role        
+      tags: hdi    

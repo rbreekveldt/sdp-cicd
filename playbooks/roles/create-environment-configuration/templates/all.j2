@@ -128,7 +128,7 @@ cloud_config:
     name: nsg-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
     rules:
       inbound:
-        - name: Allow_Acces
+        - name: Allow_Access
           protocol: Tcp
           port: 
             - 22

@@ -30,7 +30,7 @@
   loop: "{{ cloud_config.security_groups.rules.inbound }}"
   loop_control:
     loop_var: inbound_rule
-  when: inbound_rule.name == "Allow_Acces"   
+  when: inbound_rule.name == "Allow_Access"   
   tags: hdi
     
 - name: Create Data Project security group

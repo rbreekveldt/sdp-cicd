@@ -1,14 +1,8 @@
 ---
 # tasks file for provision-security-groups
-- name: Create security groups
+- name: Create (or update) security groups
   azure_rm_securitygroup:
     resource_group: "{{ cloud_config.resource_group }}"
     name: "{{ cloud_config.security_groups.name }}"
     tags: "{{ cloud_config.tags }}"
     rules: "{{ inbound_rules | default(omit) }}"
-    #- name: "{{ rule_name | default(omit) }}"
-    #   protocol: "{{ protocol | default(omit) }}"
-    #   priority: "{{ priority | default(omit) }}"
-    #   source_address_prefix: "{{ source | default(omit) }}"
-    #   destination_address_prefix: "{{ destination | default(omit) }}"
-    #   destination_port_range: "{{ port | default(omit) }}"        
