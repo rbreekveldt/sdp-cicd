@@ -26,7 +26,7 @@
     inbound_rules: 
      - name: "{{ inbound_rule.name }}"
        priority: "{{ inbound_rule.priority }}"
-       source_address_prefix: "{{ whitelist.ip }}"
+       source_address_prefix: "{{ whitelist }}"
   loop: "{{ cloud_config.security_groups.rules.inbound }}"
   loop_control:
     loop_var: inbound_rule
