@@ -21,8 +21,11 @@
   tags: hdi    
 
 - name: debug whitelist
+  loop: "{{ whitelist }}"
+  loop_control:
+    loop_var: whitelist_ip        
   debug:
-    msg: "{{ whitelist.name }}"
+    msg: "{{ whitelist_ip }}"
 
     #- name: Whitelist IP's
     #include_tasks: create-nsg.yml
