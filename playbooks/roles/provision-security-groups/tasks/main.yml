@@ -18,11 +18,11 @@
 - name: Get list of Whitelist IP's
   include_vars:
     dir: vars
-  loop: "{{ whitelist }}"
-  register: ip_whitelist  
   tags: hdi    
 
 - name: debug whitelist
+  loop: "{{ whitelist }}"
+  register: ip_whitelist
   debug:
     msg: "{{ ip_whitelist.ip }}"
 
