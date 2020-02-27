@@ -22,7 +22,8 @@
 
 - name: filter whitelist
   loop: "{{ whitelist }}"
-  register: ip_whitelist
+  loop_control:
+    loop_var: ip_whitelist        
   
 - name: debug whitelist
   debug:
