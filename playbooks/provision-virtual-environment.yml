@@ -26,7 +26,7 @@
       tags: dataproject
 
     - include_role:
-      name: "{{ role }}"
+        name: "{{ role }}"
       loop:
         - provision-sqlserver
         - provision-datalakestore
