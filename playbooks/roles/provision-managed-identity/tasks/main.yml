@@ -9,7 +9,7 @@
   shell: |
     az login --service-principal -u {{ client_id | quote }} -p {{ secret | quote }} -t {{ tenant | quote }}
     az account set --subscription {{ subscription_id | quote }}
-    az identity create -g "{{ cloud_config.resource_group }}" -n "mi-{{ cloud_config.hdi_cluster.short_name }}" --tags "{{ cloud_config.tags }}"
+    az identity create -g "{{ cloud_config.resource_group }}" -n "mi-{{ cloud_config.hdi_cluster.short_name }}"
 
     # Below needs jinja filtering on output value
     #- name: Get Managed Identity
