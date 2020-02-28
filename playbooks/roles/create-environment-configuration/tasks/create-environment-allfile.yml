@@ -10,7 +10,7 @@
 
 - fail:
     msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
-  when: "{{cloud_config.resource_group | length > 24 }}"
+  when: "{{ resource_group | length > 24 }}"
 
 
 - name: Get facts for all resource groups
