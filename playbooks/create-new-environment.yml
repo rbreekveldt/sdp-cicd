@@ -5,6 +5,7 @@
   
   roles:
 
-    - create-environment-configuration
+
     - create-jenkins-project
+    - create-environment-configuration
     - push-files-to-repo
