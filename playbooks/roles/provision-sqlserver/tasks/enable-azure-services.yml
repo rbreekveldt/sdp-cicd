@@ -1,0 +1,9 @@
+---
+# tasks file for provision-sql-server
+- name: Enable Azure Services on SQL server
+  azure_rm_sqlfirewallrule:
+    resource_group: "{{ cloud_config.resource_group }}"
+    server_name: "{{ cloud_config.sql_server.name }}"
+    name: Azure Services
+    start_ip_address: 0.0.0.0
+    end_ip_address: 0.0.0.0

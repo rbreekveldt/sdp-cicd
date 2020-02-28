@@ -5,7 +5,7 @@ cloud_config:
   resource_group_phase: {{ lookup('env', 'resource_group_phase') }}
   application_name: {{ lookup('env', 'application_name') }}
   data_domain: {{ lookup('env', 'data_domain') }}
-  resource_group: {{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}-rg
+  resource_group: {{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-rg
   location: "westeurope"
   admin_username: "sdp-admin"
 
@@ -128,28 +128,21 @@ cloud_config:
     name: nsg-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
     rules:
       inbound:
-        allow_ssh_inbound:
-          name: Allow_SSH
+        - name: Allow_Access
           protocol: Tcp
-          port: 22
+          port: 
+            - 22
+            - 443
           priority: 100
           source: VirtualNetwork
           destination: VirtualNetwork
 
-        allow_ping_inbound:  
-          name: Allow_Ping
-          protocol: Udp
-          port: 7
-          priority: 101
-          source: VirtualNetwork
-          destination: VirtualNetwork
-
-        allow_icmp_inbound:
-          name: Allow_Icmp
-          protocol: Icmp
+        - name: Allow_HDInsight
+          protocol: Tcp 
           priority: 102
-          source: VirtualNetwork
+          source: HDInsight.WestEurope
           destination: VirtualNetwork
+          port: 443
       
   peering:
     vnet_sdp_internal:
