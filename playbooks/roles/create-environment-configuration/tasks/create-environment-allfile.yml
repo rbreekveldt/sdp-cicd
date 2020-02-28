@@ -19,4 +19,4 @@
 
 - fail:
     msg: The resource_group already exists!
-  when:  azure_resource_groups.stdout.find("{{ cloud_config.resource_group }}") != -1
+  when:  azure_resource_groups.stdout.find("{{ resource_group }}") != -1
