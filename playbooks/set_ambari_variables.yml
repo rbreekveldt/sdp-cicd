@@ -14,7 +14,7 @@
     with_items: "{{ hostvars }}"
        
   #   - name: Add nodes to the hadoop-cluster group and groups representing the host_groups
-  #     include_tasks: "roles/add_nodes_azure/tasks/main.yml"
+  #     include_tasks: "roles/add_nodes_azure/tasks/create-vnet-prefix.yml"
   #     with_items: "{{ hostvars }}"
        
   #   - name: Initialize the ambari_groups list

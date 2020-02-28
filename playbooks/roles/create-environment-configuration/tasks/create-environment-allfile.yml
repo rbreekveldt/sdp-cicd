@@ -1,0 +1,21 @@
+---
+- name: Create Environment all file
+  template:
+    dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
+    src: all.j2
+    force: yes
+    owner: "{{ lookup('env', 'USER') }}"
+    output_encoding: utf-8
+    mode: 0644
+
+- fail:
+    msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
+  when: "{{ cloud_config.resource_group | length }}" >24
+
+- name: Get facts for all resource groups
+  azure_rm_resourcegroup_facts:
+  register: azure_resource_groups
+
+- fail:
+    msg: The resource_group already exists!
+  when:  azure_resource_groups.stdout.find("{{ cloud_config.resource_group }}") != -1
