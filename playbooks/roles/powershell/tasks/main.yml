@@ -34,4 +34,8 @@
 
 - name: Outcome of Powershellscript
   debug:
-    msg: "{{ result }}"        
+    msg: "{{ result.stdout_lines }}"
+
+- name: Errors of Powershellscript
+  debug:
+    msg: "{{ result.stderr_lines }}"

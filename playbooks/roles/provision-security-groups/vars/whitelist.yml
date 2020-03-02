@@ -1,0 +1,13 @@
+whitelist: 
+#- name: Liberty Global Schiphol-Rijk office 
+  - 213.46.252.136
+#- name: Devoteam Zaventem office
+  - 213.224.49.90
+#- name: Devoteam Den Haag office 
+  - 85.146.248.42
+#- name: Devoteam Amsterdam office
+  - 31.161.50.42
+#- name: Chellappan
+  - 84.81.185.32
+#- name: Jenkins
+  - 51.105.193.222
