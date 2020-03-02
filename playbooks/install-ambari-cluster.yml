@@ -1,18 +1,27 @@
 ---
 - name: Install Ambari cluster
-  hosts: nifi,ambari
-  gather_facts: false
+  hosts: hadoopcluster, ambariserver
+  gather_facts: no
   become: yes
   
-- import_playbook: "set-ambari-variables.yml"
-  tags: always
+  tasks:
+  - include_role:
+      name: set-ambari-variables
 
-- name: Apply the ambari-agent role to the hadoopcluster group
-  hosts: nifi
-  any_errors_fatal: true
-  become: yes
-  roles:
-    - ambari-agent
+#  - name: "Loop op onze dingens "
+#      debug: 
+#        msg: "{{ inventory_hostname[inventroy] }}"
+
+#  - name: Display all variables/facts known for a host
+#    debug:
+      #msg: "{{ hostvars[inventory_hostname] }}"
+      #verbosity: 4
+#- name: Apply the ambari-agent role to the hadoopcluster group
+#  hosts: ambariserver
+#  any_errors_fatal: true
+#  become: yes
+#  roles:
+#    - ambari-agent
 
 # - name: Apply the ambariserver role to the ambariserver group
 #   hosts: ambariserver

@@ -142,12 +142,7 @@ blueprint_dynamic:                                              # properties for
       - AMBARI_SERVER
       - INFRA_SOLR
       - NIFI_REGISTRY_MASTER
-      - NIMBUS
-      - DRPC_SERVER
       - STORM_UI_SERVERl
-      - METRICS_COLLECTOR
-      - METRICS_GRAFANA
-      - METRICS_MONITOR
   - host_group: "hdf-worker"
     clients: ['ZOOKEEPER_CLIENT', 'INFRA_SOLR_CLIENT']
     services:

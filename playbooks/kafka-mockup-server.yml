@@ -2,7 +2,7 @@
 - name: Install a kafka mockup server
   gather_facts: true
   become: yes
-  hosts: all
+  hosts: kafka
   
   roles:
     - install-kafka-mockup-server

@@ -1,22 +1,19 @@
 ---
 - name: Install Software of Data cluster
-  hosts: local
+  hosts: localhost
   gather_facts: false
   any_errors_fatal: true
   become: yes
 
 # Execute common task on all vms
-- hosts: all
-  roles:
-    - common
+#- hosts: all
+#  roles:
+#  - common
 
-- import_playbook: "set-host-groups.yml"
+- import_playbook: set-host-groups.yml
 
 - import_playbook: install-ambari-cluster.yml
-  when: cloud_config.nifi.provision and hostvars[inventory_hostname]['tags']['role'] == 'nifi'
 
-- import_playbook: sftp-mockup-server.yml
-  when: cloud_config.mockup.sftp.provision and hostvars[inventory_hostname]['tags']['role'] == 'sftp_mockup'
+#- import_playbook: sftp-mockup-server.yml
 
-- import_playbook: kafka-mockup-server.yml
-  when: cloud_config.mockup.kafka.provision and hostvars[inventory_hostname]['tags']['role'] == 'kafka_mockup'
+#- import_playbook: kafka-mockup-server.yml
