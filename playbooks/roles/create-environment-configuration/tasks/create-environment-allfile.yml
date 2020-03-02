@@ -1,7 +1,5 @@
 ---
-- name : set resource_group config path
-  set_fact:
-    resourcegroup_path:
+
 - name: Create Environment all file
   template:
     dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
@@ -10,16 +8,3 @@
     owner: "{{ lookup('env', 'USER') }}"
     output_encoding: utf-8
     mode: 0644
-
-- fail:
-    msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
-  when: resource_group | length > 24
-
-
-- name: Get facts for all resource groups
-  azure_rm_resourcegroup_facts:
-  register: azure_resource_groups
-
-- fail:
-    msg: The resource_group already exists!
-  when:  azure_resource_groups.find("{{ resource_group }}") != -1
