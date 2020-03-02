@@ -6,7 +6,7 @@
 - set_fact:
     master_resource_groupname: "{{ {{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}-rg }}"
 
-debug:
+- debug:
   msg: "{{ master_resource_groupname }}"
 
 - fail:
