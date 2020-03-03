@@ -44,6 +44,7 @@ pipeline {
                 sh 'git checkout --track origin/master'
             }
         }
+
         stage ('Create HDI environment configuration') {
             steps {
             withCredentials([azureServicePrincipal(credentialsId: '1683b46e-b612-4f6d-a717-9baed4b0dffb',
@@ -55,6 +56,7 @@ pipeline {
                  }
             }
         }
+
         stage ('Provision HDI Infrastructure for Project Azure Governance Testing') {
 
             steps {
