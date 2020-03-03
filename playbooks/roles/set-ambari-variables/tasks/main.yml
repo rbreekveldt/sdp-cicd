@@ -3,44 +3,35 @@
   set_fact:
     ambari_groups: []
 
-- name: Debug Blueprint_dynamic elementen
-  debug:
-#    msg: "{{ groups[item.host_group] }}"
-    msg: "===== {{ item.host_group |length }}"
-#  when: groups[item.host_group] is defined
-#and groups[item.host_group]|length > 0 # and 'AMBARI_SERVER' in item.services
-  loop: "{{ blueprint_dynamic|flatten(levels=1) }}" 
-  when: groups[item.host_group] is defined
+- name: Populate the ambari_groups list (dynamic blueprint)
+  set_fact:
+    ambari_groups: "{{ ambari_groups }} + [ '{{ item.host_group }}' ]"
+  loop: "{{ blueprint_dynamic }}"
+  when: groups[item.host_group] is defined and groups[item.host_group]|length > 0 and 'AMBARI_SERVER' in item.services
+  no_log: True
 
-#- name: Populate the ambari_groups list (dynamic blueprint)
-#  set_fact:
-#    ambari_groups: "{{ ambari_groups }} + [ '{{ item.host_group }}' ]"
-#    when: groups[item.host_group] is defined and groups[item.host_group]|length > 0 and 'AMBARI_SERVER' in item.services
-#    with_items: "{{ blueprint_dynamic }}"
-#    no_log: True
-#
-#- name: Fail if the ambari_groups list is empty
-#  fail:
-#    msg: "The ambari_groups list is empty. This usually means there is no 'AMBARI_SERVER' component defined in the blueprint or there is no Ansible inventory group corresponding with the name of the blueprint's host_group."
-#  when: ambari_groups|length == 0
-#
-#- name: Fail if there is no Ansible inventory group matching the blueprint's host_groups
-#  fail:
-#    msg: "The {{ item }} host_group is defined in the blueprint but there is no matching Ansible inventory group called {{ item }} or there are no hosts in this group."
-#  when: groups[item] is not defined or groups[item]|length == 0
-#  with_items: "{{ ambari_groups }}"
-#
-#- name: Add nodes to the ambariserver group
-#  add_host:
-#    name: "{{ groups[ambari_groups|first]|first }}"
-#    groups: "ambariserver"
-#
-#- name: Fail if no Ansible inventory group called 'hadoopcluster' exists
-#  fail:
-#    msg: "The 'hadoopcluster' Ansible inventory group is required before continuing. Check the inventory for possible issues."
-#  when: groups['hadoopcluster'] is not defined or (groups['hadoopcluster'] is defined and groups['hadoopcluster']|length == 0)
-#
-#- name: Fail if no Ansible inventory group called 'ambariserver' exists
-#  fail:
-#    msg: "The 'ambariserver' Ansible inventory group is required before continuing. Check the inventory for possible issues."
-#  when: groups['ambariserver'] is not defined or (groups['ambariserver'] is defined and groups['ambariserver']|length == 0)
+- name: Fail if the ambari_groups list is empty
+  fail:
+    msg: "The ambari_groups list is empty. This usually means there is no 'AMBARI_SERVER' component defined in the blueprint or there is no Ansible inventory group corresponding with the name of the blueprint's host_group."
+  when: ambari_groups|length == 0
+
+- name: Fail if there is no Ansible inventory group matching the blueprint's host_groups
+  fail:
+    msg: "The {{ item }} host_group is defined in the blueprint but there is no matching Ansible inventory group called {{ item }} or there are no hosts in this group."
+  when: groups[item] is not defined or groups[item]|length == 0
+  with_items: "{{ ambari_groups }}"
+
+- name: Add nodes to the ambariserver group
+  add_host:
+    name: "{{ groups[ambari_groups|first]|first }}"
+    groups: "ambariserver"
+
+- name: Fail if no Ansible inventory group called 'hdfmanagement' exists
+  fail:
+    msg: "The 'hdfmanagement' Ansible inventory group is required before continuing. Check the inventory for possible issues."
+  when: groups['hdfmanagement'] is not defined or (groups['hdfmanagement'] is defined and groups['hdfmanagement']|length == 0)
+
+- name: Fail if no Ansible inventory group called 'hdfworker' exists
+  fail:
+    msg: "The 'hdfworker' Ansible inventory group is required before continuing. Check the inventory for possible issues."
+  when: groups['hdfworker'] is not defined or (groups['hdfworker'] is defined and groups['hdfworker']|length == 0)
