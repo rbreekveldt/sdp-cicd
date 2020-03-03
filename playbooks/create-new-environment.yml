@@ -25,7 +25,7 @@
     - fail:
         msg: The resource_group already exists!
       when:  item.name == master_resource_groupname
-      loop: "{{ azure_resource_groups }}"
+      loop: "{{ azure_resource_groups | list }}"
   
 #  roles:
 
