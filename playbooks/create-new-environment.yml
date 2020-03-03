@@ -27,8 +27,8 @@
       when:  item.name != master_resource_groupname
       loop: "{{ azure_resource_groups.azure_resourcegroups }}"
   
-  roles:
+#  roles:
 
-    - create-jenkins-project
-    - create-environment-configuration
-    - push-files-to-repo
+#    - create-jenkins-project
+#    - create-environment-configuration
+#    - push-files-to-repo
