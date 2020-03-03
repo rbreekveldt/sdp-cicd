@@ -24,7 +24,7 @@
 
     - fail:
         msg: The resource_group already exists!
-      when:  azure_resource_groups.find("{{ master_resource_groupname }}") != -1
+      when:  azure_resource_groups.name != master_resource_groupname
   
   roles:
 
