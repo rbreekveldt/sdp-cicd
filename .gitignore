@@ -1,4 +1,7 @@
 sdp-cicd-tools.code-workspace
+<<<<<<< HEAD
 set-azure-credentials.sh
 .vscode
+=======
+>>>>>>> mkok
 .idea/
