@@ -3,11 +3,12 @@
   gather_facts: false
   connection: local
 
+  tasks:
 - set_fact:
     master_resource_groupname: "{{ {{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}-rg }}"
 
 - debug:
-  msg: "{{ master_resource_groupname }}"
+    msg: "{{ master_resource_groupname }}"
 
 - fail:
     msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
