@@ -4,9 +4,7 @@
   gather_facts: no
   become: yes
   
-  tasks:
-  - include_role:
-      name: set-ambari-variables
+- import_playbook: set-ambari-variables.yml
 
 - name: Apply the ambari-agent role to the hadoopcluster group
   hosts: ambariserver
@@ -15,9 +13,9 @@
   roles:
     - ambari-agent
 
-# - name: Apply the ambariserver role to the ambariserver group
-#   hosts: ambariserver
-#   any_errors_fatal: true
-#   become: yes
-#   roles:
-#     - ambariserver
+- name: Apply the ambariserver role to the ambariserver group
+  hosts: ambariserver
+  any_errors_fatal: true
+  become: yes
+  roles:
+    - ambari-server

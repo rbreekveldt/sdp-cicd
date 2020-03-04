@@ -1,15 +1,21 @@
 ---
-- name: Initialize the ambari_groups list
-  set_fact:
-    ambari_groups: []
+- name: Create the required Ansible groups
+  hosts: all
+  connection: local
+  gather_facts: True
+  
+  tasks:
+  - name: Initialize the ambari_groups list
+    set_fact:
+      ambari_groups: []
 
-- name: Populate the ambari_groups list (dynamic blueprint)
-  set_fact:
-    ambari_groups: "{{ ambari_groups }} + [ '{{ item.host_group }}' ]"
-  loop: "{{ blueprint_dynamic }}"
-  when: groups[item.host_group] is defined and groups[item.host_group]|length > 0 and 'AMBARI_SERVER' in item.services
-  no_log: True
-
+  - name: Populate the ambari_groups list (dynamic blueprint)
+    set_fact:
+      ambari_groups: "{{ ambari_groups }} + [ '{{ item.host_group }}' ]"
+    loop: "{{ blueprint_dynamic }}"
+    when: groups[item.host_group] is defined and groups[item.host_group]|length > 0 and 'AMBARI_SERVER' in item.services
+     no_log: True
+   
 - name: Fail if the ambari_groups list is empty
   fail:
     msg: "The ambari_groups list is empty. This usually means there is no 'AMBARI_SERVER' component defined in the blueprint or there is no Ansible inventory group corresponding with the name of the blueprint's host_group."
