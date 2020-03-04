@@ -70,6 +70,19 @@
   with_sequence: count="{{ cloud_config.mockup.kafka.nodes_count }}" format=%02x
   when: cloud_config.mockup.kafka.provision
 
+- name: Create mockup oracle vm's
+  include_tasks: create-vm.yml
+  vars:
+    flavor: "{{ cloud_config.mockup.oracle.flavor }}"
+    host_group: "oracle"
+    functionality: "{{ cloud_config.mockup.oracle.functionality }}"
+    number: "{{ local_loop }}"
+    my_tags: "{{ oracle_mockup_tags }}"
+  loop_control:
+    loop_var: local_loop
+  with_sequence: count="{{ cloud_config.mockup.oracle.nodes_count }}" format=%02x
+  when: cloud_config.mockup.oracle.provision
+
 - name: Combine sftp mockup Common tags
   set_fact:             
     sftp_mockup_tags: "{{ sftp_mockup_tags|default({}) | combine( {item.key: item.value} ) }}"

@@ -26,6 +26,14 @@ cloud_config:
       tags:
         role: sftp_mockup
 
+    oracle:
+      provision: {{ lookup('env', 'oracle') | default('false', true) }}
+      functionality: oracle
+      flavor: Standard_D3_v2
+      nodes_count: 1
+      tags:
+        role: oracle_mockup
+
   mgmt:
     provision: {{ lookup('env', 'nifi') | default('false', true) }}
     functionality: nifimgmt
