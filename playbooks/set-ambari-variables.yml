@@ -14,7 +14,7 @@
       ambari_groups: "{{ ambari_groups }} + [ '{{ item.host_group }}' ]"
     loop: "{{ blueprint_dynamic }}"
     when: groups[item.host_group] is defined and groups[item.host_group]|length > 0 and 'AMBARI_SERVER' in item.services
-     no_log: True
+    no_log: True
    
 - name: Fail if the ambari_groups list is empty
   fail:
@@ -41,7 +41,6 @@
   fail:
     msg: "The 'hdfworker' Ansible inventory group is required before continuing. Check the inventory for possible issues."
   when: groups['hdfworker'] is not defined or (groups['hdfworker'] is defined and groups['hdfworker']|length == 0)
-
 
 - name: Create the Ansible helper variables for the ambariserver
   hosts: ambariserver
