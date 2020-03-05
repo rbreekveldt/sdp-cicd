@@ -3,10 +3,6 @@
   include_vars:
     dir: vars
 
-- name: check master project
-  debug:
-    msg: "{{ master_project_name }}"        
-
 - name: Create Environment all file
   template:
     src: all.j2

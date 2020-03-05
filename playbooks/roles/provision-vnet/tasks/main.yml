@@ -5,11 +5,11 @@
     dns_servers:      
       - "10.90.80.4"
       - "10.90.80.5"      
-  include_tasks: create-vnet-prefix.yml
+  include_tasks: create-vnet.yml
   tags: hdi
   
 - name: Create HDF Virtual Network
-  include_tasks: create-vnet-prefix.yml
+  include_tasks: create-vnet.yml
   tags: dataproject
 
 - name: Create HDI Subnets
