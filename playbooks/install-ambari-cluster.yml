@@ -6,11 +6,19 @@
   
 - import_playbook: set-ambari-variables.yml
 
+- name: Apply the database role to the ambari-server group
+  hosts: ambariserver
+  any_errors_fatal: true
+  become: yes
+  roles:
+  tags: database
+
 - name: Apply the ambari-agent role to the hadoopcluster group
   hosts: ambariserver
   any_errors_fatal: true
   become: yes
   roles:
+    - database
     - ambari-agent
 
 - name: Apply the ambariserver role to the ambariserver group
