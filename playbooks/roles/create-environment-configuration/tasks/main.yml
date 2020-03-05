@@ -5,7 +5,7 @@
 
 - name: Create Environment all file
   template:
-    dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}/all"
+    dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
     src: all.j2
     force: yes
     owner: "{{ lookup('env', 'USER') }}"
@@ -14,7 +14,7 @@
 
 - name: Check if vnet already exists
   azure_rm_virtualnetwork_facts:
-    resource_group: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}-rg"
+    resource_group: "{{ master_project_name }}-rg"
     name: "vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
   register: vnetcheck
 
@@ -25,19 +25,19 @@
 
 - name: Replace anchor with vnet prefix in all file
   replace:
-    path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
+    path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
     replace: "{{ vnetcheck.virtualnetworks[0].address_prefixes[0].split('.')[:3] | join('.') }}"
     regexp: "VNET-ANCOR"
   when: vnetcheck.virtualnetworks != []
 
 - name: Check if Azure Dynamic inventory file exists
   stat:
-    path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/azure_rm.yml"
+    path: "{{ master_project_name }}/azure_rm.yml"
   register: azure_rm_file
 
 - name: Create azure dynamic inventory file
   template:
-    dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/azure_rm.yml"
+    dest: "{{ master_project_name }}/azure_rm.yml"
     src: azure_rm.j2
     force: yes
     owner: "{{ lookup('env', 'USER') }}"
