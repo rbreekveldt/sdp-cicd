@@ -17,7 +17,7 @@
     - clusterName: "{{ cloud_config.hdi_cluster.name }}"
     - clusterShortName: "{{ cloud_config.hdi_cluster.short_name }}"  
     - subscriptionId: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
-    - certificateFileDir: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}" 
+    - certificateFileDir: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}" 
     - KeyVaultName: "{{ cloud_config.azkeyvault.name }}" 
     - dataLakeStorageGen1Name: "adls{{ cloud_config.resource_group_phase }}{{ cloud_config.project_name }}{{ cloud_config.env_type }}"
     - subscriptionId_DataLake: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
