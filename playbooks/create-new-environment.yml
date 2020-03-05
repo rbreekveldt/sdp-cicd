@@ -29,7 +29,6 @@
       loop: "{{ azure_resource_groups.resourcegroups }}"
   
   roles:
-
     - create-jenkins-project
     - create-environment-configuration
     - push-files-to-repo
