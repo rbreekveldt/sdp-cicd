@@ -29,26 +29,6 @@
         state: present
       with_items: "{{ mysql_packages | join(',') }}"
 
-    - block:
-        - name: Install mysql-server on Ubuntu 16 (for hive embedded)
-          apt:
-            name: 'mysql-server'
-            update_cache: yes
-            state: present
-
-        - name: Configure mysql to listen on all interfaces (Ubuntu 16)
-          ini_file:
-            path: '/etc/mysql/mysql.conf.d/mysqld.cnf'
-            create: no
-            section: 'mysqld'
-            option: 'bind-address'
-            value: '*'
-            no_extra_spaces: yes
-            state: present
-      when: ansible_distribution|lower == "ubuntu" and ansible_distribution_major_version|int == 16
-      run_once: true
-      delegate_to: "{{ hiveserver_hosts[0] }}"
-
     - name: Configure the Ambari JDBC driver for mysql (for hive embedded)
       shell: /usr/sbin/ambari-server setup --jdbc-db=mysql --jdbc-driver={{ mysql_jdbc_location }}
       notify: Restart ambari-server
@@ -75,28 +55,6 @@
             target: /var/lib/ambari-server/resources/Ambari-DDL-Postgres-CREATE.sql
           when: ansible_os_family|lower != "suse"
 
-        - block:
-            - name: Create a .pgpass file (SUSE)
-              template:
-                src: pgpass.j2
-                dest: /tmp/.pgpass-ambari
-                mode: 0600
-                force: yes
-
-            - name: Check if the postgres schema was already uploaded (SUSE)
-              shell: "PGPASSFILE=/tmp/.pgpass-ambari psql -h {{ database_options.external_hostname|default(ansible_fqdn,true) }} -U {{ database_options.ambari_db_username }} -p {{ postgres_port }} -w -d {{ database_options.ambari_db_name }} -c 'select user_id from ambari.users limit 0;'"
-              register: check_results
-              ignore_errors: true
-
-            - name: Load the Ambari Server postgres schema (SUSE)
-              shell: "PGPASSFILE=/tmp/.pgpass-ambari psql -h {{ database_options.external_hostname|default(ansible_fqdn,true) }} -U {{ database_options.ambari_db_username }} -p {{ postgres_port }} -w -d {{ database_options.ambari_db_name }} < /var/lib/ambari-server/resources/Ambari-DDL-Postgres-CREATE.sql"
-              when: check_results is failed
-
-            - name: Delete the .pgpass file (SUSE)
-              file:
-                path: /tmp/.pgpass-ambari
-                state: absent
-          when: ansible_os_family|lower == "suse"
       when: database == "postgres"
 
     - block:

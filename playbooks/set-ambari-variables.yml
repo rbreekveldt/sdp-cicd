@@ -7,17 +7,15 @@
   tasks:
   - name: Initialize the ambari_groups list
     set_fact:
-     ambari_groups: []
+      ambari_groups: []
 
-  - block:
-    - name: Populate the ambari_groups list (dynamic blueprint)
-      set_fact:
-        ambari_groups: "{{ ambari_groups }} + [ '{{ item.host_group }}' ]"
-        when: groups[item.host_group] is defined and groups[item.host_group]|length > 0 and 'AMBARI_SERVER' in item.services
-        with_items: "{{ blueprint_dynamic }}"
-        no_log: True
-    when: blueprint_file == 'blueprint_dynamic.j2'
-
+  - name: Populate the ambari_groups list (dynamic blueprint)
+    set_fact:
+      ambari_groups: "{{ ambari_groups }} + [ '{{ item.host_group }}' ]"
+    loop: "{{ blueprint_dynamic }}"
+    when: groups[item.host_group] is defined and groups[item.host_group]|length > 0 and 'AMBARI_SERVER' in item.services
+    no_log: True
+   
   - name: Fail if the ambari_groups list is empty
     fail:
       msg: "The ambari_groups list is empty. This usually means there is no 'AMBARI_SERVER' component defined in the blueprint or there is no Ansible inventory group corresponding with the name of the blueprint's host_group."
@@ -34,17 +32,17 @@
       name: "{{ groups[ambari_groups|first]|first }}"
       groups: "ambariserver"
 
-  - name: Fail if no Ansible inventory group called 'hadoopcluster' exists
+  - name: Fail if no Ansible inventory group called 'hdfmanagement' exists
     fail:
-      msg: "The 'hadoopcluster' Ansible inventory group is required before continuing. Check the inventory for possible issues."
-    when: groups['hadoopcluster'] is not defined or (groups['hadoopcluster'] is defined and groups['hadoopcluster']|length == 0)
+      msg: "The 'hdfmanagement' Ansible inventory group is required before continuing. Check the inventory for possible issues."
+    when: groups['hdfmanagement'] is not defined or (groups['hdfmanagement'] is defined and groups['hdfmanagement']|length == 0)
 
-  - name: Fail if no Ansible inventory group called 'ambariserver' exists
+  - name: Fail if no Ansible inventory group called 'hdfworker' exists
     fail:
-      msg: "The 'ambariserver' Ansible inventory group is required before continuing. Check the inventory for possible issues."
-    when: groups['ambariserver'] is not defined or (groups['ambariserver'] is defined and groups['ambariserver']|length == 0)
+      msg: "The 'hdfworker' Ansible inventory group is required before continuing. Check the inventory for possible issues."
+    when: groups['hdfworker'] is not defined or (groups['hdfworker'] is defined and groups['hdfworker']|length == 0)
 
-- name: Create the Ansible help-er variables for the ambariserver
+- name: Create the Ansible helper variables for the ambariserver
   hosts: ambariserver
   gather_facts: False
   tasks:
@@ -244,42 +242,3 @@
             install_hdpsearch: True
           when: solr_hosts|length > 0
       when: blueprint_file == 'blueprint_dynamic.j2'
-
-
-
-# - name: Create the Ansible helper variables for all nodes
-#   hosts: hadoopcluster
-#   gather_facts: False
-#   tasks:
-#     - block:
-#         - name: Check if /usr/bin/python exists
-#           raw: bash -c "test -e /usr/bin/python && echo -n exists || echo -n"
-#           register: default_python2_path
-
-#         - name: Check if /usr/bin/python3 exists
-#           raw: bash -c "test -e /usr/bin/python3 && echo -n exists || echo -n"
-#           register: default_python3_path
-#           when: default_python2_path.stdout == ""
-
-#         - name: Fail if no standard python path could be found
-#           fail:
-#             msg: "Python could not be found at /usr/bin/python or /usr/bin/python3. If using a custom python path, set the 'ansible_python_interpreter' inventory variable to the valid path for your environment."
-#           when: default_python2_path.stdout == "" and default_python3_path.stdout != "exists"
-
-#         - name: Set the ansible_python_interpreter to /usr/bin/python3
-#           set_fact:
-#             ansible_python_interpreter: "/usr/bin/python3"
-#           when: default_python3_path.stdout is defined and default_python3_path.stdout == "exists"
-#       when: ansible_python_interpreter is not defined
-
-#     - name: Set the install_hdp variable to all nodes
-#       set_fact:
-#         install_hdp: "{{ hostvars[groups['ambariserver']|first]['install_hdp'] }}"
-
-#     - name: Set the install_hdf variable to all nodes
-#       set_fact:
-#         install_hdf: "{{ hostvars[groups['ambariserver']|first]['install_hdf'] }}"
-
-#     - name: Set the install_hdpsearch variable to all nodes
-#       set_fact:
-#         install_hdpsearch: "{{ hostvars[groups['ambariserver']|first]['install_hdpsearch'] }}"

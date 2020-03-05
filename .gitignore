@@ -1,3 +1,4 @@
 sdp-cicd-tools.code-workspace
 set-azure-credentials.sh
 .vscode
+.idea/

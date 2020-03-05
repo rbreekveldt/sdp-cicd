@@ -1,6 +1,6 @@
 ---
 # tasks file for calculate-vnet-prefix
-- include_vars: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
+- include_vars: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
 
 - block:
   - name: Get list of VNET SDP INTERNAL peerings
@@ -55,7 +55,6 @@
 
 - name: Replace anchore in all file of this data project
   replace:
-    path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/all"
+    path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
     replace: "{{ newsubnetprefix.stdout_lines[0] }}"
     regexp: "VNET-ANCOR"
-
