@@ -13,7 +13,8 @@ pipeline {
             choice(name: 'application_name', choices: 'Please select\nsecupi\nhdp\ndatagateway', description: 'Application name')
             choice(name: 'env_type', choices: 'Please select\ndev\nsit\nuat\nprd', description: 'Environment type to provision')
             string(name: 'project_description', defaultValue:'', description: 'Specify project description')
-            choice(name: 'country', choices: 'Please select\nnl\nch\nie\nde\nat', description: 'Select Country')                                                                                                                                         choice(name: 'unit', choices: 'Please select\nconsumeranalytics\ndatacentertechnology\ndatasolutions\nitsecurity\nsupplychain', description: 'Select Unit')
+            choice(name: 'country', choices: 'Please select\nnl\nch\nie\nde\nat', description: 'Select Country')
+            choice(name: 'unit', choices: 'Please select\nconsumeranalytics\ndatacentertechnology\ndatasolutions\nitsecurity\nsupplychain', description: 'Select Unit')
             booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster')
             booleanParam(defaultValue: false, name: 'kafka', description: 'Provision a Kafka mockup server')
             booleanParam(defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server')
@@ -45,7 +46,7 @@ pipeline {
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
                  ansiblePlaybook extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'hdi'
                  }
-            }
+            }   
         }
         stage ('Install ambari cluster') {
             steps {
