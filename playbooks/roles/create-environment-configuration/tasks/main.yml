@@ -32,12 +32,12 @@
 
 - name: Check if Azure Dynamic inventory file exists
   stat:
-    path: "{{ master_project_name }}/azure_rm.yml"
+    path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/azure_rm.yml"
   register: azure_rm_file
 
 - name: Create azure dynamic inventory file
   template:
-    dest: "{{ master_project_name }}/azure_rm.yml"
+    dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/azure_rm.yml"
     src: azure_rm.j2
     force: yes
     owner: "{{ lookup('env', 'USER') }}"
