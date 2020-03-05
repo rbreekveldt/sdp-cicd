@@ -218,3 +218,22 @@ cloud_config:
    
   hdf_version: '3.3.0.0'                                    # must be the 4-part full version number
   hdf_build_number: 'auto'                                  # the HDF build number from docs.hortonworks.com (if set to 'auto', Ansible will try to get it from the repository)
+  
+  blueprint_name: '{{ cloud_config.project_name }}_blueprint'     # the name of the blueprint as it will be stored in Ambari
+  blueprint_file: 'blueprint_dynamic.j2'                          # the blueprint JSON file - 'blueprint_dynamic.j2' is a Jinja2 template that generates the required JSON
+  blueprint_dynamic:                                              # properties for the dynamic blueprint - these are only used by the 'blueprint_dynamic.j2' template to generate the JSON
+    - host_group: "hdfmanagement"
+      clients: ['ZOOKEEPER_CLIENT', 'INFRA_SOLR_CLIENT']
+      services:
+        - AMBARI_SERVER
+        - INFRA_SOLR
+        - NIFI_REGISTRY_MASTER
+        - STORM_UI_SERVERl
+    - host_group: "hdfworker"
+      clients: ['ZOOKEEPER_CLIENT', 'INFRA_SOLR_CLIENT']
+      services:
+        - ZOOKEEPER_SERVER
+        - NIFI_MASTER
+        - KAFKA_BROKER
+        - SUPERVISOR
+        - METRICS_MONITOR
