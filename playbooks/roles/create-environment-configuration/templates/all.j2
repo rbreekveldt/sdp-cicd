@@ -5,7 +5,8 @@ cloud_config:
   resource_group_phase: {{ lookup('env', 'resource_group_phase') }}
   application_name: {{ lookup('env', 'application_name') }}
   data_domain: {{ lookup('env', 'data_domain') }}
-  resource_group: {{ master_project_name }}-rg  # to change namespace convention go to create-new-environment.yml where the {{ master_resource_groupname }} is defined
+  # to change namespace convention go to create-new-environment.yml where the master_project_name is defined
+  resource_group: {{ master_project_name }}-rg  
   location: "westeurope"
   admin_username: "sdp-admin"
 
