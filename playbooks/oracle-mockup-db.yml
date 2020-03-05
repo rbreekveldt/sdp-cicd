@@ -1,0 +1,8 @@
+---
+- name: Install oracle db
+  hosts: oracle
+  gather_facts: no
+  become: yes
+  roles:
+    - install-oracle-mockup-server
+      become_user: '{{ oracle_user }}'
