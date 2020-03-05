@@ -10,7 +10,7 @@
 
 
     - debug:
-        msg: "{{ master_resource_groupname }}"
+        msg: "{{ master_project_name }}"
 
     - fail:
         msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
