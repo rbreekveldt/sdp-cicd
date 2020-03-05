@@ -9,8 +9,8 @@
 
 - name: Create Environment all file
   template:
-    dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
     src: all.j2
+    dest: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
     force: yes
     owner: "{{ lookup('env', 'USER') }}"
     output_encoding: utf-8
