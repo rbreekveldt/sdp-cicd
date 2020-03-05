@@ -2,7 +2,7 @@
 - name: Push generated file to git repo
   shell: |
       git add -A 
-      git commit -m "Create environment {{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
+      git commit -m "Create environment {{ master_project_name }}"
       git push 
   args:
     chdir: "{{ lookup('env', 'WORKSPACE') }}"
