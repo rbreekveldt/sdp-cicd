@@ -15,6 +15,7 @@
 - import_playbook: oracle-mockup-db.yml
 
 - import_playbook: instal-ambari-cluster.yml
+
 #- import_playbook: sftp-mockup-server.yml
 
 #- import_playbook: kafka-mockup-server.yml
