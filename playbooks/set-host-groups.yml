@@ -5,7 +5,7 @@
   gather_facts: False
 
 - debug:
-  msg: {{ hosts }}
+    msg: {{ hosts }}
 
   tasks: 
   - name: Add nodes to the hadoopcluster group and groups representing the host_groups
