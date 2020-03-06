@@ -3,14 +3,14 @@
 - name: test variables
   debug:
     msg: "{{ item }}"
-    loop:
-      - "nic-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
-      - "{{ cloud_config.resource_group }}"
-      - "{{ cloud_config.resource_group }}"
-      - "{{ cloud_config.network.name }}"
-      - "{{ cloud_config.subnet.name }}"
-      - "{{ cloud_config.security_groups.name }}"
-      - "ipconfig-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
+  loop:
+    - "nic-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
+    - "{{ cloud_config.resource_group }}"
+    - "{{ cloud_config.resource_group }}"
+    - "{{ cloud_config.network.name }}"
+    - "{{ cloud_config.subnet.name }}"
+    - "{{ cloud_config.security_groups.name }}"
+    - "ipconfig-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
 
 - name: "Create NIC"
   azure_rm_networkinterface:
