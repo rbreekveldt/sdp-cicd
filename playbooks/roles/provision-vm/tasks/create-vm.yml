@@ -1,6 +1,6 @@
 ---
 # tasks file for create-vm
-- name: Create NIC
+- name: "Create NIC"
   azure_rm_networkinterface:
     name: "q1"
     resource_group: "{{ cloud_config.resource_group }}"
