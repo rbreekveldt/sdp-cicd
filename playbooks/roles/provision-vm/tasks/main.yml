@@ -71,7 +71,7 @@
   when: cloud_config.mockup.kafka.provision
 
 - name: Create mockup oracle vm's
-  import_tasks: create-vm.yml
+  include_tasks: create-vm.yml
   vars:
     flavor: "{{ cloud_config.mockup.oracle.flavor }}"
     host_group: "oracle"
