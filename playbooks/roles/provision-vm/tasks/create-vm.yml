@@ -2,7 +2,7 @@
 # tasks file for create-vm
 - name: Create NIC {{ functionality }} (with private IP only)
   azure_rm_networkinterface:
-    name: "nic-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}-{{ functionality }}{{ number }}"
+    name: q1
     resource_group: "{{ cloud_config.resource_group }}"
     tags: "{{ cloud_config.tags }}"
     virtual_network_name: "{{ cloud_config.network.name }}"
