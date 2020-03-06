@@ -4,10 +4,11 @@
   hosts: all
   gather_facts: False
 
-- debug:
-    msg: "{{ hosts }}"
-
-  tasks: 
+  tasks:
+  - name: check hosts
+    debug:
+      var: hostvars[inventory_hostname]
+      
   - name: Add nodes to the hadoopcluster group and groups representing the host_groups
     add_host:
       name: "{{ hostvars[item].inventory_hostname }}"
