@@ -23,7 +23,7 @@
     - include_role: 
         name: "{{ role }}"
       loop:
-   #     - provision-storageaccount
+        - provision-storageaccount
         - provision-vm
       loop_control:
         loop_var: role        
