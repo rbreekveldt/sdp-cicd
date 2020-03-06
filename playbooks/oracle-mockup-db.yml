@@ -5,4 +5,4 @@
   become: yes
   roles:
     - install-oracle-mockup-server
-      become_user: '{{ oracle_user }}'
+      
