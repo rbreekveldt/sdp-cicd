@@ -1,7 +1,7 @@
 ---   
 # Distribute host to different hostgroups to further installation
 - name: Create the required hosts groups
-  hosts: localhost
+  hosts: all
   gather_facts: False
 
   tasks:
