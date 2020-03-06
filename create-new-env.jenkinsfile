@@ -44,7 +44,7 @@ pipeline {
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
-                 ansiblePlaybook extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'hdi'
+                 ansiblePlaybook extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'hdi'
                  }
             }   
         }
@@ -55,7 +55,7 @@ pipeline {
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
-                  ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.application_name}'-'${params.env_type}'/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.application_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/ambari-cluster.yml'
+                  ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.env_type}'/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.application_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/ambari-cluster.yml'
                   }
             }
         }
