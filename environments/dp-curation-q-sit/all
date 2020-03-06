@@ -192,8 +192,8 @@ cloud_config:
     Env: sit 
     Project: q
     Phase: curation
-    Country: ch
-    Unit: itsecurity
+    Country: nl
+    Unit: consumeranalytics
 
   ########################
   ## java configuration ##
