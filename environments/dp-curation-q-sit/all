@@ -19,7 +19,7 @@ cloud_config:
         role: kafka_mockup
 
     sftp:
-      provision: false
+      provision: true
       functionality: sftp
       flavor: Standard_D3_v2
       nodes_count: 1
@@ -193,7 +193,7 @@ cloud_config:
     Project: q
     Phase: curation
     Country: nl
-    Unit: supplychain
+    Unit: itsecurity
 
   ########################
   ## java configuration ##
