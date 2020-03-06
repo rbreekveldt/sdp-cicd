@@ -1,0 +1,239 @@
+---
+cloud_config:
+  project_name: q
+  env_type: sit
+  resource_group_phase: datalake
+  application_name: hdp
+  data_domain: dp
+  resource_group: dp-datalake-q-sit-rg  
+  location: "westeurope"
+  admin_username: "sdp-admin"
+
+  mockup:
+    kafka:
+      provision: false
+      functionality: kafka
+      nodes_count: 1
+      flavor: Standard_D3_v2
+      tags:
+        role: kafka_mockup
+
+    sftp:
+      provision: false
+      functionality: sftp
+      flavor: Standard_D3_v2
+      nodes_count: 1
+      tags:
+        role: sftp_mockup
+
+    oracle:
+      provision: true
+      functionality: oracle
+      flavor: Standard_D3_v2
+      nodes_count: 1
+      tags:
+        role: oracle_mockup
+
+  mgmt:
+    provision: false
+    functionality: nifimgmt
+    nodes_count: 1
+    flavor: Standard_D3_v2
+    tags:
+      role: ambari_mgmt
+
+
+  nifi:
+    provision: false
+    functionality: nifi
+    nodes_count: 0
+    flavor: Standard_A5
+    tags:
+      role: nifi_worker
+  
+  sql_server:
+    name: dbsqlserverdatalakeqsit
+    secret_name: dbsqlserverdatalakeqsit-db-pwd
+    admin_username: sit-admin
+  
+  sql_db:
+    - name: "oozie"
+      provision: false
+
+    - name: "hive"
+      provision: false
+
+    - name: "ranger"
+      provision: false
+
+  ssh:
+    sdp_admin_publickey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtTDhaa9ldeOti2QpPjipKw4XITgoLGInLlRyS7fE2gSehL+FO75OD7LqSvKWMy7jyBuGiHi/IeneCQHgU/lq7SHSJlb09y7DfaqrR2L7Q9Yl93vPMJZIi7ujE3m1zupbFYDNK2rMAOR2tftqqn0S+iOLKvlhKH+2xZnXhI45u+JmFzOk8rgmFXnrtSUpBEDJkWZcFavoQKsVIkeU5N6/QshfoUB6qafcFfBCxY0Ix4LfGKhLh8qaUdHomZzAfo/FWvD6QIz5y/h8+YKqKzpN0Hc9Qv2s4VKkZrNODXhejUBl3onR1UzrqbD2rD/fvIx34rqbbtHoEgAxgc3dHu5kV sdp-admin@vm-dev-jumpbox
+    jenkins_publickey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoyva5cbaOKy/6lw6FBcLO8zZ0BaPwL6SzX4t9urNgY2RfBZzQIT90rrZMbNepjvkl9+AwQK8KukY9g3mYHn9sxvQEmBnn7ExZsNuLM9YZwZRFN5HpVS7OHr5QR/wt8ueYYd4xaEOvqgEmxuNIYT0P2UzXNNO+XsNtUJHJoPu1Ra+SzYQyBEGQ0+v63SVZSTVd70A7GvcyhQWsXHJptV48yfenxIS5NfU0UGKEsgPqxUF8qtxoucKsJ1s3eL7yLcnE36fBkPiSRjvV0XH+OByCV82cc+LallJqJAPdluMn7fylrYL1CbZhkxEemGs1RZQpnZjC7ZqlJHvOEIWzMSb9 jenkins@jenkins.prod.sdp.aa.liberty.biz
+        
+  storage_account:
+    name: saqhdpsit
+    type: "Standard_LRS"
+  
+  azkeyvault:
+    name: kv-dp-hdi-prd
+    uri: https://kv-dp-hdi-prd.vault.azure.net/
+    
+  network:
+    name: vnet-q-sit
+    address_prefix: "10.250.9.0/24"
+      
+  subnet:
+    - name: subnet-q-sit01
+      address_prefix: "10.250.9.0/26"
+
+    - name: subnet-q-sit02
+      address_prefix: "10.250.9.64/26"
+
+  #######################################################################################
+  #                                                                                     #
+  #                                                                                     #
+  #                                                                                     #
+  #                               POWERSHELL VARIABLES                                  # 
+  #                                                                                     #
+  #                                                                                     #
+  #                                                                                     #
+  #######################################################################################
+
+  adls_whitelist:
+    - name: Liberty_Office
+      ip: 213.46.252.136
+    - name: Jenkins_Machine
+      ip: 51.105.193.222
+
+  role_definition_id:
+    - e40ec5ca-96e0-45a2-b4ff-59039f2c2b59
+    - f1a07417-d97a-45cb-824c-7a7467783830
+
+  adls_service_principal_objectid: d696769f-50d7-4490-8865-e37228af1c7a
+
+  ad_domain_service:
+    - name: libertyglobal0.onmicrosoft.com
+      resource_path: /subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/Liberty-Global-Shared-Resources/providers/Microsoft.AAD/DomainServices/libertyglobal0.onmicrosoft.com
+
+  ad_role_definition_id: /subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/providers/Microsoft.Authorization/roleDefinitions/8d8d5a11-05d3-4bda-a417-a08778121c7c
+      
+  hdi_cluster:
+    name:  
+    dns_name: .azurehdinsight.net
+    short_name: 
+  #######################################################################################
+  #                                                                                     #
+  #                                                                                     #
+  #                                                                                     #
+  #                          END OF POWERSHELL VARIABLES                                # 
+  #                                                                                     #
+  #                                                                                     #
+  #                                                                                     #
+  #######################################################################################
+  
+  security_groups:
+    name: nsg-q-sit
+    rules:
+      inbound:
+        - name: Allow_Access
+          protocol: Tcp
+          port: 
+            - 22
+            - 443
+          priority: 100
+          source: VirtualNetwork
+          destination: VirtualNetwork
+
+        - name: Allow_HDInsight
+          protocol: Tcp 
+          priority: 102
+          source: HDInsight.WestEurope
+          destination: VirtualNetwork
+          port: 443
+      
+  peering:
+    vnet_sdp_internal:
+      initial_peering_name: vnet-q-sit-to-vnet-sdp-internal
+      remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
+      remote_resource_group: 'access-sdp-jumpbox-rg'
+      remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
+      connect_peering_name: vnet-sdp-internal-to-vnet-q-sit
+
+    vnet_sdp_external:
+      initial_peering_name: vnet-q-sit-to-vnet-sdp-external
+      remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-external'
+      remote_resource_group: 'access-sdp-jumpbox-rg'
+      remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
+      connect_peering_name: vnet-sdp-external-to-vnet-q-sit
+
+    vnet_cicd_prd:
+      initial_peering_name: vnet-q-sit-to-vnet-cicd-prd
+      remote_virtual_network: '/subscriptions/fd478270-bd64-4cf3-bb8b-53016bb2ffd6/resourceGroups/automation-cicd-prd-rg/providers/Microsoft.Network/virtualNetworks/vnet-cicd-prd'
+      remote_resource_group: 'automation-cicd-prd-rg'
+      remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
+      connect_peering_name: vnet-cicd-prd-to-vnet-q-sit
+
+    vnet_ad_domain:
+      initial_peering_name: vnet-q-sit-to-Liberty-Global-AD-domain-services
+      remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/Liberty-Global-Shared-Resources/providers/Microsoft.Network/virtualNetworks/Liberty-Global-AD-domain-services'
+      remote_resource_group: 'Liberty-Global-Shared-Resources'
+      remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
+      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-q-sit
+  
+  vm:
+    managed_disk_type: Standard_LRS
+    image:
+      offer: CentOS
+      publisher: OpenLogic
+      sku: '7.4'
+      version: latest
+      
+  tags:
+    Env: sit 
+    Project: q
+    Phase: datalake
+    Country: nl
+    Unit: itsecurity
+
+  ########################
+  ## java configuration ##
+  ########################
+
+java: 'openjdk'                                          # can be set to 'embedded', 'openjdk' or 'oraclejdk'
+oraclejdk_options:                                        # only used when java is set to 'oraclejdk'
+  base_folder: '/usr/java'                                # the folder where the Java package should be unpacked to
+  tarball_location: '/tmp/jdk-8u181-linux-x64.tar.gz'     # the location of the tarball on the remote system or on the Ansible controller
+  jce_location: '/tmp/jce_policy-8.zip'                   # the location of the JCE package on the remote system or on the Ansible controller
+  remote_files: no                                        # set to yes to indicate the files are already on the remote systems, otherwise they will be copied by Ansible from the Ansible controller
+
+###################################
+## Nifi Blueprint configuration  ##
+###################################
+
+repo_base_url: 'http://public-repo-1.hortonworks.com'
+ambari_version: '2.7.0.0'                                 # must be the 4-part full version number
+ 
+hdp_version: '3.1.4.0'                                    # must be the 4-part full version number
+hdp_build_number: 'auto'                                  # the HDP build number from docs.hortonworks.com (if set to 'auto', Ansible will try to get it from the repository)
+ 
+hdf_version: '3.3.0.0'                                    # must be the 4-part full version number
+hdf_build_number: 'auto'                                  # the HDF build number from docs.hortonworks.com (if set to 'auto', Ansible will try to get it from the repository)
+
+blueprint_name: "q_blueprint" # the name of the blueprint as it will be stored in Ambari
+blueprint_file: 'blueprint_dynamic.j2'                          # the blueprint JSON file - 'blueprint_dynamic.j2' is a Jinja2 template that generates the required JSON
+blueprint_dynamic:                                              # properties for the dynamic blueprint - these are only used by the 'blueprint_dynamic.j2' template to generate the JSON
+  - host_group: "hdfmanagement"
+    clients: ['ZOOKEEPER_CLIENT', 'INFRA_SOLR_CLIENT']
+    services:
+      - AMBARI_SERVER
+      - INFRA_SOLR
+      - NIFI_REGISTRY_MASTER
+      - STORM_UI_SERVERl
+  - host_group: "hdfworker"
+    clients: ['ZOOKEEPER_CLIENT', 'INFRA_SOLR_CLIENT']
+    services:
+      - ZOOKEEPER_SERVER
+      - NIFI_MASTER
+      - KAFKA_BROKER
+      - SUPERVISOR
+      - METRICS_MONITOR
