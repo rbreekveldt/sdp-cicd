@@ -193,7 +193,7 @@ cloud_config:
     Project: q
     Phase: curation
     Country: nl
-    Unit: consumeranalytics
+    Unit: supplychain
 
   ########################
   ## java configuration ##
