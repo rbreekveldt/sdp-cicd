@@ -23,7 +23,7 @@ pipeline {
     stages {
         stage ('Git checkout and switch to Master') {
             steps {
-                sh 'git checkout --track origin/kokm'
+                sh 'git checkout --track origin/master'
             }
         }
         stage ('Create Dataproject') {
