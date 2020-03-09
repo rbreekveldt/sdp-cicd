@@ -1,7 +1,7 @@
 <?xml version='1.1'?>
 <flow-definition plugin="workflow-job@2.35">
   <description>{{ lookup('env', 'project_description') }}</description>
-  <displayName>{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}</displayName>
+  <displayName>{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}</displayName>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.74">
@@ -24,7 +24,7 @@
         <hudson.plugins.git.extensions.impl.WipeWorkspace/>
       </extensions>
     </scm>
-    <scriptPath>environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'application_name') }}-{{ lookup('env', 'env_type') }}/Jenkinsfile</scriptPath>
+    <scriptPath>environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}/Jenkinsfile</scriptPath>
     <lightweight>true</lightweight>
   </definition>
   <triggers/>
