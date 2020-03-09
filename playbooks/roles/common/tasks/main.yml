@@ -14,7 +14,7 @@
     update_cache: yes
     state: present
   with_items: "{{ packages | join(',') }}"
-  became: true
+  become: true
 
 - name: Install Java
   include_tasks: java.yml
