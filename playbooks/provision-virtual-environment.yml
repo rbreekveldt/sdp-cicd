@@ -10,15 +10,15 @@
       set_fact:
         master_project_name: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
   tasks:
-   # - include_role:
-   #     name: "{{ role }}"
-   #   loop:
-   #     - provision-resource-group
-   #     - provision-security-groups
-   #     - provision-vnet
-   #     - provision-peering
-   #   loop_control:
-   #     loop_var: role
+    - include_role:
+        name: "{{ role }}"
+      loop:
+        - provision-resource-group
+        - provision-security-groups
+        - provision-vnet
+        - provision-peering
+      loop_control:
+        loop_var: role
   
     - include_role: 
         name: "{{ role }}"
