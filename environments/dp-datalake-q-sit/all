@@ -2,10 +2,10 @@
 cloud_config:
   project_name: q
   env_type: sit
-  resource_group_phase: curation
+  resource_group_phase: datalake
   application_name: hdp
   data_domain: dp
-  resource_group: dp-curation-q-sit-rg  
+  resource_group: dp-datalake-q-sit-rg  
   location: "westeurope"
   admin_username: "sdp-admin"
 
@@ -19,7 +19,7 @@ cloud_config:
         role: kafka_mockup
 
     sftp:
-      provision: true
+      provision: false
       functionality: sftp
       flavor: Standard_D3_v2
       nodes_count: 1
@@ -52,8 +52,8 @@ cloud_config:
       role: nifi_worker
   
   sql_server:
-    name: dbsqlservercurationqsit
-    secret_name: dbsqlservercurationqsit-db-pwd
+    name: dbsqlserverdatalakeqsit
+    secret_name: dbsqlserverdatalakeqsit-db-pwd
     admin_username: sit-admin
   
   sql_db:
@@ -80,14 +80,14 @@ cloud_config:
     
   network:
     name: vnet-q-sit
-    address_prefix: "10.250.7.0/24"
+    address_prefix: "10.250.9.0/24"
       
   subnet:
     - name: subnet-q-sit01
-      address_prefix: "10.250.7.0/26"
+      address_prefix: "10.250.9.0/26"
 
     - name: subnet-q-sit02
-      address_prefix: "10.250.7.64/26"
+      address_prefix: "10.250.9.64/26"
 
   #######################################################################################
   #                                                                                     #
@@ -191,7 +191,7 @@ cloud_config:
   tags:
     Env: sit 
     Project: q
-    Phase: curation
+    Phase: datalake
     Country: nl
     Unit: itsecurity
 

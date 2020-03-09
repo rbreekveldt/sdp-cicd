@@ -70,6 +70,16 @@
   with_sequence: count="{{ cloud_config.mockup.kafka.nodes_count }}" format=%02x
   when: cloud_config.mockup.kafka.provision
 
+- name: Combine oracle mockup Common tags
+  set_fact:
+    oracle_mockup_tags: "{{ oracle_mockup_tags|default({}) | combine( {item.key: item.value} ) }}"
+  loop: "{{ query('dict', cloud_config.tags) }}"
+
+- name: Combine oracle specific tags
+  set_fact:
+    oracle_mockup_tags: "{{ oracle_mockup_tags|default({}) | combine( {item.key: item.value} ) }}"
+  loop: "{{ query('dict', cloud_config.mockup.oracle.tags) }}"
+
 - name: Create mockup oracle vm's
   include_tasks: create-vm.yml
   vars:

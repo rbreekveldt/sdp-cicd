@@ -1,11 +1,11 @@
 ---
 cloud_config:
-  project_name: q
+  project_name: s
   env_type: sit
-  resource_group_phase: curation
+  resource_group_phase: datalake
   application_name: hdp
   data_domain: dp
-  resource_group: dp-curation-q-sit-rg  
+  resource_group: dp-datalake-s-sit-rg  
   location: "westeurope"
   admin_username: "sdp-admin"
 
@@ -19,7 +19,7 @@ cloud_config:
         role: kafka_mockup
 
     sftp:
-      provision: true
+      provision: false
       functionality: sftp
       flavor: Standard_D3_v2
       nodes_count: 1
@@ -52,8 +52,8 @@ cloud_config:
       role: nifi_worker
   
   sql_server:
-    name: dbsqlservercurationqsit
-    secret_name: dbsqlservercurationqsit-db-pwd
+    name: dbsqlserverdatalakessit
+    secret_name: dbsqlserverdatalakessit-db-pwd
     admin_username: sit-admin
   
   sql_db:
@@ -71,7 +71,7 @@ cloud_config:
     jenkins_publickey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoyva5cbaOKy/6lw6FBcLO8zZ0BaPwL6SzX4t9urNgY2RfBZzQIT90rrZMbNepjvkl9+AwQK8KukY9g3mYHn9sxvQEmBnn7ExZsNuLM9YZwZRFN5HpVS7OHr5QR/wt8ueYYd4xaEOvqgEmxuNIYT0P2UzXNNO+XsNtUJHJoPu1Ra+SzYQyBEGQ0+v63SVZSTVd70A7GvcyhQWsXHJptV48yfenxIS5NfU0UGKEsgPqxUF8qtxoucKsJ1s3eL7yLcnE36fBkPiSRjvV0XH+OByCV82cc+LallJqJAPdluMn7fylrYL1CbZhkxEemGs1RZQpnZjC7ZqlJHvOEIWzMSb9 jenkins@jenkins.prod.sdp.aa.liberty.biz
         
   storage_account:
-    name: saqhdpsit
+    name: sashdpsit
     type: "Standard_LRS"
   
   azkeyvault:
@@ -79,15 +79,15 @@ cloud_config:
     uri: https://kv-dp-hdi-prd.vault.azure.net/
     
   network:
-    name: vnet-q-sit
-    address_prefix: "10.250.7.0/24"
+    name: vnet-s-sit
+    address_prefix: "10.250.10.0/24"
       
   subnet:
-    - name: subnet-q-sit01
-      address_prefix: "10.250.7.0/26"
+    - name: subnet-s-sit01
+      address_prefix: "10.250.10.0/26"
 
-    - name: subnet-q-sit02
-      address_prefix: "10.250.7.64/26"
+    - name: subnet-s-sit02
+      address_prefix: "10.250.10.64/26"
 
   #######################################################################################
   #                                                                                     #
@@ -132,7 +132,7 @@ cloud_config:
   #######################################################################################
   
   security_groups:
-    name: nsg-q-sit
+    name: nsg-s-sit
     rules:
       inbound:
         - name: Allow_Access
@@ -153,32 +153,32 @@ cloud_config:
       
   peering:
     vnet_sdp_internal:
-      initial_peering_name: vnet-q-sit-to-vnet-sdp-internal
+      initial_peering_name: vnet-s-sit-to-vnet-sdp-internal
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
       remote_resource_group: 'access-sdp-jumpbox-rg'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: vnet-sdp-internal-to-vnet-q-sit
+      connect_peering_name: vnet-sdp-internal-to-vnet-s-sit
 
     vnet_sdp_external:
-      initial_peering_name: vnet-q-sit-to-vnet-sdp-external
+      initial_peering_name: vnet-s-sit-to-vnet-sdp-external
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-external'
       remote_resource_group: 'access-sdp-jumpbox-rg'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: vnet-sdp-external-to-vnet-q-sit
+      connect_peering_name: vnet-sdp-external-to-vnet-s-sit
 
     vnet_cicd_prd:
-      initial_peering_name: vnet-q-sit-to-vnet-cicd-prd
+      initial_peering_name: vnet-s-sit-to-vnet-cicd-prd
       remote_virtual_network: '/subscriptions/fd478270-bd64-4cf3-bb8b-53016bb2ffd6/resourceGroups/automation-cicd-prd-rg/providers/Microsoft.Network/virtualNetworks/vnet-cicd-prd'
       remote_resource_group: 'automation-cicd-prd-rg'
       remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
-      connect_peering_name: vnet-cicd-prd-to-vnet-q-sit
+      connect_peering_name: vnet-cicd-prd-to-vnet-s-sit
 
     vnet_ad_domain:
-      initial_peering_name: vnet-q-sit-to-Liberty-Global-AD-domain-services
+      initial_peering_name: vnet-s-sit-to-Liberty-Global-AD-domain-services
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/Liberty-Global-Shared-Resources/providers/Microsoft.Network/virtualNetworks/Liberty-Global-AD-domain-services'
       remote_resource_group: 'Liberty-Global-Shared-Resources'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-q-sit
+      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-s-sit
   
   vm:
     managed_disk_type: Standard_LRS
@@ -190,10 +190,10 @@ cloud_config:
       
   tags:
     Env: sit 
-    Project: q
-    Phase: curation
-    Country: nl
-    Unit: itsecurity
+    Project: s
+    Phase: datalake
+    Country: ch
+    Unit: datasolutions
 
   ########################
   ## java configuration ##
@@ -219,7 +219,7 @@ hdp_build_number: 'auto'                                  # the HDP build number
 hdf_version: '3.3.0.0'                                    # must be the 4-part full version number
 hdf_build_number: 'auto'                                  # the HDF build number from docs.hortonworks.com (if set to 'auto', Ansible will try to get it from the repository)
 
-blueprint_name: "q_blueprint" # the name of the blueprint as it will be stored in Ambari
+blueprint_name: "s_blueprint" # the name of the blueprint as it will be stored in Ambari
 blueprint_file: 'blueprint_dynamic.j2'                          # the blueprint JSON file - 'blueprint_dynamic.j2' is a Jinja2 template that generates the required JSON
 blueprint_dynamic:                                              # properties for the dynamic blueprint - these are only used by the 'blueprint_dynamic.j2' template to generate the JSON
   - host_group: "hdfmanagement"

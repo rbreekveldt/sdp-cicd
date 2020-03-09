@@ -18,7 +18,7 @@
         - provision-vnet
         - provision-peering
       loop_control:
-        loop_var: role        
+        loop_var: role
   
     - include_role: 
         name: "{{ role }}"

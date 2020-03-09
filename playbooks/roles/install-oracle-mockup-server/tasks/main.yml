@@ -1,7 +1,7 @@
 ---
 
 - name: Configure oracle mockup db
-    include_tasks: oracle-config.yml
+  include_tasks: oracle-config.yml
 
 - name: Install oracle mockup db
-    include_tasks: oracle-install.yml
+  include_tasks: oracle-install.yml
