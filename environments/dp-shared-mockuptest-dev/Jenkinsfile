@@ -1,9 +1,4 @@
 //Jenkins pipeline for the infrastructure of environment
-def azureSubscription = ""
-def inputSubscription = ""
-def skipRemainingStages = "true"
- 
-//data_domain=monitoring resource_group_phase=uat project_name=secuPI application_name=badapp env_type=nifi sdp_admin_public=~/.ssh/sdp_pub project_description='Bad project'
  
 pipeline {
     agent any
