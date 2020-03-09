@@ -6,15 +6,16 @@
   become: yes
 
 # Execute common task on all vms
-#- hosts: all
-#  roles:
-#  - common
+- hosts: all
+  roles:
+  - common
 
 - import_playbook: set-host-groups.yml
 
 - import_playbook: oracle-mockup-db.yml
 
 - import_playbook: instal-ambari-cluster.yml
-#- import_playbook: sftp-mockup-server.yml
 
-#- import_playbook: kafka-mockup-server.yml
+- import_playbook: sftp-mockup-server.yml
+
+- import_playbook: kafka-mockup-server.yml
