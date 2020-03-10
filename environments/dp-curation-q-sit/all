@@ -19,7 +19,7 @@ cloud_config:
         role: kafka_mockup
 
     sftp:
-      provision: true
+      provision: false
       functionality: sftp
       flavor: Standard_D3_v2
       nodes_count: 1
@@ -80,14 +80,14 @@ cloud_config:
     
   network:
     name: vnet-q-sit
-    address_prefix: "10.250.7.0/24"
+    address_prefix: "10.250.12.0/24"
       
   subnet:
     - name: subnet-q-sit01
-      address_prefix: "10.250.7.0/26"
+      address_prefix: "10.250.12.0/26"
 
     - name: subnet-q-sit02
-      address_prefix: "10.250.7.64/26"
+      address_prefix: "10.250.12.64/26"
 
   #######################################################################################
   #                                                                                     #
