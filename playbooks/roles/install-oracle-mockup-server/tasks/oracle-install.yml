@@ -26,7 +26,7 @@
 
 # ==> execute installation
 - name: Install Product
-  command: "sudo {{ installation_folder}} -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ installation_folder }}/db_install.rsp"
+  command: "{{ installation_folder}}/database/runInstaller -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ installation_folder }}/db_install.rsp"
 
 # ==> execute Inventory command as root
 - name: Execute Inventoty root command
@@ -41,13 +41,17 @@
 # ==> TODO: Create a new role for creating the database
 # ==> Create Listener TODO: Parameterize port, name etc
 - name: copy listener response file
-  template: src=netca.rsp.j2 dest={{ installation_folder }}/netca.rsp
+  template:
+    src: netca.rsp.j2
+    dest: "{{ installation_folder }}/netca.rsp"
 
 - name: Create listener using netca
   command: '{{ oracle_home }}/bin/netca -silent -responseFile {{ installation_folder }}/netca.rsp'
 
 - name: copy response file for dbca
-  template: src=dbca.rsp.j2 dest={{ installation_folder }}/dbca.rsp
+  template:
+    src: dbca.rsp.j2
+    dest: "{{ installation_folder }}/dbca.rsp"
 
 - name: create database
   command: '{{ oracle_home }}/bin/dbca -silent -responseFile {{ installation_folder }}/dbca.rsp'
