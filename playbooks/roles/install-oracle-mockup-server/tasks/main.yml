@@ -5,3 +5,4 @@
 
 - name: Install oracle mockup db
   include_tasks: oracle-install.yml
+  become_user: oracle
