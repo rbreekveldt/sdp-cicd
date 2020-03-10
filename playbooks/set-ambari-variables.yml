@@ -19,7 +19,7 @@
   - name: Fail if the ambari_groups list is empty
     fail:
       msg: "The ambari_groups list is empty. This usually means there is no 'AMBARI_SERVER' component defined in the blueprint or there is no Ansible inventory group corresponding with the name of the blueprint's host_group."
-    when: ambari_groups|length == 0
+    when: ambari_groups|length == 0 and cloud_config.nifi.provision = true
 
   - name: Fail if there is no Ansible inventory group matching the blueprint's host_groups
     fail:
