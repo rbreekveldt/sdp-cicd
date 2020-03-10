@@ -32,6 +32,11 @@
   command: "{{ installation_folder}}/database/runInstaller -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ installation_folder }}/db_install.rsp"
   become_user: "{{ oracle_user }}"
 
+# Pause 3 min
+- name: Pause 3 min during installation 
+  pause:
+    minutes: 3
+
 #==> execute Inventory command as root
 - name: Execute Inventoty root command
   command: '{{ inventory_location }}/orainstRoot.sh'
