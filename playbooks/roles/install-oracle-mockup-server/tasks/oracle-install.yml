@@ -58,16 +58,16 @@
 
 - name: create database
   command: '{{ oracle_home }}/bin/dbca -silent -responseFile {{ installation_folder }}/dbca.rsp'
-
+  become_user: "{{ oracle_user }}"
 - name: create oracle home variable
   lineinfile: dest='/home/{{ oracle_user }}/.bashrc' line='export ORACLE_HOME={{ oracle_home }}'
-
+  become_user: "{{ oracle_user }}"
 - name: create oracle sid variable
   lineinfile: dest='/home/{{ oracle_user }}/.bashrc' line='export ORACLE_SID={{ oracle_sid }}'
-
+  become_user: "{{ oracle_user }}"
 - name: add oracle home bin folder
   lineinfile: dest='/home/{{ oracle_user }}/.bashrc' line='export PATH=$PATH:$ORACLE_HOME/bin'
-
+  become_user: "{{ oracle_user }}"
 - name: change oratab
   lineinfile: dest='/etc/oratab' regexp='^{{ oracle_sid }}:{{ oracle_home }}:N' line='{{ oracle_sid }}:{{ oracle_home }}:Y'
   become_user: root
@@ -82,9 +82,12 @@
 
 - name: Create trigger for autostart pluggable db's
   copy: src=start-pluggable-dbs.sh dest={{ installation_folder }}/ mode=755
+  become_user: "{{ oracle_user }}"
   tags:
     - start-pluggable
 
+
 - shell: '{{ installation_folder }}/start-pluggable-dbs.sh'
+  become_user: "{{ oracle_user }}"
   tags:
     - start-pluggable
