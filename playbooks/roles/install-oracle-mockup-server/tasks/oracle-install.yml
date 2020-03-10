@@ -18,7 +18,7 @@
 - name: Extract installation files
   command: 'unzip -o {{ installation_folder }}/{{ item }} -d {{ installation_folder }}/'
   with_items: '{{ installer_archives }}'
-  
+
 
 # ==> generate response file
 - name: Generate the response file for software only installation
@@ -91,7 +91,6 @@
   copy: src=start-pluggable-dbs.sh dest={{ installation_folder }}/ mode=755
   tags:
     - start-pluggable
-
 
 - shell: '{{ installation_folder }}/start-pluggable-dbs.sh'
   tags:
