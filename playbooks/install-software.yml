@@ -12,6 +12,7 @@
 
 - import_playbook: set-host-groups.yml
 
+
 - import_playbook: install-ambari-cluster.yml
   when: cloud_config.nifi.provision
 

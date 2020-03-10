@@ -1,34 +1,38 @@
 ################################################################################
 # ==> Tasks for oracle-install role. This role installs the Oracle Database
 # ==> 12c software, configure a database, listener and ex express
-# ==> author: Stavros Kalapothas
 ################################################################################
 
 - name: Create folder for installation files
   file: state=directory path={{ installation_folder }}
+
 # ==> Copy installer files
 - name: Copy installer files
-  copy: src={{ item }} dest='{{ installation_folder }}/'
+  copy:
+    src: "/var/lib/jenkins/oracle_software/{{ item }}"
+    dest: "{{ installation_folder }}"
   with_items: '{{ installer_archives }}'
+
 
 # ==> extract files
 - name: Extract installation files
   command: 'unzip -o {{ installation_folder }}/{{ item }} -d {{ installation_folder }}/'
   with_items: '{{ installer_archives }}'
 
+
 # ==> generate response file
 - name: Generate the response file for software only installation
-  template: src=db_install.rsp.j2 dest="{{ installation_folder }}/db_install.rsp"
-
-# ==> clean existing config entries (if any)
-- name: clean existing config entries (if any)
-  command: "sed -i '/OraDB12Home/d' {{ oracle_inventoryloc }}/ContentsXML/inventory.xml"
+  template:
+    src: db_install.rsp.j2
+    dest: "{{ installation_folder }}/db_install.rsp"
+    force: yes
 
 # ==> execute installation
 - name: Install Product
   command: "{{ installation_folder}}/database/runInstaller -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ installation_folder }}/db_install.rsp"
+  become_user: "{{ oracle_user }}"
 
-# ==> execute Inventory command as root
+#==> execute Inventory command as root
 - name: Execute Inventoty root command
   command: '{{ inventory_location }}/orainstRoot.sh'
   become_user: root
@@ -41,25 +45,35 @@
 # ==> TODO: Create a new role for creating the database
 # ==> Create Listener TODO: Parameterize port, name etc
 - name: copy listener response file
-  template: src=netca.rsp.j2 dest={{ installation_folder }}/netca.rsp
+  template:
+    src: netca.rsp.j2
+    dest: "{{ installation_folder }}/netca.rsp"
 
 - name: Create listener using netca
   command: '{{ oracle_home }}/bin/netca -silent -responseFile {{ installation_folder }}/netca.rsp'
+  become: yes
+  become_user: "{{ oracle_user }}"
 
 - name: copy response file for dbca
-  template: src=dbca.rsp.j2 dest={{ installation_folder }}/dbca.rsp
+  template:
+    src: dbca.rsp.j2
+    dest: "{{ installation_folder }}/dbca.rsp"
 
 - name: create database
   command: '{{ oracle_home }}/bin/dbca -silent -responseFile {{ installation_folder }}/dbca.rsp'
+  become_user: "{{ oracle_user }}"
 
 - name: create oracle home variable
   lineinfile: dest='/home/{{ oracle_user }}/.bashrc' line='export ORACLE_HOME={{ oracle_home }}'
+  become_user: "{{ oracle_user }}"
 
 - name: create oracle sid variable
   lineinfile: dest='/home/{{ oracle_user }}/.bashrc' line='export ORACLE_SID={{ oracle_sid }}'
+  become_user: "{{ oracle_user }}"
 
 - name: add oracle home bin folder
   lineinfile: dest='/home/{{ oracle_user }}/.bashrc' line='export PATH=$PATH:$ORACLE_HOME/bin'
+  become_user: "{{ oracle_user }}"
 
 - name: change oratab
   lineinfile: dest='/etc/oratab' regexp='^{{ oracle_sid }}:{{ oracle_home }}:N' line='{{ oracle_sid }}:{{ oracle_home }}:Y'
