@@ -8,7 +8,7 @@
   file: state=directory path={{ installation_folder }}
 # ==> Copy installer files
 - name: Copy installer files
-  copy: src={{ item }} dest='{{ installation_folder }}/'
+  copy: src=/var/lib/jenkins/oracle_software/'{{ item }}' dest='{{ installation_folder }}'
   with_items: '{{ installer_archives }}'
 
 # ==> extract files

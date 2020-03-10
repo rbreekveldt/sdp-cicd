@@ -72,8 +72,8 @@ extra_groups:
 oracle_base: /oracle/app
 
 installer_archives:
-  - "/var/lib/jenkins/oracle_software/linuxamd64_12102_grid_1of2.zip"
-  - "/var/lib/jenkins/oracle_software/linuxamd64_12102_grid_2of2.zip"
+  - "linuxamd64_12102_grid_1of2.zip"
+  - "linuxamd64_12102_grid_2of2.zip"
 
 oracle_install_version: "12102"
 dbhome_name: "dbhome_1"
