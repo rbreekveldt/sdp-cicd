@@ -1,7 +1,6 @@
 ################################################################################
 # ==> Tasks for oracle-install role. This role installs the Oracle Database
 # ==> 12c software, configure a database, listener and ex express
-# ==> author: Stavros Kalapothas
 ################################################################################
 
 - name: Create folder for installation files
@@ -9,7 +8,7 @@
 # ==> Copy installer files
 - name: Copy installer files
   copy:
-    src: /var/lib/jenkins/oracle_software/"{{ item }}"
+    src: "/var/lib/jenkins/oracle_software/{{ item }}"
     dest: "{{ installation_folder }}"
   with_items: '{{ installer_archives }}'
 
