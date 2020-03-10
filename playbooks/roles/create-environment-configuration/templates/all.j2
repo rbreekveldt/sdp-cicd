@@ -118,9 +118,9 @@ cloud_config:
   ad_role_definition_id: /subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/providers/Microsoft.Authorization/roleDefinitions/8d8d5a11-05d3-4bda-a417-a08778121c7c
       
   hdi_cluster:
-    name: {{ lookup('env', 'cluster_name') }} 
-    dns_name: {{ lookup('env', 'cluster_name') }}.azurehdinsight.net
-    short_name: {{ lookup('env', 'short_cluster_name') }}
+    name: {{ lookup('env', 'cluster_name') | default(omit) }} 
+    dns_name: {{ lookup('env', 'cluster_name') | default(omit) }}.azurehdinsight.net
+    short_name: {{ lookup('env', 'short_cluster_name') | default(omit) }}
   #######################################################################################
   #                                                                                     #
   #                                                                                     #
