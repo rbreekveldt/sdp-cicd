@@ -22,6 +22,7 @@
   template:
     src: db_install.rsp.j2
     dest: "{{ installation_folder }}/db_install.rsp"
+    force: yes
 
 # ==> execute installation
 - name: Install Product
