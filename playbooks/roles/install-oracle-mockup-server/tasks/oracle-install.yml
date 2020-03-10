@@ -12,13 +12,13 @@
     src: "/var/lib/jenkins/oracle_software/{{ item }}"
     dest: "{{ installation_folder }}"
   with_items: '{{ installer_archives }}'
-  become_user: "{{ oracle_user }}"
+
 
 # ==> extract files
 - name: Extract installation files
   command: 'unzip -o {{ installation_folder }}/{{ item }} -d {{ installation_folder }}/'
   with_items: '{{ installer_archives }}'
-  become_user: "{{ oracle_user }}"
+  
 
 # ==> generate response file
 - name: Generate the response file for software only installation
