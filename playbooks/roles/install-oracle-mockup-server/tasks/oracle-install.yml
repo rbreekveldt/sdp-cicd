@@ -3,26 +3,26 @@
 # ==> 12c software, configure a database, listener and ex express
 ################################################################################
 
-- name: Create folder for installation files
-  file: state=directory path={{ installation_folder }}
+#- name: Create folder for installation files
+#  file: state=directory path={{ installation_folder }}
 # ==> Copy installer files
-- name: Copy installer files
-  copy:
-    src: "/var/lib/jenkins/oracle_software/{{ item }}"
-    dest: "{{ installation_folder }}"
-  with_items: '{{ installer_archives }}'
+#- name: Copy installer files
+#  copy:
+#    src: "/var/lib/jenkins/oracle_software/{{ item }}"
+#    dest: "{{ installation_folder }}"
+#  with_items: '{{ installer_archives }}'
 
 # ==> extract files
-- name: Extract installation files
-  command: 'unzip -o {{ installation_folder }}/{{ item }} -d {{ installation_folder }}/'
-  with_items: '{{ installer_archives }}'
+#- name: Extract installation files
+#  command: 'unzip -o {{ installation_folder }}/{{ item }} -d {{ installation_folder }}/'
+#  with_items: '{{ installer_archives }}'
 
 # ==> generate response file
-- name: Generate the response file for software only installation
-  template:
-    src: db_install.rsp.j2
-    dest: "{{ installation_folder }}/db_install.rsp"
-    force: yes
+#- name: Generate the response file for software only installation
+#  template:
+#    src: db_install.rsp.j2
+#    dest: "{{ installation_folder }}/db_install.rsp"
+#    force: yes
 
 # ==> execute installation
 #- name: Install Product
