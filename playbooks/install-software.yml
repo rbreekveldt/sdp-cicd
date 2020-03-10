@@ -7,8 +7,8 @@
 
 # Execute common task on all vms
 - hosts: all
-  roles:
-  - common
+  #roles:
+  #- common
 
 - import_playbook: set-host-groups.yml
 
