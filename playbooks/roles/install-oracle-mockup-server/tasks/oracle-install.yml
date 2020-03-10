@@ -25,28 +25,31 @@
     force: yes
 
 # ==> execute installation
-- name: Install Product
-  command: "{{ installation_folder}}/database/runInstaller -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ installation_folder }}/db_install.rsp"
-  become_user: "{{ oracle_user }}"
+#- name: Install Product
+#  command: "{{ installation_folder}}/database/runInstaller -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ installation_folder }}/db_install.rsp"
+#  become_user: "{{ oracle_user }}"
+
 # ==> execute Inventory command as root
-- name: Execute Inventoty root command
-  command: '{{ inventory_location }}/orainstRoot.sh'
-  become_user: root
+#- name: Execute Inventoty root command
+#  command: '{{ inventory_location }}/orainstRoot.sh'
+#  become_user: root
 
 # ==> execute DB home command as root
-- name: Execute DB home rfoot command
-  command: '{{ oracle_home }}/root.sh'
-  become_user: root
+#- name: Execute DB home rfoot command
+#  command: '{{ oracle_home }}/root.sh'
+#  become_user: root
 
 # ==> TODO: Create a new role for creating the database
 # ==> Create Listener TODO: Parameterize port, name etc
-- name: copy listener response file
-  template:
-    src: netca.rsp.j2
-    dest: "{{ installation_folder }}/netca.rsp"
+#- name: copy listener response file
+#  template:
+#    src: netca.rsp.j2
+#    dest: "{{ installation_folder }}/netca.rsp"
 
 - name: Create listener using netca
   command: '{{ oracle_home }}/bin/netca -silent -responseFile {{ installation_folder }}/netca.rsp'
+  become: yes
+  become_user: "{{ oracle_user }}"
 
 - name: copy response file for dbca
   template:
