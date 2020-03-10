@@ -21,10 +21,6 @@
 - name: Generate the response file for software only installation
   template: src=db_install.rsp.j2 dest="{{ installation_folder }}/db_install.rsp"
 
-# ==> clean existing config entries (if any)
-- name: clean existing config entries (if any)
-  command: "sed -i '/OraDB12Home/d' {{ oracle_inventoryloc }}/ContentsXML/inventory.xml"
-
 # ==> execute installation
 - name: Install Product
   command: "{{ installation_folder}}/database/runInstaller -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ installation_folder }}/db_install.rsp"
