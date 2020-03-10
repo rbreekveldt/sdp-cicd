@@ -27,7 +27,7 @@
 # ==> execute installation
 - name: Install Product
   command: "{{ installation_folder}}/database/runInstaller -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ installation_folder }}/db_install.rsp"
-
+  become_user: {{ oracle_user }}
 # ==> execute Inventory command as root
 - name: Execute Inventoty root command
   command: '{{ inventory_location }}/orainstRoot.sh'
