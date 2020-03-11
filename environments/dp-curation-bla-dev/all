@@ -80,14 +80,14 @@ cloud_config:
     
   network:
     name: vnet-bla-dev
-    address_prefix: "10.250.15.0/24"
+    address_prefix: "10.250.21.0/24"
       
   subnet:
     - name: subnet-bla-dev01
-      address_prefix: "10.250.15.0/26"
+      address_prefix: "10.250.21.0/26"
 
     - name: subnet-bla-dev02
-      address_prefix: "10.250.15.64/26"
+      address_prefix: "10.250.21.64/26"
 
   #######################################################################################
   #                                                                                     #
