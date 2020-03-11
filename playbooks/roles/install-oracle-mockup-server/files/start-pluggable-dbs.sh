@@ -2,7 +2,7 @@
 
 . /home/oracle/.bashrc
 
-sqlplus / as oracle << EOF
+sqlplus as / sysdba << EOF
 CREATE OR REPLACE TRIGGER  startup_pluggable_dbs
 AFTER STARTUP ON DATABASE
 BEGIN

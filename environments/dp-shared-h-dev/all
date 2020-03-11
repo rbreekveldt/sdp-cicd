@@ -1,11 +1,11 @@
 ---
 cloud_config:
-  project_name: bla
+  project_name: h
   env_type: dev
-  resource_group_phase: curation
+  resource_group_phase: shared
   application_name: hdp
   data_domain: dp
-  resource_group: dp-curation-bla-dev-rg  
+  resource_group: dp-shared-h-dev-rg  
   location: "westeurope"
   admin_username: "sdp-admin"
 
@@ -52,8 +52,8 @@ cloud_config:
       role: nifi_worker
   
   sql_server:
-    name: dbsqlservercurationbladev
-    secret_name: dbsqlservercurationbladev-db-pwd
+    name: dbsqlserversharedhdev
+    secret_name: dbsqlserversharedhdev-db-pwd
     admin_username: dev-admin
   
   sql_db:
@@ -71,7 +71,7 @@ cloud_config:
     jenkins_publickey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoyva5cbaOKy/6lw6FBcLO8zZ0BaPwL6SzX4t9urNgY2RfBZzQIT90rrZMbNepjvkl9+AwQK8KukY9g3mYHn9sxvQEmBnn7ExZsNuLM9YZwZRFN5HpVS7OHr5QR/wt8ueYYd4xaEOvqgEmxuNIYT0P2UzXNNO+XsNtUJHJoPu1Ra+SzYQyBEGQ0+v63SVZSTVd70A7GvcyhQWsXHJptV48yfenxIS5NfU0UGKEsgPqxUF8qtxoucKsJ1s3eL7yLcnE36fBkPiSRjvV0XH+OByCV82cc+LallJqJAPdluMn7fylrYL1CbZhkxEemGs1RZQpnZjC7ZqlJHvOEIWzMSb9 jenkins@jenkins.prod.sdp.aa.liberty.biz
         
   storage_account:
-    name: sablahdpdev
+    name: sahhdpdev
     type: "Standard_LRS"
   
   azkeyvault:
@@ -79,15 +79,15 @@ cloud_config:
     uri: https://kv-dp-hdi-prd.vault.azure.net/
     
   network:
-    name: vnet-bla-dev
-    address_prefix: "10.250.21.0/24"
+    name: vnet-h-dev
+    address_prefix: "10.250.20.0/24"
       
   subnet:
-    - name: subnet-bla-dev01
-      address_prefix: "10.250.21.0/26"
+    - name: subnet-h-dev01
+      address_prefix: "10.250.20.0/26"
 
-    - name: subnet-bla-dev02
-      address_prefix: "10.250.21.64/26"
+    - name: subnet-h-dev02
+      address_prefix: "10.250.20.64/26"
 
   #######################################################################################
   #                                                                                     #
@@ -118,9 +118,9 @@ cloud_config:
   ad_role_definition_id: /subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/providers/Microsoft.Authorization/roleDefinitions/8d8d5a11-05d3-4bda-a417-a08778121c7c
       
   hdi_cluster:
-    name:  
-    dns_name: .azurehdinsight.net
-    short_name: 
+    name: bla 
+    dns_name: bla.azurehdinsight.net
+    short_name: bla
   #######################################################################################
   #                                                                                     #
   #                                                                                     #
@@ -132,7 +132,7 @@ cloud_config:
   #######################################################################################
   
   security_groups:
-    name: nsg-bla-dev
+    name: nsg-h-dev
     rules:
       inbound:
         - name: Allow_Access
@@ -153,32 +153,32 @@ cloud_config:
       
   peering:
     vnet_sdp_internal:
-      initial_peering_name: vnet-bla-dev-to-vnet-sdp-internal
+      initial_peering_name: vnet-h-dev-to-vnet-sdp-internal
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
       remote_resource_group: 'access-sdp-jumpbox-rg'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: vnet-sdp-internal-to-vnet-bla-dev
+      connect_peering_name: vnet-sdp-internal-to-vnet-h-dev
 
     vnet_sdp_external:
-      initial_peering_name: vnet-bla-dev-to-vnet-sdp-external
+      initial_peering_name: vnet-h-dev-to-vnet-sdp-external
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-external'
       remote_resource_group: 'access-sdp-jumpbox-rg'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: vnet-sdp-external-to-vnet-bla-dev
+      connect_peering_name: vnet-sdp-external-to-vnet-h-dev
 
     vnet_cicd_prd:
-      initial_peering_name: vnet-bla-dev-to-vnet-cicd-prd
+      initial_peering_name: vnet-h-dev-to-vnet-cicd-prd
       remote_virtual_network: '/subscriptions/fd478270-bd64-4cf3-bb8b-53016bb2ffd6/resourceGroups/automation-cicd-prd-rg/providers/Microsoft.Network/virtualNetworks/vnet-cicd-prd'
       remote_resource_group: 'automation-cicd-prd-rg'
       remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
-      connect_peering_name: vnet-cicd-prd-to-vnet-bla-dev
+      connect_peering_name: vnet-cicd-prd-to-vnet-h-dev
 
     vnet_ad_domain:
-      initial_peering_name: vnet-bla-dev-to-Liberty-Global-AD-domain-services
+      initial_peering_name: vnet-h-dev-to-Liberty-Global-AD-domain-services
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/Liberty-Global-Shared-Resources/providers/Microsoft.Network/virtualNetworks/Liberty-Global-AD-domain-services'
       remote_resource_group: 'Liberty-Global-Shared-Resources'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-bla-dev
+      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-h-dev
   
   vm:
     managed_disk_type: Standard_LRS
@@ -190,8 +190,8 @@ cloud_config:
       
   tags:
     Env: dev 
-    Project: bla
-    Phase: curation
+    Project: h
+    Phase: shared
     Country: nl
     Unit: itsecurity
 
@@ -219,7 +219,7 @@ hdp_build_number: 'auto'                                  # the HDP build number
 hdf_version: '3.3.0.0'                                    # must be the 4-part full version number
 hdf_build_number: 'auto'                                  # the HDF build number from docs.hortonworks.com (if set to 'auto', Ansible will try to get it from the repository)
 
-blueprint_name: "bla_blueprint" # the name of the blueprint as it will be stored in Ambari
+blueprint_name: "h_blueprint" # the name of the blueprint as it will be stored in Ambari
 blueprint_file: 'blueprint_dynamic.j2'                          # the blueprint JSON file - 'blueprint_dynamic.j2' is a Jinja2 template that generates the required JSON
 blueprint_dynamic:                                              # properties for the dynamic blueprint - these are only used by the 'blueprint_dynamic.j2' template to generate the JSON
   - host_group: "hdfmanagement"
