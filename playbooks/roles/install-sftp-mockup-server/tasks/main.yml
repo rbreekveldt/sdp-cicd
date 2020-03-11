@@ -40,7 +40,7 @@
 - name: SFTP-Server | Create working directory for each user
   file:
     path: "{{ sftp_directories }}/{{ item.name }}/work"
-    owner: "root"
+    owner: "{{ item.name }}"
     group: "{{ sftp_group }}"
     mode: 0755
     state: directory
