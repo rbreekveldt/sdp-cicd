@@ -6,16 +6,17 @@
   file:
     path: "{{ sftp_directories }}"
     owner: root
-    mode: 0777
+    mode: 0701
     state: directory
-    recurse: yes
+    recurse: no
      
 - name: SFTP-Server | Correct ownership and permission of home directories
   file:
     path: "{{ sftp_directories }}/sftp"
     owner: root
     state: directory
-    recurse: yes
+    mode: 0701
+    recurse: no
      
 # Creates group for SFTP users.         
 - name: SFTP-Server | Create sftp user group
@@ -30,7 +31,7 @@
     group: "{{ sftp_group }}"
     append: "yes"
     shell: "/sbin/nologin"
-    home: "/{{ item.name }}"
+    home: "/{{ item.name }}/work"
     create_home: yes
     state: present
     password: "{{ item.password | password_hash('sha512') }}"
@@ -38,32 +39,32 @@
      
 - name: SFTP-Server | Create working directory for each user
   file:
-    path: "{{ sftp_directories }}/{{ item.name }}"
+    path: "{{ sftp_directories }}/{{ item.name }}/work"
     owner: "root"
     group: "{{ sftp_group }}"
-    mode: 0777
+    mode: 0755
     state: directory
     recurse: yes
   with_items: "{{ sftp_users }}"
      
-- name: SFTP-Server | Change directory modeCreate working directory for each user
-  file:
-    path: "{{ sftp_directories }}/{{ item.name }}/work"
-    owner: "{{ item.name }}"
-    group: "{{ sftp_group }}"
-    mode: 0777
-    state: directory
-    recurse: yes
-  with_items: "{{ sftp_users }}"
+# - name: SFTP-Server | Change directory modeCreate working directory for each user
+#   file:
+#     path: "{{ sftp_directories }}/{{ item.name }}/work"
+#     owner: "{{ item.name }}"
+#     group: "{{ sftp_group }}"
+#     mode: 07
+#     state: directory
+#     recurse: yes
+#   with_items: "{{ sftp_users }}"
     
     
-- name: SFTP-Server | Correct ownership and permission of home directories
-  file:
-    path: "/data/sftp"
-    owner: root
-    state: directory
-    recurse: yes
-  with_items: "{{ sftp_users }}"
+# - name: SFTP-Server | Correct ownership and permission of home directories
+#   file:
+#     path: "/data/sftp"
+#     owner: root
+#     state: directory
+#     recurse: yes
+#   with_items: "{{ sftp_users }}"
     
 - name: SFTP-Server | Add sshd_config block
   blockinfile:
