@@ -98,5 +98,6 @@
     - start-pluggable
 
 - shell: '{{ installation_folder }}/start-pluggable-dbs.sh'
+  become_user: "{{ oracle_user }}"
   tags:
     - start-pluggable
