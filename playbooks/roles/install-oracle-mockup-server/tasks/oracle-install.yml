@@ -97,7 +97,8 @@
   tags:
     - start-pluggable
 
-- shell: '{{ installation_folder }}/start-pluggable-dbs.sh'
+- name: login to Oracle
+  shell: '{{ installation_folder }}/start-pluggable-dbs.sh'
   become_user: "{{ oracle_user }}"
   tags:
     - start-pluggable
