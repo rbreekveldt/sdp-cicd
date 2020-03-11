@@ -6,7 +6,7 @@
   file:
     path: "{{ sftp_directories }}"
     owner: root
-    mode: 0701
+    mode: 0777
     state: directory
     recurse: yes
      
@@ -41,6 +41,7 @@
     path: "{{ sftp_directories }}/{{ item.name }}"
     owner: "root"
     group: "{{ sftp_group }}"
+    mode: 0777
     state: directory
     recurse: yes
   with_items: "{{ sftp_users }}"
@@ -50,6 +51,7 @@
     path: "{{ sftp_directories }}/{{ item.name }}/work"
     owner: "{{ item.name }}"
     group: "{{ sftp_group }}"
+    mode: 0777
     state: directory
     recurse: yes
   with_items: "{{ sftp_users }}"
