@@ -23,8 +23,27 @@
   group:
     name: "{{ sftp_group_name }}"
     state: present
-     
-# Create each SFTP user with NO home directory, and add to SFTP group.
+
+- name: SFTP-Server | Create home directory for each user
+  file:
+    path: "{{ sftp_directories }}/{{ item.name }}"
+    owner: root
+    group: "{{ sftp_group }}"
+    mode: 0755
+    state: directory
+  with_items: "{{ sftp_users }}"
+
+- name: SFTP-Server | Create working directory for each user
+  file:
+    path: "{{ sftp_directories }}/{{ item.name }}/work"
+    owner: "{{ item.name }}"
+    group: "{{ sftp_group }}"
+    mode: 0755
+    state: directory
+    recurse: yes
+  with_items: "{{ sftp_users }}"
+
+# Create SFTP users
 - name: SFTP-Server | Create sftp users
   user:
     name: "{{ item.name }}"
@@ -37,35 +56,7 @@
     password: "{{ item.password | password_hash('sha512') }}"
   with_items: "{{ sftp_users }}"
      
-- name: SFTP-Server | Create working directory for each user
-  file:
-    path: "{{ sftp_directories }}/{{ item.name }}/work"
-    owner: "{{ item.name }}"
-    group: "{{ sftp_group }}"
-    mode: 0755
-    state: directory
-    recurse: yes
-  with_items: "{{ sftp_users }}"
-     
-# - name: SFTP-Server | Change directory modeCreate working directory for each user
-#   file:
-#     path: "{{ sftp_directories }}/{{ item.name }}/work"
-#     owner: "{{ item.name }}"
-#     group: "{{ sftp_group }}"
-#     mode: 07
-#     state: directory
-#     recurse: yes
-#   with_items: "{{ sftp_users }}"
-    
-    
-# - name: SFTP-Server | Correct ownership and permission of home directories
-#   file:
-#     path: "/data/sftp"
-#     owner: root
-#     state: directory
-#     recurse: yes
-#   with_items: "{{ sftp_users }}"
-    
+   
 - name: SFTP-Server | Add sshd_config block
   blockinfile:
     dest: /etc/ssh/sshd_config
