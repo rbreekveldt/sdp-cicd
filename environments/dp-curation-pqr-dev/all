@@ -80,14 +80,14 @@ cloud_config:
     
   network:
     name: vnet-pqr-dev
-    address_prefix: "10.250.24.0/24"
+    address_prefix: "10.250.29.0/24"
       
   subnet:
     - name: subnet-pqr-dev01
-      address_prefix: "10.250.24.0/26"
+      address_prefix: "10.250.29.0/26"
 
     - name: subnet-pqr-dev02
-      address_prefix: "10.250.24.64/26"
+      address_prefix: "10.250.29.64/26"
 
   #######################################################################################
   #                                                                                     #
