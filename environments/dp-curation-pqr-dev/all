@@ -185,7 +185,7 @@ cloud_config:
     image:
       offer: CentOS
       publisher: OpenLogic
-      sku: '7.4'
+      sku: '7.7'
       version: latest
       
   tags:
