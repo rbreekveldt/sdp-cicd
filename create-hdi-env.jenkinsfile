@@ -62,7 +62,7 @@ pipeline {
                  }
             }
         }
-
+/*
         stage ('Provision HDI Infrastructure for Project Azure Governance Testing') {
 
             steps {
@@ -75,7 +75,7 @@ pipeline {
                     ansiblePlaybook extras: "-e @environments/'${data_domain}'-'${resource_group_phase}'-'${project_name}'-'${env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
                 }
             }
-        }
+        } */
 	
     }
 }
