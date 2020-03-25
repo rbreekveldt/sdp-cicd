@@ -22,6 +22,10 @@ pipeline {
         booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
     }
 
+    environment {
+                master_project_name = "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
+            }
+
     stages {
         stage('set subscription id') {
             steps {
@@ -49,7 +53,7 @@ pipeline {
 
         stage ('Create HDI environment configuration') {
             steps {
-            withCredentials([azureServicePrincipal(credentialsId: '1683b46e-b612-4f6d-a717-9baed4b0dffb',
+            withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
