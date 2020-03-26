@@ -4,6 +4,7 @@
     name: "{{ openjdk_package }}"
     update_cache: yes
     state: present
+  become: true
   when: java == "openjdk"
  
 - block:
@@ -53,3 +54,4 @@
         - local_policy.jar
         - US_export_policy.jar
   when: java == "oraclejdk"
+  become: true

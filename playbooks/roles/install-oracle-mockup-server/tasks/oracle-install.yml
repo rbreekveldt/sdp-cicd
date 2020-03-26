@@ -32,6 +32,11 @@
   command: "{{ installation_folder}}/database/runInstaller -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ installation_folder }}/db_install.rsp"
   become_user: "{{ oracle_user }}"
 
+# Pause 3 min
+- name: Pause 3 min during installation 
+  pause:
+    minutes: 3
+
 #==> execute Inventory command as root
 - name: Execute Inventoty root command
   command: '{{ inventory_location }}/orainstRoot.sh'
@@ -92,6 +97,19 @@
   tags:
     - start-pluggable
 
-- shell: '{{ installation_folder }}/start-pluggable-dbs.sh'
+- name: login to Oracle
+  shell: '{{ installation_folder }}/start-pluggable-dbs.sh'
+  become_user: "{{ oracle_user }}"
+  tags:
+    - start-pluggable
+
+- name: Create trigger for autostart pluggable db's
+  copy: src=oracle_connect.sh dest={{ installation_folder }}/ mode=755
+  tags:
+    - start-pluggable
+
+- name: login to Oracle
+  shell: '{{ installation_folder }}/oracle_connect.sh'
+  become_user: "{{ oracle_user }}"
   tags:
     - start-pluggable

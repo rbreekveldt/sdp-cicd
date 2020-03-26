@@ -1,17 +1,17 @@
 ---
 cloud_config:
-  project_name: {{ lookup('env', 'project_name') }}
-  env_type: {{ lookup('env', 'env_type') }}
-  resource_group_phase: {{ lookup('env', 'resource_group_phase') }}
-  application_name: {{ lookup('env', 'application_name') }}
-  data_domain: {{ lookup('env', 'data_domain') }}
-  resource_group: {{ master_project_name }}-rg  
+  project_name: h
+  env_type: dev
+  resource_group_phase: shared
+  application_name: hdp
+  data_domain: dp
+  resource_group: dp-shared-h-dev-rg  
   location: "westeurope"
   admin_username: "sdp-admin"
 
   mockup:
     kafka:
-      provision: {{ lookup('env', 'kafka') | default('false', true) }}
+      provision: true
       functionality: kafka
       nodes_count: 1
       flavor: Standard_D3_v2
@@ -19,7 +19,7 @@ cloud_config:
         role: kafka_mockup
 
     sftp:
-      provision: {{ lookup('env', 'sftp') | default('false', true) }}
+      provision: true
       functionality: sftp
       flavor: Standard_D3_v2
       nodes_count: 1
@@ -27,7 +27,7 @@ cloud_config:
         role: sftp_mockup
 
     oracle:
-      provision: {{ lookup('env', 'oracle') | default('false', true) }}
+      provision: true
       functionality: oracle
       flavor: Standard_D3_v2
       nodes_count: 1
@@ -35,7 +35,7 @@ cloud_config:
         role: oracle_mockup
 
   mgmt:
-    provision: {{ lookup('env', 'nifi') | default('false', true) }}
+    provision: false
     functionality: nifimgmt
     nodes_count: 1
     flavor: Standard_D3_v2
@@ -44,34 +44,34 @@ cloud_config:
 
 
   nifi:
-    provision: {{ lookup('env', 'nifi') | default('false', true) }}
+    provision: false
     functionality: nifi
-    nodes_count: {{ lookup('env', 'nifi_nodes_count') | default('0', true) }}
+    nodes_count: 0
     flavor: Standard_A5
     tags:
       role: nifi_worker
   
   sql_server:
-    name: dbsqlserver{{ lookup('env', 'resource_group_phase') }}{{ lookup('env', 'project_name') }}{{ lookup('env', 'env_type') }}
-    secret_name: dbsqlserver{{ lookup('env', 'resource_group_phase') }}{{ lookup('env', 'project_name') }}{{ lookup('env', 'env_type') }}-db-pwd
-    admin_username: {{ lookup('env', 'env_type') }}-admin
+    name: dbsqlserversharedhdev
+    secret_name: dbsqlserversharedhdev-db-pwd
+    admin_username: dev-admin
   
   sql_db:
     - name: "oozie"
-      provision: {{ lookup('env', 'oozie_db') | default('false', true) }}
+      provision: false
 
     - name: "hive"
-      provision: {{ lookup('env', 'hive_db') | default('false', true) }}
+      provision: false
 
     - name: "ranger"
-      provision: {{ lookup('env', 'ranger_db') | default('false', true) }}
+      provision: false
 
   ssh:
-    sdp_admin_publickey: {{ sdp_admin_public }}
-    jenkins_publickey: {{ jenkins_public }}
+    sdp_admin_publickey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtTDhaa9ldeOti2QpPjipKw4XITgoLGInLlRyS7fE2gSehL+FO75OD7LqSvKWMy7jyBuGiHi/IeneCQHgU/lq7SHSJlb09y7DfaqrR2L7Q9Yl93vPMJZIi7ujE3m1zupbFYDNK2rMAOR2tftqqn0S+iOLKvlhKH+2xZnXhI45u+JmFzOk8rgmFXnrtSUpBEDJkWZcFavoQKsVIkeU5N6/QshfoUB6qafcFfBCxY0Ix4LfGKhLh8qaUdHomZzAfo/FWvD6QIz5y/h8+YKqKzpN0Hc9Qv2s4VKkZrNODXhejUBl3onR1UzrqbD2rD/fvIx34rqbbtHoEgAxgc3dHu5kV sdp-admin@vm-dev-jumpbox
+    jenkins_publickey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoyva5cbaOKy/6lw6FBcLO8zZ0BaPwL6SzX4t9urNgY2RfBZzQIT90rrZMbNepjvkl9+AwQK8KukY9g3mYHn9sxvQEmBnn7ExZsNuLM9YZwZRFN5HpVS7OHr5QR/wt8ueYYd4xaEOvqgEmxuNIYT0P2UzXNNO+XsNtUJHJoPu1Ra+SzYQyBEGQ0+v63SVZSTVd70A7GvcyhQWsXHJptV48yfenxIS5NfU0UGKEsgPqxUF8qtxoucKsJ1s3eL7yLcnE36fBkPiSRjvV0XH+OByCV82cc+LallJqJAPdluMn7fylrYL1CbZhkxEemGs1RZQpnZjC7ZqlJHvOEIWzMSb9 jenkins@jenkins.prod.sdp.aa.liberty.biz
         
   storage_account:
-    name: sa{{ lookup('env', 'project_name') }}{{ lookup('env', 'application_name') }}{{ lookup('env', 'env_type') }}
+    name: sahhdpdev
     type: "Standard_LRS"
   
   azkeyvault:
@@ -79,15 +79,15 @@ cloud_config:
     uri: https://kv-dp-hdi-prd.vault.azure.net/
     
   network:
-    name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
-    address_prefix: "VNET-ANCOR.0/24"
+    name: vnet-h-dev
+    address_prefix: "10.250.20.0/24"
       
   subnet:
-    - name: subnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}01
-      address_prefix: "VNET-ANCOR.0/26"
+    - name: subnet-h-dev01
+      address_prefix: "10.250.20.0/26"
 
-    - name: subnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}02
-      address_prefix: "VNET-ANCOR.64/26"
+    - name: subnet-h-dev02
+      address_prefix: "10.250.20.64/26"
 
   #######################################################################################
   #                                                                                     #
@@ -118,9 +118,9 @@ cloud_config:
   ad_role_definition_id: /subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/providers/Microsoft.Authorization/roleDefinitions/8d8d5a11-05d3-4bda-a417-a08778121c7c
       
   hdi_cluster:
-    name: {{ lookup('env', 'cluster_name') | default(omit) }} 
-    dns_name: {{ lookup('env', 'cluster_name') | default(omit) }}.azurehdinsight.net
-    short_name: {{ lookup('env', 'short_cluster_name') | default(omit) }}
+    name: bla 
+    dns_name: bla.azurehdinsight.net
+    short_name: bla
   #######################################################################################
   #                                                                                     #
   #                                                                                     #
@@ -132,7 +132,7 @@ cloud_config:
   #######################################################################################
   
   security_groups:
-    name: nsg-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+    name: nsg-h-dev
     rules:
       inbound:
         - name: Allow_Access
@@ -153,47 +153,47 @@ cloud_config:
       
   peering:
     vnet_sdp_internal:
-      initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-sdp-internal
+      initial_peering_name: vnet-h-dev-to-vnet-sdp-internal
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal'
       remote_resource_group: 'access-sdp-jumpbox-rg'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: vnet-sdp-internal-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+      connect_peering_name: vnet-sdp-internal-to-vnet-h-dev
 
     vnet_sdp_external:
-      initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-sdp-external
+      initial_peering_name: vnet-h-dev-to-vnet-sdp-external
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-external'
       remote_resource_group: 'access-sdp-jumpbox-rg'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: vnet-sdp-external-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+      connect_peering_name: vnet-sdp-external-to-vnet-h-dev
 
     vnet_cicd_prd:
-      initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-cicd-prd
+      initial_peering_name: vnet-h-dev-to-vnet-cicd-prd
       remote_virtual_network: '/subscriptions/fd478270-bd64-4cf3-bb8b-53016bb2ffd6/resourceGroups/automation-cicd-prd-rg/providers/Microsoft.Network/virtualNetworks/vnet-cicd-prd'
       remote_resource_group: 'automation-cicd-prd-rg'
       remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
-      connect_peering_name: vnet-cicd-prd-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+      connect_peering_name: vnet-cicd-prd-to-vnet-h-dev
 
     vnet_ad_domain:
-      initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-Liberty-Global-AD-domain-services
+      initial_peering_name: vnet-h-dev-to-Liberty-Global-AD-domain-services
       remote_virtual_network: '/subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/Liberty-Global-Shared-Resources/providers/Microsoft.Network/virtualNetworks/Liberty-Global-AD-domain-services'
       remote_resource_group: 'Liberty-Global-Shared-Resources'
       remote_subscription_id: 'dd10eed9-865c-4bfa-a260-d3e8fe16b047'
-      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+      connect_peering_name: Liberty-Global-AD-domain-services-to-vnet-h-dev
   
   vm:
     managed_disk_type: Standard_LRS
     image:
       offer: CentOS
       publisher: OpenLogic
-      sku: '7.7'
+      sku: '7.4'
       version: latest
       
   tags:
-    Env: {{ lookup('env', 'env_type') }} 
-    Project: {{ lookup('env', 'project_name') }}
-    Phase: {{ lookup('env', 'resource_group_phase') }}
-    Country: {{ lookup('env', 'country') }}
-    Unit: {{ lookup('env', 'unit') }}
+    Env: dev 
+    Project: h
+    Phase: shared
+    Country: nl
+    Unit: itsecurity
 
   ########################
   ## java configuration ##
@@ -219,7 +219,7 @@ hdp_build_number: 'auto'                                  # the HDP build number
 hdf_version: '3.3.0.0'                                    # must be the 4-part full version number
 hdf_build_number: 'auto'                                  # the HDF build number from docs.hortonworks.com (if set to 'auto', Ansible will try to get it from the repository)
 
-blueprint_name: "{{ lookup('env', 'project_name') }}_blueprint" # the name of the blueprint as it will be stored in Ambari
+blueprint_name: "h_blueprint" # the name of the blueprint as it will be stored in Ambari
 blueprint_file: 'blueprint_dynamic.j2'                          # the blueprint JSON file - 'blueprint_dynamic.j2' is a Jinja2 template that generates the required JSON
 blueprint_dynamic:                                              # properties for the dynamic blueprint - these are only used by the 'blueprint_dynamic.j2' template to generate the JSON
   - host_group: "hdfmanagement"

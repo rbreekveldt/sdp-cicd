@@ -18,7 +18,7 @@
   any_errors_fatal: true
   become: yes
   roles:
-    - database
+    # Hakan moet deze fixen - database
     - ambari-agent
 
 - name: Apply the ambariserver role to the ambariserver group
