@@ -31,6 +31,24 @@ pipeline {
                 sh 'git checkout --track origin/kokm'
             }
         }
+    stage('set subscription id') {
+               steps {
+                   script {
+                       if (cluster_name.length() > 4)
+                       { env.short_cluster_name = cluster_name.substring(0, cluster_name.length() - 4)}
+                       else { error("cluster_name must be > 4") }
+                       // Missing credential_ID's in Jenkins
+                       if (subscription.toString()=='Project Azure governance testing')
+                       {env.CREDENTIAL_ID = 'SPAzureGovernanceTesting'}
+                       else if(subscription.toString()=='Non-Prod Data and Processing')
+                       {env.CREDENTIAL_ID = 'SPNonProdDataAndProcessing'}
+                       else if (subscription.toString()=='Prod Data and Processing')
+                       {env.CREDENTIAL_ID = 'SPProdDataAndProcessing'}
+                       else {env.CREDENTIAL_ID = 'SPCpd'}
+
+                   }
+               }
+           }
         stage ('Create Dataproject') {
             steps {
             withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
