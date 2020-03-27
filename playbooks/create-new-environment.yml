@@ -28,8 +28,15 @@
       loop: "{{ azure_resource_groups.resourcegroups }}"
       when:  item.name == master_project_name
 
+    - name: Get facts for all virtual networks
+      azure_rm_virtualnetwork_facts:
+      register: azure_vnets
 
-  roles:
-    - create-jenkins-project
-    - create-environment-configuration
-    - push-files-to-repo
+    - debug:
+        msg: "{{ azure_vnets }}"
+
+
+  #roles:
+  #  - create-jenkins-project
+  #  - create-environment-configuration
+  #  - push-files-to-repo
