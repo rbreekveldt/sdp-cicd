@@ -58,7 +58,7 @@ pipeline {
                  }
             }
         }
-        stage ('Provision Dataproject') {
+        /*stage ('Provision Dataproject') {
             steps {
             withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
@@ -69,7 +69,7 @@ pipeline {
                  }
             }   
         }
-        /*stage ('Install ambari cluster') {
+        stage ('Install ambari cluster') {
             steps {
             withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
