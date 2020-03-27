@@ -8,6 +8,13 @@
       set_fact:
         master_project_name: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
 
+    - name: Get facts for all virtual networks
+      azure_rm_virtualnetwork_facts:
+      resource_group: "{{ master_project_name }}"
+      register: azure_vnets
+
+    - debug:
+        msg: "{{ azure_vnets }}"
 
     - debug:
         msg: "{{ master_project_name }}"
@@ -28,16 +35,6 @@
       loop: "{{ azure_resource_groups.resourcegroups }}"
       when:  item.name == master_project_name
 
-    - name: Get facts for all virtual networks
-      azure_rm_virtualnetwork_facts:
-      resource_group: "{{ master_project_name }}"
-      register: azure_vnets
-
-    - debug:
-        msg: "{{ azure_vnets }}"
 
 
-#  roles:
-#    - create-jenkins-project
-#    - create-environment-configuration
-#    - push-files-to-repo
+
