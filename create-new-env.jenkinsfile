@@ -30,7 +30,7 @@ pipeline {
     stages {
         stage ('Git checkout and switch to Master') {
             steps {
-                sh 'git checkout --track origin/master'
+                sh 'git checkout --track origin/kokm'
             }
         }
     stage('set subscription id') {
