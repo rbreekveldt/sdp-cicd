@@ -30,13 +30,14 @@
 
     - name: Get facts for all virtual networks
       azure_rm_virtualnetwork_facts:
+      resource_group: "{{ master_project_name }}"
       register: azure_vnets
 
     - debug:
         msg: "{{ azure_vnets }}"
 
 
-  #roles:
-  #  - create-jenkins-project
-  #  - create-environment-configuration
-  #  - push-files-to-repo
+#  roles:
+#    - create-jenkins-project
+#    - create-environment-configuration
+#    - push-files-to-repo
