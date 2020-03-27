@@ -3,7 +3,7 @@ cloud_config:
   project_name: q
   env_type: sit
   resource_group_phase: curation
-  application_name: hdp
+  application_name: secupi
   data_domain: dp
   resource_group: dp-curation-q-sit-rg  
   location: "westeurope"
@@ -71,7 +71,7 @@ cloud_config:
     jenkins_publickey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoyva5cbaOKy/6lw6FBcLO8zZ0BaPwL6SzX4t9urNgY2RfBZzQIT90rrZMbNepjvkl9+AwQK8KukY9g3mYHn9sxvQEmBnn7ExZsNuLM9YZwZRFN5HpVS7OHr5QR/wt8ueYYd4xaEOvqgEmxuNIYT0P2UzXNNO+XsNtUJHJoPu1Ra+SzYQyBEGQ0+v63SVZSTVd70A7GvcyhQWsXHJptV48yfenxIS5NfU0UGKEsgPqxUF8qtxoucKsJ1s3eL7yLcnE36fBkPiSRjvV0XH+OByCV82cc+LallJqJAPdluMn7fylrYL1CbZhkxEemGs1RZQpnZjC7ZqlJHvOEIWzMSb9 jenkins@jenkins.prod.sdp.aa.liberty.biz
         
   storage_account:
-    name: saqhdpsit
+    name: saqsecupisit
     type: "Standard_LRS"
   
   azkeyvault:
@@ -118,9 +118,9 @@ cloud_config:
   ad_role_definition_id: /subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/providers/Microsoft.Authorization/roleDefinitions/8d8d5a11-05d3-4bda-a417-a08778121c7c
       
   hdi_cluster:
-    name:  
-    dns_name: .azurehdinsight.net
-    short_name: 
+    name: q 
+    dns_name: q.azurehdinsight.net
+    short_name: q
   #######################################################################################
   #                                                                                     #
   #                                                                                     #
@@ -193,7 +193,7 @@ cloud_config:
     Project: q
     Phase: curation
     Country: nl
-    Unit: datacentertechnology
+    Unit: consumeranalytics
 
   ########################
   ## java configuration ##
