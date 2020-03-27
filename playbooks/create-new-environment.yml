@@ -10,7 +10,7 @@
 
     - name: Get facts for all virtual networks
       azure_rm_virtualnetwork_facts:
-      resource_group: "{{ master_project_name }}"
+        resource_group: "{{ master_project_name }}"
       register: azure_vnets
 
     - debug:
