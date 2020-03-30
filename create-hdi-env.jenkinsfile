@@ -49,7 +49,7 @@ pipeline {
 
         stage ('Create HDI environment configuration') {
             steps {
-            withCredentials([azureServicePrincipal(credentialsId: '1683b46e-b612-4f6d-a717-9baed4b0dffb',
+            withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}" ,
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
