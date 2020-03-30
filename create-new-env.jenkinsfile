@@ -22,6 +22,21 @@ pipeline {
                 booleanParam(defaultValue: false, name: 'oracle', description: 'Provision a oracle mockup db')
            }
     stages {
+    
+      stage('set subscription id') {
+            steps {
+                script {
+                    // Missing credential_ID's in Jenkins
+                    if (subscription.toString()=='Project Azure governance testing')
+                    {env.CREDENTIAL_ID = 'SPAzureGovernanceTesting'}
+                    else if(subscription.toString()=='Non-Prod Data and Processing')
+                    {env.CREDENTIAL_ID = 'SPNonProdDataAndProcessing'}
+                    else {env.CREDENTIAL_ID = 'SPCpd'}
+
+                }
+            }
+        }               
+        
         stage ('Git checkout and switch to Master') {
             steps {
                 sh 'git checkout --track origin/master'
