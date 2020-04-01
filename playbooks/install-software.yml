@@ -24,7 +24,5 @@
 - import_playbook: oracle-mockup-db.yml
   when: cloud_config.mockup.oracle.provision
 
-- import_playbook: oracle-mockup-db.yml
-  when: cloud_config.mockup.oracle.provision
 
 
