@@ -35,6 +35,10 @@
       loop: "{{ azure_resource_groups.resourcegroups }}"
       when:  item.name == master_project_name
 
+  roles:
+    - create-jenkins-project
+    - create-environment-configuration
+    - push-files-to-repo
 
 
 

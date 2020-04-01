@@ -9,5 +9,4 @@ CREATE USER sdp_user IDENTIFIED BY "sdppwd" DEFAULT TABLESPACE "sdp_db" TEMPORAR
 
 GRANT CONNECT, RESOURUCE TO sdp_user;
 
-"jdbc:oracle:thin:@vm-x-sit-oracle01.internal.cloudapp.net:1521/ORCL", "sdp_user", "sdppwd"
 EOF
