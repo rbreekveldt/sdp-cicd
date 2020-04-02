@@ -11,7 +11,7 @@ cloud_config:
 
   mockup:
     kafka:
-      provision: true
+      provision: false
       functionality: kafka
       nodes_count: 1
       flavor: Standard_D3_v2
@@ -19,7 +19,7 @@ cloud_config:
         role: kafka_mockup
 
     sftp:
-      provision: true
+      provision: false
       functionality: sftp
       flavor: Standard_D3_v2
       nodes_count: 1
@@ -80,14 +80,14 @@ cloud_config:
     
   network:
     name: vnet-mockup-dev
-    address_prefix: "10.250.1.0/24"
+    address_prefix: "10.250.4.0/24"
       
   subnet:
     - name: subnet-mockup-dev01
-      address_prefix: "10.250.1.0/26"
+      address_prefix: "10.250.4.0/26"
 
     - name: subnet-mockup-dev02
-      address_prefix: "10.250.1.64/26"
+      address_prefix: "10.250.4.64/26"
 
   #######################################################################################
   #                                                                                     #
@@ -118,9 +118,9 @@ cloud_config:
   ad_role_definition_id: /subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/providers/Microsoft.Authorization/roleDefinitions/8d8d5a11-05d3-4bda-a417-a08778121c7c
       
   hdi_cluster:
-    name: mk 
-    dns_name: mk.azurehdinsight.net
-    short_name: mk
+    name:  
+    dns_name: .azurehdinsight.net
+    short_name: 
   #######################################################################################
   #                                                                                     #
   #                                                                                     #
@@ -192,8 +192,8 @@ cloud_config:
     Env: dev 
     Project: mockup
     Phase: shared
-    Country: nl
-    Unit: itsecurity
+    Country: ch
+    Unit: datasolutions
 
   ########################
   ## java configuration ##
