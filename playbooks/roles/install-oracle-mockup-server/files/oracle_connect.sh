@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 . /home/oracle/.bashrc
 
 <<EOF
@@ -12,6 +13,6 @@ CREATE USER sdp_user IDENTIFIED BY sdppwd DEFAULT TABLESPACE "sdp_db" TEMPORARY 
 
 GRANT CONNECT, RESOURCE TO sdp_user;
 
-"jdbc:oracle:thin:@vm-x-sit-oracle01.internal.cloudapp.net:1521/ORCL", "sdp_user", "sdppwd"
+"jdbc:oracle:thin:@vm-x-sit-oracle01.internal.cloudapp.net:1521:ORCL", "sdp_user", "sdppwd"
 
 EOF
