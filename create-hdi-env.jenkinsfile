@@ -59,7 +59,7 @@ pipeline {
             }
         }
 
-        stage ('Provision HDI Infrastructure for Project Azure Governance Testing') {
+        stage ('Provision HDI Infrastructure') {
 
             steps {
 
