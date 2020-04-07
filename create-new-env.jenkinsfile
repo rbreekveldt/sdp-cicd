@@ -15,7 +15,7 @@ pipeline {
                 string(name: 'project_description', defaultValue:'', description: 'Specify project description')
                 choice(name: 'country', choices: 'Please select\nnl\nch\nie\nde\nat', description: 'Select Country')
                 choice(name: 'unit', choices: 'Please select\nconsumeranalytics\ndatacentertechnology\ndatasolutions\nitsecurity\nsupplychain', description: 'Select Unit')
-                choice(name: 'nodes_count', choices: 'Please select\n1\n2\n3\n4\n5', description: 'choose the amount of nodes for Nifi cluster')
+                choice(name: 'nifi_nodes_count', choices: 'Please select\n1\n2\n3\n4\n5', description: 'choose the amount of nodes for Nifi cluster')
                 booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster')
                 booleanParam(defaultValue: false, name: 'kafka', description: 'Provision a Kafka mockup server')
                 booleanParam(defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server')
