@@ -12,7 +12,6 @@
       azure_rm_virtualnetworkpeering_facts:
         resource_group: "{{ lookup('env', 'remote_resource_group') }}"
         virtual_network: "{{ lookup('env', 'remote_virtual_network') }}"
-
       register: vnet_ad_result
 
     - debug:
