@@ -10,6 +10,12 @@
 
     - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
       azure_rm_virtualnetworkpeering_facts:
+        resource_group: "{{ lookup('env', 'remote_resource_group') }}"
+        virtual_network: "{{ lookup('env', 'remote_virtual_network') }}"
+        subscription_id: "{{ lookup('env', 'remote_subscription_id') }}"
+        tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+        secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+        client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
       register: vnet_ad_result
 
     - debug:
