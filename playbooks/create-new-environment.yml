@@ -8,16 +8,12 @@
       set_fact:
         master_project_name: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
 
-    - name: Get facts for all virtual networks
-      azure_rm_virtualnetwork_facts:
-        resource_group: "{{ master_project_name }}"
-      register: azure_vnets
+    - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
+      azure_rm_virtualnetworkpeering_facts:
+      register: vnet_ad_result
 
     - debug:
-        msg: "{{ azure_vnets }}"
-
-    - debug:
-        msg: "{{ master_project_name }}"
+        msg: "{{ vnet_ad_result }}"
 
     - fail:
         msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
