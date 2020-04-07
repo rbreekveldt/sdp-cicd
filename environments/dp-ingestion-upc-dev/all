@@ -46,7 +46,7 @@ cloud_config:
   nifi:
     provision: true
     functionality: nifi
-    nodes_count: 0
+    nodes_count: 3
     flavor: Standard_A5
     tags:
       role: nifi_worker
