@@ -5,7 +5,7 @@
   vars:
     master_project_name: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-rg }}"
 
-  pre_tasks:
+  tasks:
 
     - debug:
         msg: "{{ master_project_name }}"
@@ -63,11 +63,11 @@
       register: azure_resource_groups
 
     - debug:
-        msg: "{{ azure_resource_groups.resourcegroups.name }}"
+        msg: "{{ azure_resource_groups.resourcegroups }}"
 
     - fail:
         msg: The resource_group already exists!
-      when:  masterproject name is azure_resource_groups.resourcegroups
+      when:  item.name == master_project_name
       loop: "{{ azure_resource_groups.resourcegroups }}"
 
 
