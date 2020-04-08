@@ -56,7 +56,7 @@
 
     - fail:
         msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
-      when: master_project_name | length > 24
+      when: rg_name_test | length > 24
 
     - name: Get facts for all resource groups
       azure_rm_resourcegroup_facts:
