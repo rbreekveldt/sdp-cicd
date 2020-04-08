@@ -8,7 +8,7 @@
   tasks:
 
     - debug:
-        msg: "{{ rg_name_test}}"
+        msg: "{{ rg_name_test }}"
 
 
     - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
