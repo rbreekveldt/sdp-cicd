@@ -68,7 +68,7 @@
 
     - fail:
         msg: The resource_group already exists!
-      loop: "{{ lookup('dict', azure_resource_groups.resourcegroups }}"
+      loop: "{{ lookup('dict', azure_resource_groups.resourcegroups) }}"
       when:  item.value.name == master_project_name
 
 
