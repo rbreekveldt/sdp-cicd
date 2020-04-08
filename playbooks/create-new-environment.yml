@@ -15,10 +15,10 @@
         tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
         secret: "{{ lookup('env', 'AZURE_SECRET') }}"
         client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-      register: vnet_ad_result
+      register: vnet
 
     - debug:
-        msg: vnet_ad_result
+        msg: "{{ vnet_ad_result }}"
 
     - fail:
         msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
