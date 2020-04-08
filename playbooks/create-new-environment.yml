@@ -4,12 +4,16 @@
   connection: local
   vars:
     rg_name_test: "{{ lookup('env', 'master_project_name') }}-rg"
-    internal_vnet_test: "vnet-sdp-internal-to-oreo-dev-vnet"
+    internal_vnet_test: "vnet-sdp-internal-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
     external_vnet_test: "vnet-sdp-external-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
     cicd_vnet_test: "vnet-cicd-prd-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
     dom_serv_vnet: "Liberty-Global-AD-domain-services-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
 
   pre-tasks:
+
+    - debug:
+        msg: "{{ rg_name_test }}"
+
 
     - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
       azure_rm_virtualnetworkpeering_facts:
@@ -23,11 +27,6 @@
 
     - debug:
         msg: "{{ vnet_internal.vnetpeerings }}"
-
-    - fail:
-        msg: The vnet already exists!
-      when: item.name == internal_vnet_test
-      loop: "{{ vnet_internal.vnetpeerings }}"
 
     - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
       azure_rm_virtualnetworkpeering_facts:
