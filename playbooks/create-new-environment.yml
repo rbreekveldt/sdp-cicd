@@ -68,7 +68,7 @@
 
     - fail:
         msg: The resource_group already exists!
-      when:  item.name == "dp-curation-q-sit-rg"
+      when:  item.name is exists
       loop: "{{ azure_resource_groups.resourcegroups }}"
 
 
