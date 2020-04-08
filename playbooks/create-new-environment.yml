@@ -68,9 +68,8 @@
 
     - fail:
         msg: The resource_group already exists!
-      loop: "{{lookup('subelements', azure_resource_groups.resourcegroups, 'name', {'skip_missing': True})}}"
-      when:  item == master_project_name
-
+      when:  item.name == master_project_name
+      loop: "{{ azure_resource_groups.azure_resourcegroups }}"
 
 
 
