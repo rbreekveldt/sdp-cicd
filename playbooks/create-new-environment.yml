@@ -18,7 +18,7 @@
       register: vnet
 
     - debug:
-        msg: "{{ vnet_ad_result }}"
+        msg: "{{ vnet }}"
 
     - fail:
         msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
