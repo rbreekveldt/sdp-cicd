@@ -3,7 +3,7 @@
   gather_facts: false
   connection: local
   vars:
-    master_project_name: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-rg }}"
+    master_project_name: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-rg"
 
   tasks:
 
