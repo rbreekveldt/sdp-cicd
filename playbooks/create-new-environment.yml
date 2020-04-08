@@ -12,6 +12,10 @@
       azure_rm_virtualnetworkpeering_facts:
         resource_group: access-sdp-jumpbox-rg
         virtual_network: vnet-sdp-external
+        subscription_id: dd10eed9-865c-4bfa-a260-d3e8fe16b047
+        tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+        secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+        client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
       register: vnet
 
     - debug:
