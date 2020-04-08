@@ -63,7 +63,7 @@
       register: azure_resource_groups
 
     - debug:
-        msg: "{{ azure_resource_groups.resourcegroups }}"
+        msg: "{{ azure_resource_groups.resourcegroups.name }}"
 
     - fail:
         msg: The resource_group already exists!
