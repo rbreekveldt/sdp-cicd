@@ -8,6 +8,23 @@
       set_fact:
         master_project_name: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
 
+    - debug:
+        msg: "{{ master_project_name }}"
+
+
+    - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
+      azure_rm_virtualnetworkpeering_facts:
+        resource_group: access-sdp-jumpbox-rg
+        virtual_network: vnet-sdp-internal
+        subscription_id: dd10eed9-865c-4bfa-a260-d3e8fe16b047
+        tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+        secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+        client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+      register: vnet_internal
+
+    - debug:
+        msg: "{{ vnet_internal }}"
+
     - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
       azure_rm_virtualnetworkpeering_facts:
         resource_group: access-sdp-jumpbox-rg
@@ -16,10 +33,27 @@
         tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
         secret: "{{ lookup('env', 'AZURE_SECRET') }}"
         client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-      register: vnet
+      register: vnet_external
 
-    - debug:
-        msg: "{{ vnet }}"
+    - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
+      azure_rm_virtualnetworkpeering_facts:
+        resource_group: automation-cicd-prd-rg
+        virtual_network: vnet_cicd_prd
+        subscription_id: fd478270-bd64-4cf3-bb8b-53016bb2ffd6
+        tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+        secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+        client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+      register: vnet_prd
+
+    - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
+      azure_rm_virtualnetworkpeering_facts:
+        resource_group: Liberty-Global-Shared-Resources
+        virtual_network: Liberty-Global-AD-domain-services
+        subscription_id: dd10eed9-865c-4bfa-a260-d3e8fe16b047
+        tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+        secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+        client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+      register: vnet_glb
 
     - fail:
         msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
@@ -32,10 +66,10 @@
     - debug:
         msg: "{{ azure_resource_groups }}"
 
-    - fail:
-        msg: The resource_group already exists!
-      loop: "{{ azure_resource_groups.resourcegroups }}"
-      when:  item.name == master_project_name
+      - fail:
+          msg: The resource_group already exists!
+        loop: "{{ azure_resource_groups.resourcegroups }}"
+        when:  item['name'] == master_project_name
 
 
 
