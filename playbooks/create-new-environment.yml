@@ -3,7 +3,7 @@
   gather_facts: false
   connection: local
   vars:
-    master_project_name: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-rg"
+    rg_name_test: "{{ lookup('env', 'master_project_name') }}-rg"
 
   tasks:
 
@@ -67,7 +67,7 @@
 
     - fail:
         msg: The resource_group already exists!
-      when:  item.name == master_project_name
+      when:  item.name == rg_name_test
       loop: "{{ azure_resource_groups.resourcegroups }}"
 
 
