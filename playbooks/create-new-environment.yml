@@ -66,10 +66,10 @@
     - debug:
         msg: "{{ azure_resource_groups }}"
 
-      - fail:
-          msg: The resource_group already exists!
-        loop: "{{ azure_resource_groups.resourcegroups }}"
-        when:  item['name'] == master_project_name
+    - fail:
+        msg: The resource_group already exists!
+      loop: "{{ azure_resource_groups.resourcegroups }}"
+      when:  item['name'] == master_project_name
 
 
 
