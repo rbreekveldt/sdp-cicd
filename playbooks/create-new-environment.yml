@@ -63,11 +63,11 @@
       register: azure_resource_groups
 
     - debug:
-        msg: "{{ azure_resource_groups }}"
+        msg: "{{ azure_resource_groups.resourcegroups }}"
 
     - fail:
         msg: The resource_group already exists!
-      when:  master_project_name == item.name
+      when:  masterproject name is azure_resource_groups.resourcegroups
       loop: "{{ azure_resource_groups.resourcegroups }}"
 
 
