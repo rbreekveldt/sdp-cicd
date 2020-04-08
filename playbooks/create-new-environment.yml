@@ -69,7 +69,7 @@
     - fail:
         msg: The resource_group already exists!
       when:  item.name == master_project_name
-      loop: "{{ azure_resource_groups.azure_resourcegroups }}"
+      loop: "{{ azure_resource_groups }}"
 
 
 
