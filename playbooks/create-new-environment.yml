@@ -2,6 +2,7 @@
   hosts: localhost
   gather_facts: false
   connection: local
+
   vars:
     rg_name_test: "vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-sdp-internal"
     internal_vnet_test: "vnet-sdp-internal-to-Liberty-Global-Governance-Vnet-Guavus"
@@ -12,9 +13,10 @@
   pre_tasks:
 
     - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
+      block:
       azure_rm_virtualnetworkpeering_facts:
         resource_group: access-sdp-jumpbox-rg
-        virtual_network: vnet-sdp-internal
+        virtual_network: /subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal
         subscription_id: dd10eed9-865c-4bfa-a260-d3e8fe16b047
         tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
         secret: "{{ lookup('env', 'AZURE_SECRET') }}"
@@ -78,9 +80,6 @@
     - name: Get facts for all resource groups
       azure_rm_resourcegroup_facts:
       register: azure_resource_groups
-
-    - debug:
-        msg: "{{ azure_resource_groups.resourcegroups }}"
 
     - fail:
         msg: The resource_group already exists!
