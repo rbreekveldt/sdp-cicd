@@ -1,0 +1,24 @@
+---
+# tasks file for whitelisting ip'ss
+- name: creating rules file
+  template:
+    src: whitelist.j2
+    dest: "{{ role_path }}/vars/main.yml"
+    force: yes
+    output_encoding: utf-8
+    mode: 0644    
+
+- name: Include vars
+  include_vars:
+    dir: vars        
+
+- name: Whitelist IP's
+  include_tasks: update-nsg.yml
+  vars:
+    subscription_id: "{{ local_loop.subscription_id  }}"
+    resource_group: "{{ local_loop.resource_group }}"
+    security_group: "{{ local_loop.security_group }}"
+    rules: "{{ local_loop.rules }}"    
+  loop: "{{ whitelist.inbound }}"
+  loop_control:
+    loop_var: local_loop        

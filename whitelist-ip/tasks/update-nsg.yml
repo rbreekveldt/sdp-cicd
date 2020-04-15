@@ -1,0 +1,17 @@
+---
+# tasks file for provision-security-groups
+- name: Create (or update) {{ security_group }}
+  azure_rm_securitygroup:
+    purge_rules: yes      
+    subscription_id: "{{ subscription_id }}"
+    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+    resource_group: "{{ resource_group }}"
+    name: "{{ security_group }}"
+    rules: "{{ rules }}"
+  register: result
+
+- name: Show result
+  debug:
+    msg: "{{ result.state.rules }}"        

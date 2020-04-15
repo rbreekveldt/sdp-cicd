@@ -1,0 +1,6 @@
+- name: Whitelist IP's
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  roles:
+    - whitelist-ip
