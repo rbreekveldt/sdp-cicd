@@ -1,6 +1,6 @@
 ---
   - debug:
-      msg: "{{ cloud_config.peering }}"
+      msg: "{{ cloud_config.peering.vnet_sdp_internal.remote_resource_group }}"
 
   - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
     azure_rm_virtualnetworkpeering_facts:
