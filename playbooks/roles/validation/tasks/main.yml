@@ -11,7 +11,7 @@
          tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
          secret: "{{ lookup('env', 'AZURE_SECRET') }}"
          client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-      register: vnet_internal_result
+       register: vnet_internal_result
 
        azure_rm_virtualnetworkpeering_facts:
          resource_group: "{{ cloud_config.peering.vnet_ad_domain.remote_resource_group }}"
@@ -20,7 +20,7 @@
          tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
          secret: "{{ lookup('env', 'AZURE_SECRET') }}"
          client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-      register: vnet_ad_result
+       register: vnet_ad_result
   when: vnetcheck.virtualnetworks != []
 
   - fail:
