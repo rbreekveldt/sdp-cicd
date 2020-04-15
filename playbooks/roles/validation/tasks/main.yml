@@ -21,7 +21,7 @@
          secret: "{{ lookup('env', 'AZURE_SECRET') }}"
          client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
        register: vnet_ad_result
-     when: vnetcheck.virtualnetworks != []
+    when: vnetcheck.virtualnetworks != []
 
   - fail:
       msg: The resource_group already exists!
