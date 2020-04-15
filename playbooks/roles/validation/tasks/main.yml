@@ -13,9 +13,6 @@
     register: vnet_internal
     with_items:
       - "{{ cloud_config.peering.vnet_sdp_internal }}"
-      - "{{ cloud_config.peering.vnet_sdp_external }}"
-      - "{{ cloud_config.peering.vnet_cicd_prd }}"
-      - "{{ cloud_config.peering.vnet_ad_domain }}"
 
   - fail:
       msg: The resource_group already exists!
