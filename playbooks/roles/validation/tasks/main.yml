@@ -24,7 +24,7 @@
     register: vnet_ad_result
     when: vnetcheck.virtualnetworks != []
 
-    debug:
+  - debug:
       msg: "{{ vnet_ad_result }}"
 
   - fail:
