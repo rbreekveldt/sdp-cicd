@@ -1,0 +1,46 @@
+---
+
+  - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
+    azure_rm_virtualnetworkpeering_facts:
+      resource_group: '{{ item.remote_resource_group }}'
+      virtual_network: '{{ item }}'
+      subscription_id: '{{ item.remote_subscription_id }}'
+      tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+      secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+      client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+    register: vnet_internal
+    with_items:
+      - "{{ cloud_config.peering }}"
+
+  - fail:
+      msg: The resource_group already exists!
+    when:  item.name == cloud_config.peering.vnet_sdp_internal.connect_peering_name
+    loop: "{{ vnet_internal.vnetpeerings }}"
+
+  - fail:
+      msg: The resource_group already exists!
+    when:  item.name == cloud_config.peering.vnet_sdp_external.connect_peering_name
+    loop: "{{ vnet_internal.vnetpeerings }}"
+
+  - fail:
+      msg: The resource_group already exists!
+    when:  item.name == cloud_config.peering.vnet_ad_domain.connect_peering_name
+    loop: "{{ vnet_internal.vnetpeerings }}"
+
+  - fail:
+      msg: The resource_group already exists!
+    when:  item.name == cloud_config.peering.vnet_cicd_prd.connect_peering_name
+    loop: "{{ vnet_internal.vnetpeerings }}"
+
+  - fail:
+      msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
+    when: rg_name_test | length > 24
+
+  - name: Get facts for all resource groups
+    azure_rm_resourcegroup_facts:
+    register: azure_resource_groups
+
+  - fail:
+      msg: The resource_group already exists!
+    when:  item.name == rg_name_test
+    loop: "{{ azure_resource_groups.resourcegroups }}"

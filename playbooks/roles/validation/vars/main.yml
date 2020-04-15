@@ -1,0 +1,2 @@
+---
+rg_name_test: "{{ master_project_name }}-rg"
