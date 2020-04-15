@@ -13,7 +13,7 @@
   register: vnet_internal
 
 
-    - fail:
+  - fail:
       msg: The resource_group already exists!
     when:  item.name == cloud_config.peering.vnet_sdp_internal.connect_peering_name
     loop: "{{ vnet_internal.vnetpeerings }}"
