@@ -3,11 +3,10 @@
   gather_facts: false
   connection: local
 
-roles:
-  - create-jenkins-project
-  - create-environment-configuration
-  - validation
-
+  roles:
+    - create-jenkins-project
+    - create-environment-configuration
+    - push-files-to-repo
 
 
 
