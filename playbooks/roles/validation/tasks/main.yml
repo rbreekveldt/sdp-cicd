@@ -1,4 +1,4 @@
----
+  ---
 
   - include_vars: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
 
