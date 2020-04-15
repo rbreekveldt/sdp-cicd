@@ -2,15 +2,16 @@
 
 - include_vars: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
 
-- name: get vnet names
-  azure_rm_virtualnetworkpeering_facts:
-    resource_group: "{{ cloud_config.peering.vnet_sdp_internal.remote_resource_group }}"
-    virtual_network: "{{ cloud_config.peering.vnet_sdp_internal.remote_virtual_network }}"
-    subscription_id: "{{ cloud_config.peering.vnet_sdp_internal.remote_subscription_id }}"
-    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
-    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
-    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-  register: vnet_internal
+
+  - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
+    azure_rm_virtualnetworkpeering_facts:
+      resource_group: '{{ cloud_config.peering.vnet_sdp_internal.remote_resource_group }}'
+      virtual_network: '{{ cloud_config.peering.vnet_sdp_internal  }}'
+      subscription_id: '{{ cloud_config.peering.vnet_sdp_internal.remote_subscription_id }}'
+      tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+      secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+      client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+    register: vnet_internal
 
 
   - fail:
