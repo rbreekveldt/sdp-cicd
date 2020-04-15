@@ -2,48 +2,81 @@
 
   - include_vars: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
 
-  - fail:
-      msg: The resource_group already exists!
-    when:  item.name == cloud_config.peering.vnet_sdp_internal.connect_peering_name
-    loop: "{{ vnet_internal_result.vnetpeerings }}"
-
-  - fail:
-      msg: The resource_group already exists!
-    when:  item.name == cloud_config.peering.vnet_ad_domain.connect_peering_name
-    loop: "{{ vnet_ad_result.vnetpeerings }}"
 
   - name: Get list of VNET SDP INTERNAL peerings
+    block:
     azure_rm_virtualnetworkpeering_facts:
-      resource_group: "{{ item.remote_resource_group }}"
-      virtual_network: "{{ item.remote_virtual_network }}"
-      subscription_id: "{{ item.remote_subscription_id }}"
+      resource_group: "{{ cloud_config.peering.vnet_sdp_internal.remote_resource_group }}"
+      virtual_network: "{{ cloud_config.peering.vnet_sdp_internal.remote_virtual_network }}"
+      subscription_id: "{{ cloud_config.peering.vnet_sdp_internal.remote_subscription_id }}"
       tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
       secret: "{{ lookup('env', 'AZURE_SECRET') }}"
       client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-    register: vnet_external_cicd
-    with_items:
-      - "{{ cloud_config.peering.vnet_sdp_external }}"
-      - "{{ cloud_config.peering.vnet_cicd_prd }}"
+      register: vnet_internal_result
 
-  - fail:
-      msg: The resource_group already exists!
-    when:  item.name == cloud_config.peering.vnet_cicd_prd.connect_peering_name
-    loop: "{{ vnet_external_cicd }}"
 
-  - fail:
-      msg: The resource_group already exists!
-    when:  item.name == cloud_config.peering.vnet_sdp_external.connect_peering_name
-    loop: "{{ vnet_external_cicd }}"
+  - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
+    azure_rm_virtualnetworkpeering_facts:
+      resource_group: "{{ cloud_config.peering.vnet_ad_domain.remote_resource_group }}"
+      virtual_network: "{{ cloud_config.peering.vnet_ad_domain.remote_virtual_network }}"
+      subscription_id: "{{ cloud_config.peering.vnet_ad_domain.remote_subscription_id }}"
+      tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+      secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+      client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+      register: vnet_ad_result
+    when: vnetcheck.virtualnetworks != []
 
-  - fail:
-      msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
-    when: rg_name_test | length > 24
 
-  - name: Get facts for all resource groups
-    azure_rm_resourcegroup_facts:
-    register: azure_resource_groups
 
-  - fail:
-      msg: The resource_group already exists!
-    when:  item.name == rg_name_test
-    loop: "{{ azure_resource_groups.resourcegroups }}"
+- fail:
+    msg: The resource_group already exists!
+  when:  item.name == cloud_config.peering.vnet_sdp_internal.connect_peering_name
+  loop: "{{ vnet_internal_result.vnetpeerings }}"
+
+- fail:
+    msg: The resource_group already exists!
+  when:  item.name == cloud_config.peering.vnet_ad_domain.connect_peering_name
+  loop: "{{ vnet_ad_result.vnetpeerings }}"
+
+- name: Get list of VNET SDP INTERNAL peerings
+  azure_rm_virtualnetworkpeering_facts:
+    resource_group: "{{ cloud_config.peering.vnet_sdp_external.remote_resource_group }}"
+    virtual_network: "{{ cloud_config.peering.vnet_sdp_external.remote_virtual_network }}"
+    subscription_id: "{{ cloud_config.peering.vnet_sdp_external.remote_subscription_id }}"
+    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+  register: vnet_external
+
+  - name: Get list of VNET SDP INTERNAL peerings
+    azure_rm_virtualnetworkpeering_facts:
+      resource_group: "{{ cloud_config.peering.vnet_cicd_prd.remote_resource_group }}"
+      virtual_network: "{{ cloud_config.peering.vnet_cicd_prd.remote_virtual_network }}"
+      subscription_id: "{{ cloud_config.peering.vnet_cicd_prd.remote_subscription_id }}"
+      tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+      secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+      client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+    register: vnet_cicd
+
+- fail:
+    msg: The resource_group already exists!
+  when:  item.name == cloud_config.peering.vnet_cicd_prd.connect_peering_name
+  loop: "{{ vnet_cicd }}"
+
+- fail:
+    msg: The resource_group already exists!
+  when:  item.name == cloud_config.peering.vnet_sdp_external.connect_peering_name
+  loop: "{{ vnet_prd }}"
+
+- fail:
+    msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
+  when: rg_name_test | length > 24
+
+- name: Get facts for all resource groups
+  azure_rm_resourcegroup_facts:
+  register: azure_resource_groups
+
+- fail:
+    msg: The resource_group already exists!
+  when:  item.name == rg_name_test
+  loop: "{{ azure_resource_groups.resourcegroups }}"
