@@ -23,18 +23,15 @@
     register: vnet_ad_result
 
 
-  - debug:
-      msg: "{{ vnet_ad_result }}"
-
   - fail:
       msg: The resource_group already exists!
     when:  item.name == cloud_config.peering.vnet_sdp_internal.connect_peering_name
-    loop: "{{ vnet_internal_result }}"
+    loop: "{{ vnet_internal_result.vnetpeerings }}"
 
   - fail:
       msg: The resource_group already exists!
     when:  item.name == cloud_config.peering.vnet_ad_domain.connect_peering_name
-    loop: "{{ vnet_ad_result }}"
+    loop: "{{ vnet_ad_result.vnetpeerings }}"
 
   - name: Get list of VNET SDP INTERNAL peerings
     azure_rm_virtualnetworkpeering_facts:
@@ -56,21 +53,15 @@
       client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
     register: vnet_cicd
 
-  - debug:
-      msg: "{{ vnet_external }}"
-
-  - debug:
-      msg: "{{ vnet_cicd }}"
-
   - fail:
       msg: The resource_group already exists!
     when:  item.name == cloud_config.peering.vnet_cicd_prd.connect_peering_name
-    loop: "{{ vnet_cicd }}"
+    loop: "{{ vnet_cicd.vnetpeerings }}"
 
   - fail:
       msg: The resource_group already exists!
     when:  item.name == cloud_config.peering.vnet_sdp_external.connect_peering_name
-    loop: "{{ vnet_external }}"
+    loop: "{{ vnet_external.vnetpeerings }}"
 
   - fail:
       msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
