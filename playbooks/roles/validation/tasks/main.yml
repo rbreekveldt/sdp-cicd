@@ -1,4 +1,6 @@
 ---
+  - debug:
+      msg: "{{ cloud_config.peering }}"
 
   - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
     azure_rm_virtualnetworkpeering_facts:
