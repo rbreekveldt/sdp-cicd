@@ -26,12 +26,12 @@
   - fail:
       msg: The resource_group already exists!
     when:  item.name == cloud_config.peering.vnet_sdp_internal.connect_peering_name
-    loop: "{{ vnet_internal_result.vnetpeerings }}"
+    loop: "{{ vnet_internal_result }}"
 
   - fail:
       msg: The resource_group already exists!
     when:  item.name == cloud_config.peering.vnet_ad_domain.connect_peering_name
-    loop: "{{ vnet_ad_result.vnetpeerings }}"
+    loop: "{{ vnet_ad_result }}"
 
   - name: Get list of VNET SDP INTERNAL peerings
     azure_rm_virtualnetworkpeering_facts:
