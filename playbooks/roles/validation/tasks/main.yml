@@ -9,8 +9,8 @@
          virtual_network: "{{ cloud_config.peering.vnet_sdp_internal.remote_virtual_network }}"
          subscription_id: "{{ cloud_config.peering.vnet_sdp_internal.remote_subscription_id }}"
          tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
-        secret: "{{ lookup('env', 'AZURE_SECRET') }}"
-        client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+         secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+         client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
       register: vnet_internal_result
 
        azure_rm_virtualnetworkpeering_facts:
