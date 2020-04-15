@@ -54,10 +54,10 @@
     register: vnet_cicd
 
   - debug:
-      - msg: "{{ vnet_external }}"
+      msg: "{{ vnet_external }}"
 
   - debug:
-      - msg: "{{ vnet_cicd }}"
+      msg: "{{ vnet_cicd }}"
 
   - fail:
       msg: The resource_group already exists!
