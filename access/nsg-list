@@ -181,6 +181,7 @@ security_groups:
       - UPC_LU_Locations
       - Infosys_Office1	
       - Infosys_Office2	
+      - Jenkins
       - Pranshu_Mishra	
       - Nikhil_Vyas	
       - Smiksha_Singh	
