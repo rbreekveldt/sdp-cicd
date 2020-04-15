@@ -3,88 +3,11 @@
   gather_facts: false
   connection: local
 
-  vars:
-    rg_name_test: "vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-vnet-sdp-internal"
-    internal_vnet_test: "vnet-sdp-internal-to-Liberty-Global-Governance-Vnet-Guavus"
-    external_vnet_test: "vnet-sdp-external-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
-    cicd_vnet_test: "vnet-cicd-prd-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
-    dom_serv_vnet: "Liberty-Global-AD-domain-services-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
+roles:
+  - create-jenkins-project
+  - create-environment-configuration
+  - validation
 
-  pre_tasks:
-
-    - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
-      block:
-      azure_rm_virtualnetworkpeering_facts:
-        resource_group: access-sdp-jumpbox-rg
-        virtual_network: /subscriptions/dd10eed9-865c-4bfa-a260-d3e8fe16b047/resourceGroups/access-sdp-jumpbox-rg/providers/Microsoft.Network/virtualNetworks/vnet-sdp-internal
-        subscription_id: dd10eed9-865c-4bfa-a260-d3e8fe16b047
-        tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
-        secret: "{{ lookup('env', 'AZURE_SECRET') }}"
-        client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-      register: vnet_internal
-
-    - fail:
-        msg: The resource_group already exists!
-      when:  item.name == internal_vnet_test
-      loop: "{{ vnet_internal.vnetpeerings }}"
-
-    - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
-      azure_rm_virtualnetworkpeering_facts:
-        resource_group: access-sdp-jumpbox-rg
-        virtual_network: vnet-sdp-external
-        subscription_id: dd10eed9-865c-4bfa-a260-d3e8fe16b047
-        tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
-        secret: "{{ lookup('env', 'AZURE_SECRET') }}"
-        client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-      register: vnet_external
-
-    - fail:
-        msg: The resource_group already exists!
-      when:  item.name == external_vnet_test
-      loop: "{{ vnet_external.vnetpeerings }}"
-
-    - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
-      azure_rm_virtualnetworkpeering_facts:
-        resource_group: automation-cicd-prd-rg
-        virtual_network: vnet_cicd_prd
-        subscription_id: fd478270-bd64-4cf3-bb8b-53016bb2ffd6
-        tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
-        secret: "{{ lookup('env', 'AZURE_SECRET') }}"
-        client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-      register: vnet_prd
-
-    - fail:
-        msg: The resource_group already exists!
-      when:  item.name == cicd_vnet_test
-      loop: "{{ vnet_prf.vnetpeerings }}"
-
-    - name: Get list of VNET LIBERTY GLOBAL AD DOMAIN peerings
-      azure_rm_virtualnetworkpeering_facts:
-        resource_group: Liberty-Global-Shared-Resources
-        virtual_network: Liberty-Global-AD-domain-services
-        subscription_id: dd10eed9-865c-4bfa-a260-d3e8fe16b047
-        tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
-        secret: "{{ lookup('env', 'AZURE_SECRET') }}"
-        client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-      register: vnet_glb
-
-    - fail:
-        msg: The resource_group already exists!
-      when:  item.name == dom_serv_vnet
-      loop: "{{ vnet_glb.vnetpeerings }}"
-
-    - fail:
-        msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
-      when: rg_name_test | length > 24
-
-    - name: Get facts for all resource groups
-      azure_rm_resourcegroup_facts:
-      register: azure_resource_groups
-
-    - fail:
-        msg: The resource_group already exists!
-      when:  item.name == rg_name_test
-      loop: "{{ azure_resource_groups.resourcegroups }}"
 
 
 
