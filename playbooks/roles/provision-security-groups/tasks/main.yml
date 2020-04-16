@@ -20,7 +20,7 @@
     dir: vars
   tags: hdi
 
-- name: Whitelist IP's
+- name: Whitelist HDI IP's
   include_tasks: create-nsg.yml
   vars:
     inbound_rules: 

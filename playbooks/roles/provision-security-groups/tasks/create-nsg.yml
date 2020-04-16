@@ -4,5 +4,5 @@
   azure_rm_securitygroup:
     resource_group: "{{ cloud_config.resource_group }}"
     name: "{{ cloud_config.security_groups.name }}"
-    tags: "{{ cloud_config.tags }}"
+    tags: "{{ cloud_config.tags | default(omit) }}"
     rules: "{{ inbound_rules | default(omit) }}"
