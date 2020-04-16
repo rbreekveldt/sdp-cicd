@@ -16,7 +16,7 @@
     msg: "{{ test }}"
 
 - fail:
-    msg: The vnet name exists in vnet_sdp_internal
+    msg: "The vnet peering {{ item.name }} already exists"
   when:  item.name == loop_local.connect_peering_name
   loop: "{{ test.vnetpeerings }}"
 
