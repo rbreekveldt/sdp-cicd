@@ -12,6 +12,9 @@
     client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
   register: test
 
+- debug:
+    msg: "{{ query('dict', test) }}"
+
 - fail:
     msg: The vnet name exists in vnet_sdp_internal
   when:  item.vnetpeering.name == loop_local.connect_peering_name
