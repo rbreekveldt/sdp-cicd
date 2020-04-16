@@ -9,7 +9,6 @@
       rs_group: "{{ loop_local.remote_resource_group  }}"
       vn: "{{ loop_local.remote_virtual_network }}"
       sub_id: "{{ loop_local.remote_subscription_id }}"
-      register: "{{ loop_local }}"
       fail_loop:
     loop_control:
       loop_var: loop_local

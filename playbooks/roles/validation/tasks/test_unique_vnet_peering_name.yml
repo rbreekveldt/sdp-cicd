@@ -10,12 +10,13 @@
     tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
     secret: "{{ lookup('env', 'AZURE_SECRET') }}"
     client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-  register: "{{ register }}"
+  register: test
 
 - fail:
     msg: The vnet name exists in vnet_sdp_internal
-  when:  item.name == register.connect_peerin_name
-  loop: "{{ register }}.vnetpeerings"
+  when:  item.vnetpeering.name == loop_local.connect_peering_name
+  loop: "{{ test }}"
+
 
 
 
