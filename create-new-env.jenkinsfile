@@ -6,21 +6,26 @@ def skipRemainingStages = "true"
 pipeline {
     agent any
     parameters{
-                choice(name: 'subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProject CPD\nProject Audience Measurement\nProject UPC Cablecom - Digital Roadmap', description: 'Subscription to provision')
-                choice(name: 'data_domain', choices: 'Please select\ndp\nautomation\naccess\nmonitoring', description: 'Data Domain')
-                choice(name: 'resource_group_phase', choices: 'Please select\npiimgmt\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
-                string(name: 'project_name', defaultValue:'', description: 'Specify project name')
-                choice(name: 'application_name', choices: 'Please select\nsecupi\nhdp\ndatagateway', description: 'Application name')
-                choice(name: 'env_type', choices: 'Please select\ndev\nsit\nuat\nprd', description: 'Environment type to provision')
-                string(name: 'project_description', defaultValue:'', description: 'Specify project description')
-                choice(name: 'country', choices: 'Please select\nnl\nch\nie\nde\nat', description: 'Select Country')
-                choice(name: 'unit', choices: 'Please select\nconsumeranalytics\ndatacentertechnology\ndatasolutions\nitsecurity\nsupplychain', description: 'Select Unit')
-                choice(name: 'nifi_nodes_count', choices: 'Please select\n1\n2\n3\n4\n5', description: 'choose the amount of nodes for Nifi cluster')
-                booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster')
-                booleanParam(defaultValue: false, name: 'kafka', description: 'Provision a Kafka mockup server')
-                booleanParam(defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server')
-                booleanParam(defaultValue: false, name: 'oracle', description: 'Provision a oracle mockup db')
-           }
+        choice(name: 'subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProject CPD\nProject Audience Measurement\nProject UPC Cablecom - Digital Roadmap', description: 'Subscription to provision')
+        choice(name: 'data_domain', choices: 'Please select\ndp\nautomation\naccess\nmonitoring', description: 'Data Domain')
+        choice(name: 'resource_group_phase', choices: 'Please select\npiimgmt\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
+        string(name: 'project_name', defaultValue:'', description: 'Specify project name')
+        choice(name: 'application_name', choices: 'Please select\nsecupi\nhdp\ndatagateway', description: 'Application name')
+        choice(name: 'env_type', choices: 'Please select\ndev\nsit\nuat\nprd', description: 'Environment type to provision')
+        string(name: 'project_description', defaultValue:'', description: 'Specify project description')
+        choice(name: 'country', choices: 'Please select\nnl\nch\nie\nde\nat', description: 'Select Country')
+        choice(name: 'unit', choices: 'Please select\nconsumeranalytics\ndatacentertechnology\ndatasolutions\nitsecurity\nsupplychain', description: 'Select Unit')
+        choice(name: 'nifi_nodes_count', choices: 'Please select\n1\n2\n3\n4\n5', description: 'choose the amount of nodes for Nifi cluster')
+        booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster')
+        booleanParam(defaultValue: false, name: 'kafka', description: 'Provision a Kafka mockup server')
+        booleanParam(defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server')
+        booleanParam(defaultValue: false, name: 'oracle', description: 'Provision a oracle mockup db')
+     }
+   
+    environment {
+        master_project_name = "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
+    }
+
     stages {
     
       stage('set subscription id') {
@@ -46,7 +51,7 @@ pipeline {
         }
         stage ('Create Dataproject') {
             steps {
-            withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}" ,
+            withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
@@ -57,7 +62,7 @@ pipeline {
         }
         stage ('Provision Dataproject') {
             steps {
-            withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}" ,
+            withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
@@ -68,12 +73,12 @@ pipeline {
         }
         stage ('Install ambari cluster') {
             steps {
-            withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}" ,
+            withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
-                  // ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.env_type}'/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi'
+                  ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.env_type}'/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi'
                   }
             }
         }

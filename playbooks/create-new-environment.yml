@@ -8,27 +8,8 @@
       set_fact:
         master_project_name: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
 
-
-    - debug:
-        msg: "{{ master_project_name }}"
-
-    - fail:
-        msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
-      when: master_project_name | length > 24
-
-    - name: Get facts for all resource groups
-      azure_rm_resourcegroup_facts:
-      register: azure_resource_groups
-
-    - debug:
-        msg: "{{ azure_resource_groups }}"
-
-    - fail:
-        msg: The resource_group already exists!
-      when:  item.name == master_project_name
-      loop: "{{ azure_resource_groups.resourcegroups }}"
-  
   roles:
     - create-jenkins-project
     - create-environment-configuration
-    - push-files-to-repo
+    - validation
+    - push-files-to-repo  
