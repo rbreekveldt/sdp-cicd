@@ -162,12 +162,14 @@ locations:
   - name: Marco_Blanca
     source:
       - 213.127.97.204
+      - 213.127.77.186
     ports:
       - 22
       - 443 
   - name: Anurag_Raut
     source:
       - 85.146.88.162
+      - 157.47.5.204
     ports:
       - 22
       - 443 
