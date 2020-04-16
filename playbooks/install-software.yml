@@ -12,8 +12,8 @@
 
 - import_playbook: set-host-groups.yml
 
-- import_playbook: install-ambari-cluster.yml
-  when: cloud_config.nifi.provision
+#- import_playbook: install-ambari-cluster.yml
+#  when: cloud_config.nifi.provision
 
 - import_playbook: sftp-mockup-server.yml
   when: cloud_config.mockup.sftp.provision
@@ -23,9 +23,3 @@
 
 - import_playbook: oracle-mockup-db.yml
   when: cloud_config.mockup.oracle.provision
-
-<<<<<<< HEAD
-
-=======
->>>>>>> f85feee49ac472ad358da4d0f932070f787b20b9
-
