@@ -17,8 +17,8 @@
 
 - fail:
     msg: The vnet name exists in vnet_sdp_internal
-  when:  item.vnetpeering.name == loop_local.connect_peering_name
-  loop: "{{ query('dict', test) }}"
+  when:  item.vnetpeerings.name == loop_local.connect_peering_name
+  loop: "{{ test }}"
 
 
 
