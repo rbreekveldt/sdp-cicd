@@ -14,8 +14,8 @@
 
 - fail:
     msg: The vnet name exists in vnet_sdp_internal
-  when:  item.name == loop_local.connect_peerin_name
-  loop: "{{ fail_loop }}"
+  when:  item.name == register.connect_peerin_name
+  loop: "{{ register }}.vnetpeerings"
 
 
 
