@@ -12,9 +12,6 @@
     client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
   register: test
 
-- debug:
-    msg: "{{ test }}"
-
 - fail:
     msg: "The vnet peering {{ item.name }} already exists"
   when:  item.name == loop_local.connect_peering_name
