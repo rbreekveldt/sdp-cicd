@@ -7,7 +7,7 @@ pipeline {
     agent any
     //  why does subscription have more functionalities then accounted for to run playbooks?
     parameters{
-        choice(name: 'subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProd Data and Processing\nProject CPD', description: 'Subscription to provision')
+        choice(name: 'subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProd Data and Processing\nProject CPD\nProject UPC Cablecom - Digital Roadmap', description: 'Subscription to provision')
         choice(name: 'data_domain', choices: 'Please select\ndp\nautomation\naccess\nmonitoring', description: 'Data Domain')
         choice(name: 'resource_group_phase', choices: 'Please select\npiimgmt\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
         string(name: 'project_name', defaultValue:'', description: 'Specify project name')
@@ -40,6 +40,8 @@ pipeline {
                     {env.CREDENTIAL_ID = 'SPNonProdDataAndProcessing'}
                     else if (subscription.toString()=='Prod Data and Processing')
                     {env.CREDENTIAL_ID = 'SPProdDataAndProcessing'}
+                    else if (subscription.toString()=='Project UPC Cablecom - Digital Roadmap')
+                    {env.CREDENTIAL_ID = 'SPUPCCablecom'}
                     else {env.CREDENTIAL_ID = 'SPCpd'}
 
                 }
@@ -53,7 +55,7 @@ pipeline {
 
         stage ('Create HDI environment configuration') {
             steps {
-            withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
+            withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}" ,
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
@@ -63,8 +65,7 @@ pipeline {
             }
         }
 
-       /* stage ('Provision HDI Infrastructure for Project Azure Governance Testing') {
-
+        stage ('Provision HDI Infrastructure') {
             steps {
 
                 withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}" ,
@@ -75,7 +76,7 @@ pipeline {
                     ansiblePlaybook extras: "-e @environments/'${data_domain}'-'${resource_group_phase}'-'${project_name}'-'${env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
                 }
             }
-        } */
+        } 
 	
     }
 }

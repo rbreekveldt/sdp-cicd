@@ -1,0 +1,27 @@
+---
+whitelist:
+  inbound:
+{% for item in security_groups %}
+    - security_group: {{ item.security_group }}
+      subscription_id: {{ item.subscription_id }}
+      resource_group: {{ item.resource_group }} 
+      rules:
+{% for rule in item.locations %}
+        - name: {{ rule }}
+          priority: {{ 199 + loop.index }}
+          protocol: Tcp
+          destination_address_prefix: VirtualNetwork
+{% for location in locations %}
+{% if rule == location.name %}
+          source_address_prefix: 
+{% for source in location.source %}
+            - {{ source }}
+{% endfor %}
+          destination_port_range:
+{% for port in location.ports %}
+            - {{ port }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}

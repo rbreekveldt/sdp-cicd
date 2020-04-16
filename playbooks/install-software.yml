@@ -24,5 +24,8 @@
 - import_playbook: oracle-mockup-db.yml
   when: cloud_config.mockup.oracle.provision
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f85feee49ac472ad358da4d0f932070f787b20b9
 

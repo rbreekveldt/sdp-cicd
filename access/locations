@@ -1,0 +1,320 @@
+---
+locations:
+####################
+# Office Locations #
+####################
+  - name: LG_Locations
+    source: 
+      - 213.46.252.136
+      - 212.142.22.199
+      - 62.179.123.10
+      - 213.46.253.0/27
+      - 213.46.240.36
+      - 212.83.65.158
+      - 213.46.236.21
+      - 84.199.103.66
+      - 74.63.136.128/26
+      - 4.16.80.96/27
+    ports:
+      - 22
+      - 443 
+  - name: Devoteam_Locations
+    source: 
+      - 85.146.248.42
+      - 31.161.50.42
+    ports:
+      - 22
+      - 443 
+  - name: Ziggo_Locations
+    source: 
+      - 212.142.33.197
+      - 212.142.33.200
+      - 212.178.206.251
+      - 212.178.206.243
+      - 212.178.206.241
+    ports:
+      - 22
+      - 443 
+  - name: UPC_AT_Locations  
+    source: 
+      - 195.34.134.140
+      - 80.109.255.5
+    ports:
+      - 22
+      - 443 
+  - name: UPC_HU_Locations
+    source: 
+      - 195.184.167.238
+    ports:
+      - 22
+      - 443 
+  - name: VM_IE_Locations
+    source: 
+      - 89.101.170.35
+    ports:
+      - 22
+      - 443 
+  - name: UPC_PL_Locations
+    source: 
+      - 81.18.192.5
+      - 62.179.0.0/28
+    ports:
+      - 22
+      - 443 
+  - name: UPC_RO_Locations
+    source: 
+      - 193.226.168.19
+      - 85.186.255.2
+      - 85.186.249.16/28   
+    ports:
+      - 22
+      - 443 
+  - name: UPC_CZ_Locations
+    source:
+      - 62.24.68.103
+    ports:
+      - 22
+      - 443 
+  - name: UPC_SK_Locations
+    source:
+      - 217.23.240.6
+    ports:
+      - 22
+      - 443 
+  - name: UPC_CH_Locations
+    source:
+      - 62.2.21.164
+      - 62.2.131.1 	
+    ports:
+      - 22
+      - 443 
+  - name: UM_DE_Locations
+    source:
+      - 80.69.97.9
+      - 80.69.99.150
+      - 82.212.63.30
+    ports:
+      - 22
+      - 443 
+  - name: Telenet_BE_Locations
+    source:
+      - 212.123.14.6
+      - 81.83.203.80
+    ports:
+      - 22
+      - 443 
+  - name: VM_UK_Locations
+    source: 
+      - 193.38.82.36
+    ports:
+      - 22
+      - 443 
+  - name: UPC_LU_Locations
+    source:
+      - 195.46.232.162
+    ports:
+      - 22
+      - 443 
+  - name: Infosys_Office1	
+    source:	
+      - 122.98.50.25
+    ports:
+      - 22
+      - 443 
+  - name: Infosys_Office2	
+    source:	
+      - 122.98.54.25
+    ports:
+      - 22
+      - 443 
+  - name: SecuPi_Locations
+    source:
+      - 35.225.149.221
+    ports:
+      - 22
+      - 443 
+
+######################
+# Services and tools #
+######################
+  - name: Jenkins
+    source: 
+      - 51.105.193.222	
+    ports:
+      - 22
+      - 443 
+  - name: HDInsight_Westeurope
+    source:
+      - 52.174.36.244
+      - 52.166.243.90
+    ports:
+      - 443
+
+###########################
+# Devoteam home locations #
+###########################
+  - name: Chellappan_Chockalingam
+    source:
+      - 84.81.185.32
+    ports:
+      - 22
+      - 443 
+  - name: Marco_Blanca
+    source:
+      - 213.127.97.204
+    ports:
+      - 22
+      - 443 
+  - name: Anurag_Raut
+    source:
+      - 85.146.88.162
+    ports:
+      - 22
+      - 443 
+  - name: Remco_Breekveldt
+    source:
+      - 145.133.103.83  
+    ports:
+      - 22
+      - 443 
+  - name: Petri_la_Grange
+    source:
+      - 213.127.38.93
+    ports:
+      - 22
+      - 443 
+  - name: Luc_Ackermann
+    source:
+      - 85.148.62.240  
+    ports:
+      - 22
+      - 443 
+  - name: Hakan_Elgin
+    source:
+      - 83.85.64.159
+    ports:
+      - 22
+      - 443 
+  - name: Gaurav_Gupta
+    source:
+      - 83.84.230.175  
+    ports:
+      - 22
+      - 443 
+  - name: Aleksandr_Bykov
+    source:
+      - 195.240.178.170  
+    ports:
+      - 22
+      - 443 
+  - name: Oguz_Eren
+    source:
+      - 86.92.11.120  
+    ports:
+      - 22
+      - 443 
+  - name: Mike_de_Kok
+    source:
+      - 213.127.101.86 
+    ports:
+      - 22
+      - 443 
+
+#################################
+# Liberty Global home locations #
+#################################
+  - name: Ben_Sutton
+    source:
+      - 86.12.247.71  
+    ports:
+      - 22
+      - 443 
+  - name: Rohit_Mattoo
+    source:
+      - 82.44.113.143  
+    ports:
+      - 22
+      - 443 
+  - name: Manu_Raja
+    source:
+      - 80.114.94.45  
+    ports:
+      - 22
+      - 443 
+  - name: Wang_Defu_Home
+    source:
+      - 86.145.3.26
+    ports:
+      - 22
+      - 443 
+  - name: Joseph
+    source:
+      - 77.98.125.47  
+    ports:
+      - 22
+      - 443 
+  - name: Martin_Barutchiyska
+    source:
+      - 94.15.136.164  
+    ports:
+      - 22
+      - 443 
+
+##########################
+# Infosys home locations #
+##########################
+  - name: Pranshu_Mishra	
+    source:	
+      - 61.246.57.5
+    ports:
+      - 22
+      - 443 
+  - name: Nikhil_Vyas	
+    source:	
+      - 172.69.54.37
+    ports:
+      - 22
+      - 443 
+  - name: Smiksha_Singh	
+    source:	
+      - 94.14.190.82
+    ports:
+      - 22
+      - 443 
+  - name: Shivanki_Choudhary	
+    source:	
+      - 183.87.60.122
+    ports:
+      - 22
+      - 443 
+  - name: Rajat_Sharma
+    source:	
+      - 80.231.232.64
+    ports:
+      - 22
+      - 443 
+  - name: Priyanka_Tandon	
+    source:	
+      - 117.225.212.238
+      - 117.225.129.70
+    ports:
+      - 22
+      - 443 
+  - name: Jigayasa_Golhani
+    source:	
+      - 49.36.55.21
+    ports:
+      - 22
+      - 443 
+  - name: Rahul_Akulla
+    source:	
+      - 77.162.104.139
+    ports:
+      - 22
+      - 443 
+  - name: Nayna_Choubey
+    source:	
+      - 49.32.8.5 
+    ports:
+      - 22
+      - 443 

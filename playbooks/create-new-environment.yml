@@ -12,6 +12,4 @@
     - create-jenkins-project
     - create-environment-configuration
     - validation
-
-
-
+    - push-files-to-repo  

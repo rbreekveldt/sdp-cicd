@@ -33,7 +33,21 @@
     state: directory
   with_items: "{{ sftp_users }}"
 
-- name: SFTP-Server | Create working directory for each user
+
+# Create SFTP users
+- name: SFTP-Server | Create sftp users
+  user:
+    name: "{{ item.name }}"
+    group: "{{ sftp_group }}"
+    append: "yes"
+    shell: "/sbin/nologin"
+    home: "/data/{{ item.name }}/work"
+    create_home: yes
+    state: present
+    password: "{{ item.password | password_hash('sha512') }}"
+  with_items: "{{ sftp_users }}"
+
+- name: SFTP-Server | Creete working directory for each user
   file:
     path: "{{ sftp_directories }}/{{ item.name }}/work"
     owner: "{{ item.name }}"
@@ -43,19 +57,6 @@
     recurse: yes
   with_items: "{{ sftp_users }}"
 
-# Create SFTP users
-- name: SFTP-Server | Create sftp users
-  user:
-    name: "{{ item.name }}"
-    group: "{{ sftp_group }}"
-    append: "yes"
-    shell: "/sbin/nologin"
-    home: "/{{ item.name }}/work"
-    create_home: yes
-    state: present
-    password: "{{ item.password | password_hash('sha512') }}"
-  with_items: "{{ sftp_users }}"
-     
    
 - name: SFTP-Server | Add sshd_config block
   blockinfile:
