@@ -13,7 +13,7 @@
   register: test
 
 - debug:
-    msg: "{{ query('dict', test) }}"
+    msg: "{{ test | list }}"
 
 - fail:
     msg: The vnet name exists in vnet_sdp_internal
