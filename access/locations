@@ -297,8 +297,8 @@ locations:
       - 443 
   - name: Priyanka_Tandon	
     source:	
-      - 117.225.212.238
-      - 117.225.129.70
+      - 117.224.210.254
+      - 117.224.35.240
     ports:
       - 22
       - 443 
@@ -316,7 +316,7 @@ locations:
       - 443 
   - name: Nayna_Choubey
     source:	
-      - 49.32.8.5 
+      - 49.33.155.111 
     ports:
       - 22
       - 443 
