@@ -117,6 +117,8 @@ security_groups:
       - Priyanka_Tandon	
       - Jigayasa_Golhani
       - Nayna_Choubey
+      - Remco_Breekveldt
+      - Anurag_Raut
    
   - security_group: nsg-cicd-prd
     subscription_id: fd478270-bd64-4cf3-bb8b-53016bb2ffd6
