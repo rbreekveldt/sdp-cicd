@@ -6,7 +6,7 @@
   connection: local
   vars:
     - dnsname: "{{ cloud_config.hdi_cluster.dns_name }}" 
-    - environment_path: "../../../../environments/{{ cloud_config.data_domain }}-{{ cloud_config.resource_group_phase }}-{{ cloud_config.project_name }}-{{ cloud_config.application_name }}-{{ cloud_config.env_type }}"
+    - environment_path: "../../../../environments/{{ cloud_config.data_domain }}-{{ cloud_config.resource_group_phase }}-{{ cloud_config.project_name }}-{{ cloud_config.env_type }}"
     - crtpath: "{{ environment_path }}/{{ cloud_config.hdi_cluster.name }}_certfile.crt"
     - pempath: "{{ environment_path }}/{{ cloud_config.hdi_cluster.name }}_certfile.pem"
     - csrpath: "{{ environment_path }}/{{ cloud_config.hdi_cluster.name }}_certfile.csr"

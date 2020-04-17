@@ -12,7 +12,6 @@ pipeline {
         choice(name: 'resource_group_phase', choices: 'Please select\npiimgmt\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
         string(name: 'project_name', defaultValue:'', description: 'Specify project name')
         string(name: 'cluster_name', defaultValue:'', description: 'Specify cluster name')
-        choice(name: 'application_name', choices: 'Please select\nsecupi\nhdp\ndatagateway', description: 'Application name')
         choice(name: 'env_type', choices: 'Please select\ndev\nsit\nuat\nprd', description: 'Environment type to provision')
         string(name: 'project_description', defaultValue:'', description: 'Specify project description')
         choice(name: 'country', choices: 'Please select\nnl\nch\nie\nde\nat', description: 'Select Country')

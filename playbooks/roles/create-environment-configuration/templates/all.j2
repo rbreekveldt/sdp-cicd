@@ -3,7 +3,6 @@ cloud_config:
   project_name: {{ lookup('env', 'project_name') }}
   env_type: {{ lookup('env', 'env_type') }}
   resource_group_phase: {{ lookup('env', 'resource_group_phase') }}
-  application_name: {{ lookup('env', 'application_name') }}
   data_domain: {{ lookup('env', 'data_domain') }}
   resource_group: {{ master_project_name }}-rg  
   location: "westeurope"
@@ -71,7 +70,7 @@ cloud_config:
     jenkins_publickey: {{ jenkins_public }}
         
   storage_account:
-    name: sa{{ lookup('env', 'project_name') }}{{ lookup('env', 'application_name') }}{{ lookup('env', 'env_type') }}
+    name: sa{{ lookup('env', 'project_name') }}{{ lookup('env', 'env_type') }}
     type: "Standard_LRS"
   
   azkeyvault:
