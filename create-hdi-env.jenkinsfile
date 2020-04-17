@@ -12,8 +12,6 @@ pipeline {
         choice(name: 'resource_group_phase', choices: 'Please select\npiimgmt\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
         string(name: 'project_name', defaultValue:'', description: 'Specify project name')
         string(name: 'cluster_name', defaultValue:'', description: 'Specify cluster name')
-        string(name: 'short_cluster_name', defaultValue:'', description: 'Specify short cluster name for Managed Identity')
-        choice(name: 'application_name', choices: 'Please select\nsecupi\nhdp\ndatagateway', description: 'Application name')
         choice(name: 'env_type', choices: 'Please select\ndev\nsit\nuat\nprd', description: 'Environment type to provision')
         string(name: 'project_description', defaultValue:'', description: 'Specify project description')
         choice(name: 'country', choices: 'Please select\nnl\nch\nie\nde\nat', description: 'Select Country')
@@ -23,10 +21,17 @@ pipeline {
         booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
     }
 
+    environment {
+        master_project_name = "${data_domain}'-'${resource_group_phase}'-'${project_name}'-'${env_type}"
+            }
+
     stages {
         stage('set subscription id') {
             steps {
                 script {
+                    if (cluster_name.length() > 4)
+                    { env.short_cluster_name = cluster_name.substring(0, cluster_name.length() - 4)}
+                    else { error("cluster_name must be > 4") }
                     // Missing credential_ID's in Jenkins
                     if (subscription.toString()=='Project Azure governance testing')
                     {env.CREDENTIAL_ID = 'SPAzureGovernanceTesting'}
@@ -60,7 +65,6 @@ pipeline {
         }
 
         stage ('Provision HDI Infrastructure') {
-
             steps {
 
                 withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}" ,
@@ -71,7 +75,7 @@ pipeline {
                     ansiblePlaybook extras: "-e @environments/'${data_domain}'-'${resource_group_phase}'-'${project_name}'-'${env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
                 }
             }
-        }
+        } 
 	
     }
 }

@@ -3,7 +3,6 @@ cloud_config:
   project_name: {{ lookup('env', 'project_name') }}
   env_type: {{ lookup('env', 'env_type') }}
   resource_group_phase: {{ lookup('env', 'resource_group_phase') }}
-  application_name: {{ lookup('env', 'application_name') }}
   data_domain: {{ lookup('env', 'data_domain') }}
   resource_group: {{ master_project_name }}-rg  
   location: "westeurope"
@@ -71,7 +70,7 @@ cloud_config:
     jenkins_publickey: {{ jenkins_public }}
         
   storage_account:
-    name: sa{{ lookup('env', 'project_name') }}{{ lookup('env', 'application_name') }}{{ lookup('env', 'env_type') }}
+    name: sa{{ lookup('env', 'project_name') }}{{ lookup('env', 'env_type') }}
     type: "Standard_LRS"
   
   azkeyvault:
@@ -171,7 +170,7 @@ cloud_config:
       remote_virtual_network: '/subscriptions/fd478270-bd64-4cf3-bb8b-53016bb2ffd6/resourceGroups/automation-cicd-prd-rg/providers/Microsoft.Network/virtualNetworks/vnet-cicd-prd'
       remote_resource_group: 'automation-cicd-prd-rg'
       remote_subscription_id: 'fd478270-bd64-4cf3-bb8b-53016bb2ffd6'
-      connect_peering_name: vnet-cicd-prd-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}
+      connect_peering_name: vnet-cicd-prd-to-vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }} 
 
     vnet_ad_domain:
       initial_peering_name: vnet-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}-to-Liberty-Global-AD-domain-services

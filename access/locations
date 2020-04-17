@@ -162,12 +162,14 @@ locations:
   - name: Marco_Blanca
     source:
       - 213.127.97.204
+      - 213.127.77.186
     ports:
       - 22
       - 443 
   - name: Anurag_Raut
     source:
       - 85.146.88.162
+      - 157.47.5.204
     ports:
       - 22
       - 443 
@@ -271,7 +273,7 @@ locations:
       - 443 
   - name: Nikhil_Vyas	
     source:	
-      - 172.69.54.37
+      - 213.127.111.26 
     ports:
       - 22
       - 443 
@@ -295,8 +297,8 @@ locations:
       - 443 
   - name: Priyanka_Tandon	
     source:	
-      - 117.225.212.238
-      - 117.225.129.70
+      - 117.224.210.254
+      - 117.224.35.240
     ports:
       - 22
       - 443 
@@ -314,7 +316,7 @@ locations:
       - 443 
   - name: Nayna_Choubey
     source:	
-      - 49.32.8.5 
+      - 49.33.155.111 
     ports:
       - 22
       - 443 

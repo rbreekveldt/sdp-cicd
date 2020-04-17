@@ -1,0 +1,32 @@
+---
+
+  - include_vars: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
+
+
+  - name: check uniqueness of VNET SDP INTERNAL peerings
+    include_tasks: test_unique_vnet_peering_name.yml
+    vars:
+      rs_group: "{{ loop_local.remote_resource_group  }}"
+      vn: "{{ loop_local.remote_virtual_network }}"
+      sub_id: "{{ loop_local.remote_subscription_id }}"
+      fail_loop:
+    loop_control:
+      loop_var: loop_local
+    with_items:
+      - "{{ cloud_config.peering.vnet_sdp_internal }}"
+      - "{{ cloud_config.peering.vnet_ad_domain }}"
+      - "{{ cloud_config.peering.vnet_sdp_external }}"
+      - "{{ cloud_config.peering.vnet_cicd_prd }}"
+
+  - fail:
+      msg: The resource_group is not according to the namespace conventions ( 24 > 3 characters)
+    when: rg_name_test | length > 24
+
+  - name: Get facts for all resource groups
+    azure_rm_resourcegroup_facts:
+    register: azure_resource_groups
+
+  - fail:
+      msg: The resource_group already exists!
+    when:  item.name == rg_name_test
+    loop: "{{ azure_resource_groups.resourcegroups }}"

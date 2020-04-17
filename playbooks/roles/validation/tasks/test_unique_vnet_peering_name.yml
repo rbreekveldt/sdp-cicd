@@ -1,0 +1,22 @@
+---
+
+- include_vars: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
+
+- name: Get list of VNET SDP INTERNAL peerings
+  azure_rm_virtualnetworkpeering_facts:
+    resource_group: "{{ rs_group}}"
+    virtual_network: "{{ vn }}"
+    subscription_id: "{{ sub_id }}"
+    tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
+    secret: "{{ lookup('env', 'AZURE_SECRET') }}"
+    client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+  register: test
+
+- fail:
+    msg: "The vnet peering {{ item.name }} already exists"
+  when:  item.name == loop_local.connect_peering_name
+  loop: "{{ test.vnetpeerings }}"
+
+
+
+
