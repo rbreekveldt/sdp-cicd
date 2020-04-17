@@ -199,6 +199,7 @@ security_groups:
       - HDInsight_Westeurope
       - Jigayasa_Golhani
       - Nayna_Choubey
+      - Chellappan_Chockalingam
 
   - security_group: am-sei0-nsg
     subscription_id: 4e0be25d-2501-46ce-b71b-36ad4d34c88e 
@@ -231,3 +232,4 @@ security_groups:
       - HDInsight_Westeurope
       - Jigayasa_Golhani
       - Nayna_Choubey
+      - Chellappan_Chockalingam
