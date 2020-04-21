@@ -261,6 +261,12 @@ locations:
     ports:
       - 22
       - 443 
+  - name: Udit_Gupta
+    source:
+      - 145.53.247.7  
+    ports:
+      - 22
+      - 443 
 
 ##########################
 # Infosys home locations #
