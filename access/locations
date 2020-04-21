@@ -327,8 +327,7 @@ locations:
       - 443 
   - name: Nayna_Choubey
     source:	
-      - 49.33.155.111
-      - 49.33.170.242
+      - 49.32.30.59
     ports:
       - 22
       - 443 
