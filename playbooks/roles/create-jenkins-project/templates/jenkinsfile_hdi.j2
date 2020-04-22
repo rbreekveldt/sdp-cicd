@@ -7,9 +7,9 @@
     agent any
     parameters{
   {{ lookup('env', 'oozie_db') }}
-  {{% if lookup('env', 'oozie_db') == false %}}
+  {% if lookup('env', 'oozie_db') != true %}
   booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
-  {{% endif %}}
+  {% endif %}
   {% if lookup('env', 'hive_db') == false %}
   booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
   {% endif %}
