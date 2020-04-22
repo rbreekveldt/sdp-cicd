@@ -30,18 +30,6 @@
     }
     }
 
-    stage ('Create HDI environment configuration') {
-    steps {
-  withCredentials([azureServicePrincipal(credentialsId: '{{ lookup('env', 'CREDENTIAL_ID') }}' ,
-                                                          subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
-                                                          clientIdVariable: 'AZURE_CLIENT_ID',
-                                                          clientSecretVariable: 'AZURE_SECRET',
-                                                          tenantIdVariable: 'AZURE_TENANT')]) {
-                                                          ansiblePlaybook playbook: 'playbooks/create-new-environment.yml', skippedTags: 'dataproject'
-  }
-  }
-  }
-
     stage ('Provision HDI Infrastructure') {
     steps {
 
@@ -50,7 +38,7 @@
                                                           clientIdVariable: 'AZURE_CLIENT_ID',
                                                           clientSecretVariable: 'AZURE_SECRET',
                                                           tenantIdVariable: 'AZURE_TENANT')]) {
-                                                          ansiblePlaybook extras: "-e @environments/{{ master_project_name }}/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject,hdi'
+                                                          ansiblePlaybook extras: "-e @environments/{{ master_project_name }}/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'hdi'
   }
   }
   }
