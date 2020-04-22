@@ -11,6 +11,6 @@
   roles:
 # This role needs to be further developed
     - create-jenkins-project
-#    - create-environment-configuration
+    - create-environment-configuration
 #    - validation
-#    - push-files-to-repo
+    - push-files-to-repo
