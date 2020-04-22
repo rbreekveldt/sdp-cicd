@@ -33,7 +33,7 @@
                                                           clientIdVariable: 'AZURE_CLIENT_ID',
                                                           clientSecretVariable: 'AZURE_SECRET',
                                                           tenantIdVariable: 'AZURE_TENANT')]) {
-                                                          ansiblePlaybook extras: "-e @environments/{{ master_project_name }}/all", playbook: 'playbooks/update-all-file.yml', skippedTags: 'dataproject,hdi'
+                                                          ansiblePlaybook extras: "-e @environments/{{ lookup('env', 'master_project_name') }}/all", playbook: 'playbooks/update-all-file.yml', skippedTags: 'dataproject,hdi'
   }
   }
   }
@@ -45,7 +45,7 @@
                                                           clientIdVariable: 'AZURE_CLIENT_ID',
                                                           clientSecretVariable: 'AZURE_SECRET',
                                                           tenantIdVariable: 'AZURE_TENANT')]) {
-                                                          ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/{{ master_project_name }}/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi,dataproject'
+                                                          ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/{{ lookup('env', 'master_project_name') }}/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi,dataproject'
   }
   }
   }
