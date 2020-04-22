@@ -23,6 +23,8 @@
   {% endif %}
   }
 
+
+
     stages {
     stage ('Git checkout and switch to Master') {
     steps {
@@ -32,7 +34,7 @@
 
     stage ('Create HDI environment configuration') {
     steps {
-  withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}" ,
+  withCredentials([azureServicePrincipal(credentialsId: {{ lookup('env', 'CREDENTIOAL_ID') }} ,
                                                           subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                           clientIdVariable: 'AZURE_CLIENT_ID',
                                                           clientSecretVariable: 'AZURE_SECRET',
