@@ -6,17 +6,20 @@
     pipeline {
     agent any
     parameters{
-  {{ lookup('env', 'oozie_db') }}
   {% if lookup('env', 'oozie_db') == 'false' %}
   booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
   {% else %}
-  /*label(......) already installed*/
+  string(name: 'oozie_db_installed', defaultValue: 'The oozie_db is already installed' )
   {% endif %}
-  {% if lookup('env', 'hive_db') == false %}
+  {% if lookup('env', 'hive_db') == 'false' %}
   booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
+  {% else %}
+  string(name: 'hive_db_installed', defaultValue: 'The hive_db is already installed' )
   {% endif %}
-  {% if lookup('env', 'ranger_db') == false %}
+  {% if lookup('env', 'ranger_db') == 'false' %}
   booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
+  {% else %}
+  string(name: 'ranger_db_installed', defaultValue: 'The oozie_db is already installed' )
   {% endif %}
   }
 

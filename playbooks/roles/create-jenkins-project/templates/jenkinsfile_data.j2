@@ -8,11 +8,13 @@
     parameters{
 
   choice(name: 'add_nifi_nodes', choices: 'Please select\n1\n2\n3\n4', description: 'choose the amount of nodes to add to the existing for Nifi cluster')
-  {% if lookup('env', 'nifi') == false %}
+  {% if lookup('env', 'nifi') == 'false' %}
   booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster')
-  {% if lookup('env', 'sftp') == false %}
+  {% else %}
+  string(name: 'oozie_db_installed', defaultValue: 'The oozie_db is already installed' )
+  {% if lookup('env', 'sftp') == 'false' %}
   booleanParam(defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server')
-  {% if lookup('env', 'oracle') == false %}
+  {% if lookup('env', 'oracle') == 'false' %}
   booleanParam(defaultValue: false, name: 'oracle', description: 'Provision a oracle mockup db')
   {% endif %}
   }
