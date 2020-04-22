@@ -10,7 +10,7 @@
 
   roles:
 # This role needs to be further developed
-#   - create-jenkins-project
+    - create-jenkins-project
     - create-environment-configuration
     - validation
     - push-files-to-repo  
