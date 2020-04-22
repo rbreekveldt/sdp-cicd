@@ -1,0 +1,38 @@
+  //Jenkins pipeline to provision HDInsight infrastructure
+    def azureSubscription = ""
+    def inputSubscription = ""
+    def skipRemainingStages = "true"
+
+    pipeline {
+    agent any
+    //  why does subscription have more functionalities then accounted for to run playbooks?
+    parameters{
+
+  booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
+  booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
+  booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
+  }
+
+    stages {
+    stage ('Git checkout and switch to Master') {
+    steps {
+    sh 'git checkout --track origin/master'
+    }
+    }
+
+
+    stage ('Provision HDI Infrastructure') {
+    steps {
+
+  withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}" ,
+                                                          subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                          clientIdVariable: 'AZURE_CLIENT_ID',
+                                                          clientSecretVariable: 'AZURE_SECRET',
+                                                          tenantIdVariable: 'AZURE_TENANT')]) {
+                                                          ansiblePlaybook extras: "-e @environments/'${data_domain}'-'${resource_group_phase}'-'${project_name}'-'${env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject,hdi'
+  }
+  }
+  }
+
+  }
+  }
