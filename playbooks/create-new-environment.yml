@@ -9,7 +9,6 @@
         master_project_name: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
 
   roles:
-# This role needs to be further developed
     - create-jenkins-project
     - create-environment-configuration
     - validation
