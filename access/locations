@@ -218,6 +218,7 @@ locations:
   - name: Mike_de_Kok
     source:
       - 213.127.101.86 
+      - 80.60.7.100
     ports:
       - 22
       - 443 
