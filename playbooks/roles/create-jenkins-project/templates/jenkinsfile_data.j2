@@ -11,11 +11,17 @@
   {% if lookup('env', 'nifi') == 'false' %}
   booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster')
   {% else %}
-  string(name: 'oozie_db_installed', defaultValue: 'The oozie_db is already installed' )
+  string(name: 'nifi_installed', defaultValue: 'nifi is already installed' )
+  {% endif %}
   {% if lookup('env', 'sftp') == 'false' %}
   booleanParam(defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server')
+  {% else %}
+  string(name: 'sftp_installed', defaultValue: 'sftp is already installed' )
+  {% endif %}
   {% if lookup('env', 'oracle') == 'false' %}
   booleanParam(defaultValue: false, name: 'oracle', description: 'Provision a oracle mockup db')
+  {% else %}
+  string(name: 'oracle_installed', defaultValue: 'Oracle is already installed' )
   {% endif %}
   }
 
