@@ -1,7 +1,7 @@
 ---
-  - name: Create project directory structure
-    file:
-        path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}"
-        state: directory
-        mode: 0755
-        owner: "{{ lookup('env', 'USER') }}"
+- name: Create project directory structure
+  file:
+    path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}"
+    state: directory
+    mode: 0755
+    owner: "{{ lookup('env', 'USER') }}"
