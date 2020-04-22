@@ -5,12 +5,15 @@
 
     pipeline {
     agent any
-    //  why does subscription have more functionalities then accounted for to run playbooks?
     parameters{
 
+  {% if lookup('env', 'oozie_db') == false %}
   booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
+  {% if lookup('env', 'hive_db') == false %}
   booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
+  {% if lookup('env', 'ranger_db') == false %}
   booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
+  {% endif %}
   }
 
     stages {
@@ -19,6 +22,19 @@
     sh 'git checkout --track origin/master'
     }
     }
+
+    stage ('update all file') {
+    steps {
+
+  withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}" ,
+                                                          subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                          clientIdVariable: 'AZURE_CLIENT_ID',
+                                                          clientSecretVariable: 'AZURE_SECRET',
+                                                          tenantIdVariable: 'AZURE_TENANT')]) {
+                                                          ansiblePlaybook extras: "-e @environments/{{ master_project_name }}/all", playbook: 'playbooks/update-all-file.yml', skippedTags: 'dataproject,hdi'
+  }
+  }
+  }
 
 
     stage ('Provision HDI Infrastructure') {
@@ -29,7 +45,7 @@
                                                           clientIdVariable: 'AZURE_CLIENT_ID',
                                                           clientSecretVariable: 'AZURE_SECRET',
                                                           tenantIdVariable: 'AZURE_TENANT')]) {
-                                                          ansiblePlaybook extras: "-e @environments/'${data_domain}'-'${resource_group_phase}'-'${project_name}'-'${env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject,hdi'
+                                                          ansiblePlaybook extras: "-e @environments/{{ master_project_name }}/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject,hdi'
   }
   }
   }

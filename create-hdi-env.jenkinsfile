@@ -23,6 +23,7 @@ pipeline {
 
     environment {
         master_project_name = "${data_domain}'-'${resource_group_phase}'-'${project_name}'-'${env_type}"
+        job_type = "jenkinsfile_hdi.j2"
             }
 
     stages {
