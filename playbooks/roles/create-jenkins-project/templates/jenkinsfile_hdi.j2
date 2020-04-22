@@ -34,7 +34,7 @@
 
     stage ('Create HDI environment configuration') {
     steps {
-  withCredentials([azureServicePrincipal(credentialsId: {{ lookup('env', 'CREDENTIOAL_ID') }} ,
+  withCredentials([azureServicePrincipal(credentialsId: {{ lookup('env', 'CREDENTIAL_ID') }} ,
                                                           subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                           clientIdVariable: 'AZURE_CLIENT_ID',
                                                           clientSecretVariable: 'AZURE_SECRET',
