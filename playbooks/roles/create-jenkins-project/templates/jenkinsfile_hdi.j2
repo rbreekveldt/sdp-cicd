@@ -6,7 +6,7 @@
     pipeline {
     agent any
     parameters{
-
+  {{ lookup('env', 'oozie_db') }}
   {% if lookup('env', 'oozie_db') == false %}
   booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
   {% endif %}
