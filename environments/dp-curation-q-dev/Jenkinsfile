@@ -6,9 +6,10 @@
     pipeline {
     agent any
     parameters{
-  false
     booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
-        }
+      booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
+      booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
+    }
 
     stages {
     stage ('Git checkout and switch to Master') {
