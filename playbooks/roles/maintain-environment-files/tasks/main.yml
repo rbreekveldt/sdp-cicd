@@ -2,13 +2,13 @@
 - name: update all file true false status of oracle kaftka etc
   replace:
     path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
-    replace: "{{ item.condition}}"
-    regexp: "{{ item.regex }}"
-    when:  item.condition == true
-    with_items:
+    replace: true
+    regexp: '(?<=oozie.\n)\s*\w*:\s*(false)'
+    when:  true == true
+    #with_items:
      # - { regex: '(?<=nifi.\n)\s*\w*:\s*(false)', condition : "{{ lookup('env', 'nifi') | default('false', true) }}" }
      # - { regex: '(?<=sftp.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'sftp') | default('false', true) }}" }
      # - { regex: '(?<=oracle.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'oracle') | default('false', true) }}" }
-      - { regex: '(?<=oozie.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'oozie_db') | default('false', true) }}" }
-      - { regex: '(?<=hive.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'hive_db') | default('false', true) }}" }
-      - { regex: '(?<=ranger.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'ranger_db') | default('false', true) }}" }
+     # - { regex: '(?<=oozie.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'oozie_db') | default('false', true) }}" }
+     # - { regex: '(?<=hive.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'hive_db') | default('false', true) }}" }
+     # - { regex: '(?<=ranger.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'ranger_db') | default('false', true) }}" }
