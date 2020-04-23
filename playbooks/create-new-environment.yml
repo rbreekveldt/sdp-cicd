@@ -8,7 +8,7 @@
       set_fact:
         master_project_name: "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
   tasks:
-    - include role:
+    - include_role:
         name: "{{ role }}"
       loop:
         - create-jenkins-project
@@ -19,7 +19,7 @@
         loop_var: role
       tags: create
 
-    - include role:
+    - include_role:
         name: "{{ role }}"
       loop:
         - maintain-environment-files
