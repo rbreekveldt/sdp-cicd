@@ -14,7 +14,7 @@
     environment
     {
         data_domain = "dp"
-        reource_group_phase = "curation"
+        resource_group_phase = "curation"
         project_name = "test"
         env_type = "dev"
     }
