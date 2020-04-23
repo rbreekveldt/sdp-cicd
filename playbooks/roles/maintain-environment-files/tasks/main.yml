@@ -3,7 +3,7 @@
   replace:
     path: "{{ lookup('env', 'WORKSPACE') }}/environments/dp-curation-test-dev/all"
     replace: '\g<1>true'
-    regexp: '(?<=oozie.\n)\s*\w*:\s*(false)'
+    regexp: '(?:(?<=oozie.\n)\s*\w*:\s*)(false)'
 
     #with_items:
      # - { regex: '(?<=nifi.\n)\s*\w*:\s*(false)', condition : "{{ lookup('env', 'nifi') | default('false', true) }}" }
