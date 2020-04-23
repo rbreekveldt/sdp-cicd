@@ -2,7 +2,7 @@
 - name: update all file true false status of oracle kaftka etc
   replace:
     path: "{{ lookup('env', 'WORKSPACE') }}/environments/dp-curation-q-dev/all"
-    replace: true
+    replace:      "provision: true"
     regexp: '(?<=oozie.\n)\s*\w*:\s*(false)'
 
     #with_items:
