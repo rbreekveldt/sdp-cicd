@@ -1,8 +1,8 @@
+---
 - name: Create new environment
   hosts: localhost
   gather_facts: false
   connection: local
-
   pre_tasks:
     - name: "set resource groupname"
       set_fact:
