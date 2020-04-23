@@ -4,8 +4,7 @@
     path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
     replace: '\g<1>true'
     regexp: '(?<=oozie.\n)(\s*\w*:\s)false'
-    with_items:
-      - { name: 'oozie'}
+
     #with_items:
      # - { regex: '(?<=nifi.\n)\s*\w*:\s*(false)', condition : "{{ lookup('env', 'nifi') | default('false', true) }}" }
      # - { regex: '(?<=sftp.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'sftp') | default('false', true) }}" }
