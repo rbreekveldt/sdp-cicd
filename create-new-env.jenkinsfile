@@ -56,7 +56,7 @@ pipeline {
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
-                 ansiblePlaybook playbook: 'playbooks/create-new-environment.yml', skippedTags: 'hdi'
+                 ansiblePlaybook playbook: 'playbooks/create-new-environment.yml', skippedTags: 'hdi,maintain'
                  }
             }
         }
