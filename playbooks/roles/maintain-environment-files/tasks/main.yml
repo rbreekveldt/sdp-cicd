@@ -1,5 +1,5 @@
 ---
-- name: remove {{ item.name }} from jenkinsfile
+- name: update all file true false status of oracle kaftka etc
   replace:
     path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
     replace: "{{ item.condition}}"
