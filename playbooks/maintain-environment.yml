@@ -1,0 +1,9 @@
+---
+- name : maintain existing environments
+  hosts: localhost
+  gather_facts: false
+  connection: local
+
+  roles:
+    - maintain-environment-files
+

@@ -1,0 +1,14 @@
+---
+- name: remove {{ item.name }} from jenkinsfile
+  replace:
+    path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
+    replace: "{{ item.condition}}"
+    regexp: "(?<={{ item.name }}.\n)\s*\w*:\s*(false)"
+    when:  item.condition == true
+    with_items:
+      - { name: 'nifi', condition : "{{ lookup('env', 'nifi') | default('false', true) }}" }
+      - { name: 'sftp', condition: "{{ lookup('env', 'sftp') | default('false', true) }}" }
+      - { name: 'oracle', condition: "{{ lookup('env', 'oracle') | default('false', true) }}" }
+      - { name: 'oozie', condition: "{{ lookup('env', 'oozie_db') | default('false', true) }}" }
+      - { name: 'hive', condition: "{{ lookup('env', 'hive_db') | default('false', true) }}" }
+      - { name: 'ranger', condition: "{{ lookup('env', 'ranger_db') | default('false', true) }}" }
