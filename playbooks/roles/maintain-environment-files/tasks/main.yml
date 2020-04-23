@@ -3,7 +3,7 @@
   replace:
     path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
     replace: "{{ item.condition}}"
-    regexp: "(?<={{ item.name }}.\n)\s*\w*:\s*(false)"
+    regexp: "(?<="{{ item.name }}".\n)\s*\w*:\s*(false)"
     when:  item.condition == true
     with_items:
       - { name: 'nifi', condition : "{{ lookup('env', 'nifi') | default('false', true) }}" }
