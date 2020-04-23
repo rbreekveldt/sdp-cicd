@@ -6,22 +6,31 @@
     pipeline {
     agent any
     parameters{
-  {% if lookup('env', 'oozie_db') == 'false' %}
-  booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
-  {% else %}
-  string(name: 'oozie_db_installed', defaultValue: 'The oozie_db is already installed' )
-  {% endif %}
-  {% if lookup('env', 'hive_db') == 'false' %}
-  booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
-  {% else %}
-  string(name: 'hive_db_installed', defaultValue: 'The hive_db is already installed' )
-  {% endif %}
-  {% if lookup('env', 'ranger_db') == 'false' %}
-  booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
-  {% else %}
-  string(name: 'ranger_db_installed', defaultValue: 'The oozie_db is already installed' )
-  {% endif %}
-  }
+
+    {% if lookup('env', 'oozie_db') == 'false' %}
+    booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
+    {% else %}
+    string(name: 'oozie_db_installed', defaultValue: 'The oozie_db is already installed' )
+    {% endif %}
+    {% if lookup('env', 'hive_db') == 'false' %}
+    booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
+    {% else %}
+    string(name: 'hive_db_installed', defaultValue: 'The hive_db is already installed' )
+    {% endif %}
+    {% if lookup('env', 'ranger_db') == 'false' %}
+    booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
+    {% else %}
+    string(name: 'ranger_db_installed', defaultValue: 'The oozie_db is already installed' )
+    {% endif %}
+    }
+
+    environment
+    {
+        data_domain = {{ lookup('env', 'data_domain' }}
+        reource_group_phase = {{ lookup('env', 'resource_group_phase') }}
+        project_name = {{ lookup('env', 'project_name') }}
+        env_type = {{ lookup('env', 'env_type') }}
+    }
 
     stages {
     stage ('Git checkout and switch to Master') {

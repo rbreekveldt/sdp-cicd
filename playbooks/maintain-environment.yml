@@ -3,6 +3,7 @@
   hosts: localhost
   gather_facts: false
   connection: local
+  pre_tasks
 
   roles:
     - maintain-environment-files

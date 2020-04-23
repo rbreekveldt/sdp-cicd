@@ -1,9 +1,9 @@
 ---
 - name: update all file true false status of oracle kaftka etc
   replace:
-    path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ cloud_config.master_project_name }}/all"
+    path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
     replace: '\g<1>true'
-    regexp: '(?<={{ item.name }}.\n)(\s*\w*:\s)false'
+    regexp: '(?<=oozie.\n)(\s*\w*:\s)false'
     with_items:
       - { name: 'oozie'}
     #with_items:

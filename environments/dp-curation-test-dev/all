@@ -7,7 +7,6 @@ cloud_config:
   resource_group: dp-curation-test-dev-rg  
   location: "westeurope"
   admin_username: "sdp-admin"
-  master_project_name: dp-curation-test-dev-rg
 
   mockup:
     kafka:
