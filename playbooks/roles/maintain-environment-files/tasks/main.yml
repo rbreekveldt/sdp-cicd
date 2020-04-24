@@ -1,8 +1,5 @@
 ---
 
--  debug:
-     msg: "{{ lookup('env', 'oozie_db') }}"
-
 -  name: update all file
    include_tasks: update_all_file.yml
    vars:
@@ -12,9 +9,9 @@
       - { regex: '(?<=oozie.\n)(\s*\w*:\s*)false', condition: "{{ lookup('env', 'oozie_db') }}" }
       - { regex: '(?<=hive.\n)(\s*\w*:\s*)false', condition: "{{ lookup('env', 'hive_db') }}" }
       - { regex: '(?<=ranger.\n)(\s*\w*:\s*)false', condition: "{{ lookup('env', 'ranger_db') }}" }
-     # - { regex: '(?<=nifi.\n)(\s*\w*:\s)false', condition : "{{ lookup('env', 'nifi') }}" }
-     # - { regex: '(?<=sftp.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'sftp') }}" }
-     # - { regex: '(?<=oracle.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'oracle') }}" }
+      - { regex: '(?<=nifi.\n)(\s*\w*:\s)false', condition : "{{ lookup('env', 'nifi') }}" }
+      - { regex: '(?<=sftp.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'sftp') }}" }
+      - { regex: '(?<=oracle.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'oracle') }}" }
 
 
 
