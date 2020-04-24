@@ -5,7 +5,7 @@
    vars:
      reg: "{{ item.regex }}"
    when: item.condition ==  true
-     loop:
+   loop:
       - { regex: '(?<=nifi.\n)\s*\w*:\s*(false)', condition : "{{ lookup('env', 'nifi') }}" }
       - { regex: '(?<=sftp.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'sftp') }}" }
       - { regex: '(?<=oracle.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'oracle') }}" }
