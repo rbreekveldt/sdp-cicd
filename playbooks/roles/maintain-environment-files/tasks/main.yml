@@ -4,7 +4,7 @@
    include_tasks: update_all_file.yml
    vars:
      reg: "{{ item.regex }}"
-   when: item.condition ==  'true'
+   when: item.condition
    loop:
       - { regex: '(?<=nifi.\n)\s*\w*:\s*(false)', condition : "{{ lookup('env', 'nifi') }}" }
       - { regex: '(?<=sftp.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'sftp') }}" }
