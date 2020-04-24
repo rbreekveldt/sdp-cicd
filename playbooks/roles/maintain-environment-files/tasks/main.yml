@@ -1,14 +1,14 @@
 ---
 
-- name: check uniqueness of VNET SDP INTERNAL peerings
-  include_tasks: update_all_file.yml
-  vars:
-    reg: "{{ item.regex }}"
-  when: item.condition ==  true
-    with_items:
-     - { regex: '(?<=nifi.\n)\s*\w*:\s*(false)', condition : "{{ lookup('env', 'nifi') }}" }
-     - { regex: '(?<=sftp.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'sftp') }}" }
-     - { regex: '(?<=oracle.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'oracle') }}" }
+-  name: check uniqueness of VNET SDP INTERNAL peerings
+   include_tasks: update_all_file.yml
+   vars:
+     reg: "{{ item.regex }}"
+   when: item.condition ==  true
+     with_items:
+      - { regex: '(?<=nifi.\n)\s*\w*:\s*(false)', condition : "{{ lookup('env', 'nifi') }}" }
+      - { regex: '(?<=sftp.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'sftp') }}" }
+      - { regex: '(?<=oracle.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'oracle') }}" }
 
 
 
