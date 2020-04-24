@@ -6,9 +6,9 @@
     reg: "{{ item.regex }}"
   when: item.condition ==  true
     with_items:
-     - { regex: '(?<=nifi.\n)\s*\w*:\s*(false)', condition : "{{ lookup('env', 'nifi') | default('false', true) }}" }
-     - { regex: '(?<=sftp.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'sftp') | default('false', true) }}" }
-     - { regex: '(?<=oracle.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'oracle') | default('false', true) }}" }
+     - { regex: '(?<=nifi.\n)\s*\w*:\s*(false)', condition : "{{ lookup('env', 'nifi') }}" }
+     - { regex: '(?<=sftp.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'sftp') }}" }
+     - { regex: '(?<=oracle.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'oracle') }}" }
 
 
 
