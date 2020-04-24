@@ -1,5 +1,8 @@
 ---
 
+-  debug:
+     msg: "{{ lookup('env', 'nifi') }}"
+
 -  name: update all file
    include_tasks: update_all_file.yml
    vars:
