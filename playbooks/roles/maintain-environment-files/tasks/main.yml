@@ -1,7 +1,7 @@
 ---
 
 -  debug:
-     msg: "{{ lookup('env', 'nifi') }}"
+     msg: "{{ lookup('env', 'oozie_db') }}"
 
 -  name: update all file
    include_tasks: update_all_file.yml
@@ -9,12 +9,13 @@
      reg: "{{ item.regex }}"
    when: item.condition
    loop:
-      - { regex: '(?<=nifi.\n)(\s*\w*:\s)false', condition : "{{ lookup('env', 'nifi') }}" }
-      - { regex: '(?<=sftp.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'sftp') }}" }
-      - { regex: '(?<=oracle.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'oracle') }}" }
+      - { regex: '(?<=oozie.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'oozie_db') }}" }
+      - { regex: '(?<=hive.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'hive_db') }}" }
+      - { regex: '(?<=ranger.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'ranger_db') }}" }
+     # - { regex: '(?<=nifi.\n)(\s*\w*:\s)false', condition : "{{ lookup('env', 'nifi') }}" }
+     # - { regex: '(?<=sftp.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'sftp') }}" }
+     # - { regex: '(?<=oracle.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'oracle') }}" }
 
 
 
-     # - { regex: '(?<=oozie.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'oozie_db') | default('false', true) }}" }
-     # - { regex: '(?<=hive.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'hive_db') | default('false', true) }}" }
-     # - { regex: '(?<=ranger.\n)\s*\w*:\s*(false)', condition: "{{ lookup('env', 'ranger_db') | default('false', true) }}" }
+

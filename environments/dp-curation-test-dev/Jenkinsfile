@@ -7,8 +7,8 @@
     agent any
     parameters{
     booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
-      booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
-      booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
+    booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
+    booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
     }
 
     environment
