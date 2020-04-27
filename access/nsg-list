@@ -156,6 +156,55 @@ security_groups:
       - Chellappan_Chockalingam
       - Marco_Blanca
 
+- security_group: nsg-cicd-prd
+    subscription_id: fd478270-bd64-4cf3-bb8b-53016bb2ffd6
+    resource_group: automation-cicd-prd-rg
+    locations:
+      - LG_Locations
+      - Devoteam_Locations
+      - Ziggo_Locations
+      - UPC_AT_Locations  
+      - UPC_HU_Locations
+      - VM_IE_Locations
+      - UPC_PL_Locations
+      - UPC_RO_Locations
+      - UPC_CZ_Locations
+      - UPC_SK_Locations
+      - UPC_CH_Locations
+      - UM_DE_Locations
+      - Telenet_BE_Locations
+      - VM_UK_Locations
+      - UPC_LU_Locations
+      - Infosys_Office1	
+      - Infosys_Office2	
+      - SecuPi_Locations
+      - Chellappan_Chockalingam
+      - Marco_Blanca
+      - Anurag_Raut
+      - Remco_Breekveldt
+      - Petri_la_Grange
+      - Luc_Ackermann
+      - Hakan_Elgin
+      - Gaurav_Gupta
+      - Aleksandr_Bykov
+      - Oguz_Eren
+      - Ben_Sutton
+      - Rohit_Mattoo
+      - Manu_Raja
+      - Wang_Defu_Home
+      - Joseph
+      - Martin_Barutchiyska
+      - Pranshu_Mishra	
+      - Nikhil_Vyas	
+      - Smiksha_Singh	
+      - Shivanki_Choudhary	
+      - Rajat_Sharma
+      - Priyanka_Tandon	
+      - Jigayasa_Golhani
+      - Nayna_Choubey
+      - Mike_de_Kok
+      - Udit_Gupta
+
   - security_group: am-sei0-nsg
     subscription_id: 4e0be25d-2501-46ce-b71b-36ad4d34c88e 
     resource_group: am-sit-proj-rg
