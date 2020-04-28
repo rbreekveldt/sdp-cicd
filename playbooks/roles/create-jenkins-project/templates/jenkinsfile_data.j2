@@ -48,7 +48,7 @@
                                                           clientIdVariable: 'AZURE_CLIENT_ID',
                                                           clientSecretVariable: 'AZURE_SECRET',
                                                           tenantIdVariable: 'AZURE_TENANT')]) {
-                                                          ansiblePlaybook extras: "-e @environments/{{ lookup('env', 'master_project_name') }}/all", playbook: 'create-new-environment.yml', skippedTags: 'create,hdi'
+                                                          ansiblePlaybook extras: "-e @environments/{{ lookup('env', 'master_project_name') }}/all", playbook: 'playbooks/create-new-environment.yml', skippedTags: 'create,hdi'
   }
   }
   }
