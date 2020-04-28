@@ -53,6 +53,19 @@
   }
   }
 
+    stage ('Provision HDI Infrastructure') {
+    steps {
+
+    withCredentials([azureServicePrincipal(credentialsId: '{{ lookup('env', 'CREDENTIAL_ID') }}' ,
+                                                            subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                            clientIdVariable: 'AZURE_CLIENT_ID',
+                                                            clientSecretVariable: 'AZURE_SECRET',
+                                                            tenantIdVariable: 'AZURE_TENANT')]) {
+                                                            ansiblePlaybook extras: "-e @environments/{{ master_project_name }}/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'hdi'
+  }
+  }
+  }
+
     stage ('Install ambari cluster') {
     steps {
   withCredentials([azureServicePrincipal(credentialsId: '{{ lookup('env', 'CREDENTIAL_ID') }}',

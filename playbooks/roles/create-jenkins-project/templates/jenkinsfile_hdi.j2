@@ -12,7 +12,6 @@
     choice(name: 'resource_group_phase', choices: '{{ lookup( "env", 'resource_group_phase') }}', description: 'Resourcegroup Phase')
     choice(name: 'project_name', choices: '{{ lookup( "env", 'project_name') }}', description: 'Project Name')
     choice(name: 'env_type', choices: '{{ lookup( "env", 'env_type') }}', description: 'Environment type to provision')
-
     {% if lookup('env', 'oozie_db') == 'false' %}
     booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
     {% else %}
@@ -36,6 +35,19 @@
     sh 'git checkout --track origin/mike'
     }
     }
+
+    stage ('Provision HDI Infrastructure') {
+    steps {
+
+    withCredentials([azureServicePrincipal(credentialsId: '{{ lookup('env', 'CREDENTIAL_ID') }}' ,
+                                                            subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                            clientIdVariable: 'AZURE_CLIENT_ID',
+                                                            clientSecretVariable: 'AZURE_SECRET',
+                                                            tenantIdVariable: 'AZURE_TENANT')]) {
+                                                            ansiblePlaybook extras: "-e @environments/{{ master_project_name }}/all", playbook: 'playbooks/create-new-environment.yml', skippedTags: 'hdi'
+  }
+  }
+  }
 
     stage ('Provision HDI Infrastructure') {
     steps {
