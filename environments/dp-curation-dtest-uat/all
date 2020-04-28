@@ -19,7 +19,7 @@ cloud_config:
         role: kafka_mockup
 
     sftp:
-      provision: false
+      provision: true
       functionality: sftp
       flavor: Standard_D3_v2
       nodes_count: 1
@@ -27,7 +27,7 @@ cloud_config:
         role: sftp_mockup
 
     oracle:
-      provision: false
+      provision: true
       functionality: oracle
       flavor: Standard_D3_v2
       nodes_count: 1
@@ -44,7 +44,7 @@ cloud_config:
 
 
   nifi:
-    provision: false
+    provision: true
     functionality: nifi
     nodes_count: 1
     flavor: Standard_A5
