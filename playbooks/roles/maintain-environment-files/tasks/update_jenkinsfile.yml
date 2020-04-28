@@ -4,4 +4,4 @@
    lineinfile:
      path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/Jenkinsfile"
      state: absent
-     regexp: "{ reg }"
+     regexp: "{{ reg }}"
