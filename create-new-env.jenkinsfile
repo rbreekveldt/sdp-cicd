@@ -71,16 +71,6 @@ pipeline {
                  }
             }   
         }
-        stage ('Install ambari cluster') {
-            steps {
-            withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
-                                                  subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
-                                                  clientIdVariable: 'AZURE_CLIENT_ID',
-                                                  clientSecretVariable: 'AZURE_SECRET',
-                                                  tenantIdVariable: 'AZURE_TENANT')]) {
-                  ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.env_type}'/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi'
-                  }
-            }
-        }
+
     }
 }    

@@ -48,7 +48,7 @@
                                                           clientIdVariable: 'AZURE_CLIENT_ID',
                                                           clientSecretVariable: 'AZURE_SECRET',
                                                           tenantIdVariable: 'AZURE_TENANT')]) {
-                                                          ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi,dataproject'
+                                                          ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/provision-virtual-environment.yml' , skippedTags: 'hdi,dataproject'
   }
   }
   }
