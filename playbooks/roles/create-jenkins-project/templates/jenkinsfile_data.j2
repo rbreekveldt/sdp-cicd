@@ -6,7 +6,13 @@
     pipeline {
     agent any
     parameters{
-
+    choice(name: 'Subscription', choices: '{{ lookup( "env", 'Subscription') }}', description: 'Subscription to provision')
+    choice(name: 'ResourceGroup', choices: '{{ lookup( "env", 'data_domain') }}-{{ lookup( "env", 'resource_group_phase') }}-{{ lookup( "env", 'project_name') }}-{{ lookup( "env", 'env_type') }}', description: 'Subscription to provision')
+    choice(name: 'data_domain', choices: '{{ lookup( "env", 'data_domain') }}', description: 'this is the Data Domain')
+    choice(name: 'resource_group_phase', choices: '{{ lookup( "env", 'resource_group_phase') }}', description: 'Resourcegroup Phase')
+    choice(name: 'project_name', choices: '{{ lookup( "env", 'project_name') }}', description: 'Project Name')
+    choice(name: 'env_type', choices: '{{ lookup( "env", 'env_type') }}', description: 'Environment type to provision')
+    string(name: 'nifi_nodes_count', defaultValue: '{{ lookup( "env", 'nifi_nodes_count') }}', description: 'Update the node count')
     choice(name: 'add_nifi_nodes', choices: 'Please select\n1\n2\n3\n4', description: 'choose the amount of nodes to add to the existing for Nifi cluster')
     {% if lookup('env', 'nifi') == 'false' %}
     booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster')
@@ -23,14 +29,6 @@
     {% else %}
     string(name: 'oracle_installed', defaultValue: 'Oracle is already installed' )
     {% endif %}
-    }
-
-    environment
-    {
-    data_domain = {{ lookup('env', 'data_domain' }}
-    reource_group_phase = {{ lookup('env', 'resource_group_phase') }}
-    project_name = {{ lookup('env', 'project_name') }}
-    env_type = {{ lookup('env', 'env_type') }}
     }
 
 
@@ -50,7 +48,7 @@
                                                           clientIdVariable: 'AZURE_CLIENT_ID',
                                                           clientSecretVariable: 'AZURE_SECRET',
                                                           tenantIdVariable: 'AZURE_TENANT')]) {
-                                                          ansiblePlaybook extras: "-e @environments/{{ lookup('env', 'master_project_name') }}/all", playbook: 'playbooks/update-all-file.yml', skippedTags: 'dataproject,hdi'
+                                                          ansiblePlaybook extras: "-e @environments/{{ lookup('env', 'master_project_name') }}/all", playbook: 'create-new-environment.yml', skippedTags: 'dataproject,hdi'
   }
   }
   }
