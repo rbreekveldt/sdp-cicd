@@ -1,0 +1,56 @@
+  //Jenkins pipeline to provision Hortonworks infrastructure
+    def azureSubscription = ""
+    def inputSubscription = ""
+    def skipRemainingStages = "true"
+
+    pipeline {
+    agent any
+    parameters{
+    choice(name: 'Subscription', choices: '', description: 'Subscription to provision')
+    choice(name: 'ResourceGroup', choices: 'dp-curation-dtest-uat', description: 'Subscription to provision')
+    choice(name: 'data_domain', choices: 'dp', description: 'this is the Data Domain')
+    choice(name: 'resource_group_phase', choices: 'curation', description: 'Resourcegroup Phase')
+    choice(name: 'project_name', choices: 'dtest', description: 'Project Name')
+    choice(name: 'env_type', choices: 'uat', description: 'Environment type to provision')
+    string(name: 'nifi_nodes_count', defaultValue: '1', description: 'Update the node count')
+    choice(name: 'add_nifi_nodes', choices: 'Please select\n1\n2\n3\n4', description: 'choose the amount of nodes to add to the existing for Nifi cluster')
+        booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster')
+            booleanParam(defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server')
+            booleanParam(defaultValue: false, name: 'oracle', description: 'Provision a oracle mockup db')
+        }
+
+
+    stages {
+
+    stage ('Git checkout and switch to Master') {
+    steps {
+    sh 'git checkout --track origin/master'
+    }
+    }
+
+    stage ('update all file') {
+    steps {
+
+  withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}" ,
+                                                          subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                          clientIdVariable: 'AZURE_CLIENT_ID',
+                                                          clientSecretVariable: 'AZURE_SECRET',
+                                                          tenantIdVariable: 'AZURE_TENANT')]) {
+                                                          ansiblePlaybook extras: "-e @environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}/all", playbook: 'create-new-environment.yml', skippedTags: 'dataproject,hdi'
+  }
+  }
+  }
+
+    stage ('Install ambari cluster') {
+    steps {
+  withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
+                                                          subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                          clientIdVariable: 'AZURE_CLIENT_ID',
+                                                          clientSecretVariable: 'AZURE_SECRET',
+                                                          tenantIdVariable: 'AZURE_TENANT')]) {
+                                                          ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi,dataproject'
+  }
+  }
+  }
+  }
+  }
