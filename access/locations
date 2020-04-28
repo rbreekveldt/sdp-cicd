@@ -169,7 +169,7 @@ locations:
   - name: Anurag_Raut
     source:
       - 85.146.88.162
-      - 157.33.130.75
+      - 157.33.118.5
     ports:
       - 22
       - 443 
@@ -305,8 +305,8 @@ locations:
       - 443 
   - name: Priyanka_Tandon	
     source:	
-      - 117.224.95.233
-      - 117.224.169.191
+      - 117.224.45.167
+      - 117.225.178.158
     ports:
       - 22
       - 443 
@@ -330,7 +330,7 @@ locations:
       - 443    
   - name: Nayna_Choubey
     source:	
-      - 49.32.10.128
+      - 49.32.1.174
     ports:
       - 22
       - 443 
