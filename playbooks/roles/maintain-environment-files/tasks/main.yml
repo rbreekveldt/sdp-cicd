@@ -24,7 +24,7 @@
       - { regex: 'booleanParam.defaultValue: false, name: 'hive_db', description: 'Provision a Hive database'.', condition: "{{  cloud_config.sql_db.provision[1] }}" }
       - { regex: 'booleanParam.defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database'.', condition: "{{  cloud_config.sql_db.provision[2] }}" }
       - { regex: 'booleanParam.defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server'.', condition: "{{ cloud_config.mockup.sftp.provision }}" }
-      - { regex: 'booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster'), condition: "{{ cloud_config.nifi.provision }}" }
+      - { regex: 'booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster'.', condition: "{{ cloud_config.nifi.provision }}" }
       - { regex: 'booleanParam.defaultValue: false, name: 'oracle', description: 'Provision a oracle mockup db'.', condition: "{{ cloud_config.mockup.oracle.provision }}" }
 
 
