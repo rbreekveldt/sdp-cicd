@@ -8,7 +8,7 @@ cloud_config:
   location: "westeurope"
   admin_username: "sdp-admin"
   master_project_name: {{ master_project_name }}
-  
+
   mockup:
     kafka:
       provision: {{ lookup('env', 'kafka') | default('false', true) }}
