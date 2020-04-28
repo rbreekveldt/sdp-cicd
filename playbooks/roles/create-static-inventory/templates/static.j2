@@ -1,0 +1,19 @@
+######################################################
+##
+## The static inventory puts the hosts in different groups as described here: https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#hosts-and-groups
+## Variables would be defined directly for each host, including the ansible_user, the login user with sudoers permissions.
+## For authentication, either the password or the SSH Private Key can be used.
+##
+######################################################
+
+
+[hdfmanagement]
+master01 ansible_host={{ inventory_mgmt_ip }} ansible_user=sdp-admin ansible_ssh_private_key_file="~/.ssh/id_rsa" rack=/default-rack
+
+[hdfworker]
+{% set count = 1 %}
+{% for item in inventory_worker_ip %}
+slave0{{ count }} ansible_host={{ item }} ansible_user=sdp-admin ansible_ssh_private_key_file="~/.ssh/id_rsa" rack=/default-rack
+{% set count = count + 1 %}
+{% endfor %}
+

@@ -24,6 +24,18 @@
     until: job_result.finished
     retries: 120
 
+  - name: Set fact for IPs
+    set_fact:
+      inventory_mgmt_ip: "{{ job_result.state.ip_configuration.private_ip_address }}"
+      cacheable: yes
+    when: job_result.state.ip_configuration.name.find("mgmt") != -1
+
+  - name: Set fact for IPs
+    set_fact:
+      inventory_worker_ip: "{{ inventory_worker_ip|default([]) + [job_result.state.ip_configuration.private_ip_address] }}"
+      cacheable: yes
+    when: job_result.state.ip_configuration.name.find("nifi0") != -1
+
 - name: Create "{{ functionality }}{{ number }}" node
   azure_rm_virtualmachine:
     resource_group: "{{ cloud_config.resource_group }}"

@@ -1,0 +1,11 @@
+---
+# tasks file for create-static-inventory
+
+- name: create inventory file
+  template:
+    src: static.j2
+    dest: "{{ lookup('env', 'WORKSPACE') }}/inventory/static"
+    force: yes
+    owner: "{{ lookup('env', 'USER') }}"
+    output_encoding: utf-8
+    mode: 0644
