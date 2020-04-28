@@ -1,0 +1,1 @@
+Inventory file location to create HDF environment.

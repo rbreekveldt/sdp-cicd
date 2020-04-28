@@ -32,6 +32,14 @@
     - include_role:
         name: "{{ role }}"
       loop:
+        - create-static-inventory
+      loop_control:
+        loop_var: role
+      tags: dataproject
+
+    - include_role:
+        name: "{{ role }}"
+      loop:
         - provision-sqlserver
         - provision-datalakestore
         - provision-managed-identity
