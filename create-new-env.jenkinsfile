@@ -59,6 +59,7 @@ pipeline {
                  }
             }
         }
+        /*
         stage ('Provision Dataproject') {
             steps {
             withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
@@ -81,5 +82,6 @@ pipeline {
                   }
             }
         }
+        */
     }
 }

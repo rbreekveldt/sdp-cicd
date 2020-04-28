@@ -36,7 +36,7 @@
                                                           clientIdVariable: 'AZURE_CLIENT_ID',
                                                           clientSecretVariable: 'AZURE_SECRET',
                                                           tenantIdVariable: 'AZURE_TENANT')]) {
-                                                          ansiblePlaybook playbook: 'playbooks/create-new-environment.yml', skippedTags: 'dataproject,create'
+                                                          ansiblePlaybook extras: "-e @environments/dp-curation-dtest-uat/all", playbook: 'playbooks/create-new-environment.yml', skippedTags: 'dataproject,create'
   }
   }
   }
