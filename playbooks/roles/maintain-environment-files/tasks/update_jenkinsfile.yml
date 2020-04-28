@@ -4,5 +4,4 @@
    lineinfile:
      path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/Jenkinsfile"
      state: absent
-     regexp: 'booleanParam.defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database'.'
-   when: cloud_config.sql_db.provision[0]
+     regexp: "{ reg }"
