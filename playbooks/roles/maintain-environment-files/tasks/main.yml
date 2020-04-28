@@ -14,6 +14,10 @@
       - { regex: '(?<=oracle.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'oracle') }}" }
 
 
+-  debug:
+     msg: "{{ cloud_config.sql_db[0].provision }} {{ cloud_config.sql_db[1].provision }} {{ cloud_config.sql_db[2].provision }} {{ cloud_config.mockup.sftp.provision }} {{ cloud_config.nifi.provision }} {{ cloud_config.mockup.oracle.provision }}"
+
+
 -  name: update jenkinsfile
    include_tasks: update_jenkinsfile.yml
    vars:
