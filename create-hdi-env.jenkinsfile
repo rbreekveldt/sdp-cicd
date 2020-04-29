@@ -71,7 +71,7 @@ pipeline {
                         clientIdVariable: 'AZURE_CLIENT_ID',
                         clientSecretVariable: 'AZURE_SECRET',
                         tenantIdVariable: 'AZURE_TENANT')]) {
-                    ansiblePlaybook extras: "-e @environments/'${data_domain}'-'${resource_group_phase}'-'${project_name}'-'${env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
+                    ansiblePlaybook extras: "-e @environments/'${master_project_name}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
                 }
             }
         } 
