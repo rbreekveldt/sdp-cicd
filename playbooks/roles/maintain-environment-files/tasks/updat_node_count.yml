@@ -1,0 +1,7 @@
+---
+
+-  name: update node count
+   replace:
+     path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
+     replace: "{{ item.replace }}"
+     regexp: '(?<=f.\n)(\s*\w*:\s*).'
