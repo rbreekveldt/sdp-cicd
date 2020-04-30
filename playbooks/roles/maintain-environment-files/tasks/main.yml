@@ -1,12 +1,10 @@
 ---
--  debug:
-      msg: "{{ replace }}"
-
--  name: update noce count file
-   include_tasks: update_node_count.yml
-   vars:
-      replace: "{{ replace }}"
-
+-  name: update node count
+   replace:
+      path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
+      replace: '\g<1>{{ nodes_int }}'
+      regexp: '(?<=f.\n)(\s*\w*:\s*).'
+      
 -  name: update all file
    include_tasks: update_all_file.yml
    vars:
