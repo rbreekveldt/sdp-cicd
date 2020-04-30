@@ -3,5 +3,6 @@
 -  name: delete unnescescary lines in jenkinsfile
    lineinfile:
      path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/Jenkinsfile"
-     state: absent
+     state: present
      regexp: "{{ reg }}"
+     line: "{{ line }}"
