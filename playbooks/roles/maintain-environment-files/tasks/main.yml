@@ -6,7 +6,7 @@
 
 -  name: check
    debug:
-   var: "{{ nodes_int }}"
+     var: "{{ nodes_int }}"
 
 -  name: update all file
    include_tasks: update_all_file.yml
