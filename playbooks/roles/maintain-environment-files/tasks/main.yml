@@ -1,7 +1,7 @@
 ---
 -  name: check
    debug:
-      var: "{{ lookup('param', 'nifi_nodes_count') }}"
+      var: "{{ lookup('env', 'nifi_nodes_count') }}"
 
 - name: Set node var
   set_fact:
