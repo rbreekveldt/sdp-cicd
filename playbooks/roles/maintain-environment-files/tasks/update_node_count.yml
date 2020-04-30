@@ -3,5 +3,5 @@
 -  name: update node count
    replace:
      path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
-     replace: "{{ replace }}"
+     replace: '\g<1>{{ nodes_int }}'
      regexp: '(?<=f.\n)(\s*\w*:\s*).'
