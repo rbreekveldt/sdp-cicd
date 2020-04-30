@@ -3,7 +3,7 @@
 -  name: update noce count file
    include_tasks: update_node_count.yml
    vars:
-      replace: "{{ \g<1>{{ nodes_int }} }}"
+      replace: "{{ replace }}"
 
 -  name: update all file
    include_tasks: update_all_file.yml
