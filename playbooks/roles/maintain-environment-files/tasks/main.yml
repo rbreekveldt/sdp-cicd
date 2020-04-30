@@ -1,4 +1,7 @@
 ---
+-  name: check
+   debug:
+      var: "{{ lookup('param', 'nifi_nodes_count') }}"
 
 - name: Set node var
   set_fact:
@@ -6,9 +9,6 @@
      add_nifi_nodes: "{{ lookup('env', 'add_nifi_nodes') }}"
  #    nodes_int: "{{ nifi_nodes_count|int + add_nifi_nodes|int }}"
 
--  name: check
-   debug:
-     var: "{{ nodes_int }}"
 
 -  name: update all file
    include_tasks: update_all_file.yml
