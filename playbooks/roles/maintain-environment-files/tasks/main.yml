@@ -1,5 +1,10 @@
 ---
 
+- name: Set Apache URL
+  set_fact:
+     nodes_int: "{{ ({{ lookup('env', 'nifi_nodes_count') }}+{{ lookup('env', 'add_nifi_nodes' }}) |int|abs }}"
+
+
 -  name: update all file
    include_tasks: update_all_file.yml
    vars:
@@ -12,10 +17,6 @@
       - { regex: '(?<=nifi.\n)(\s*\w*:\s)false', condition : "{{ lookup('env', 'nifi') }}" }
       - { regex: '(?<=sftp.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'sftp') }}" }
       - { regex: '(?<=oracle.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'oracle') }}" }
-
-
--  debug:
-     msg: "{{ cloud_config.mockup.sftp.provision }} {{ cloud_config.nifi.provision }} {{ cloud_config.mockup.oracle.provision }}"
 
 
 -  name: update jenkinsfile
