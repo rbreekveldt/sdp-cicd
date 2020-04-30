@@ -4,6 +4,9 @@
   set_fact:
      nodes_int: "{{ ({{ lookup('env', 'nifi_nodes_count') }}+{{ lookup('env', 'add_nifi_nodes' }}) |int|abs }}"
 
+-  name: check
+   debug:
+   var: "{{ nodes_int }}"
 
 -  name: update all file
    include_tasks: update_all_file.yml
