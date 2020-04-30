@@ -24,7 +24,7 @@
    vars:
       reg: "{{ item.regex }}"
       line: "{{ item.line }}"
-   when: item.condition == 'true'
+   when: item.condition == true
    loop:
       - { regex: 'booleanParam.defaultValue: false, name: .oozie., description: .Provision an Oozie database..', condition: "{{ cloud_config.sql_db[0].provision }}", line: "string(name: 'oozie_db_installed', defaultValue: 'The oozie_db is already installed')" }
       - { regex: 'booleanParam.defaultValue: false, name: .hive_db., description: .Provision a Hive database..', condition: "{{ cloud_config.sql_db[1].provision }}", line: "string(name: 'hive_db_installed', defaultValue: 'The hive_db is already installed')" }
