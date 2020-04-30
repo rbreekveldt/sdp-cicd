@@ -1,6 +1,6 @@
 ---
 
-- name: Set Apache URL
+- name: Set node var
   set_fact:
      nodes_int: "{{ ({{ lookup('env', 'nifi_nodes_count') }}+{{ lookup('env', 'add_nifi_nodes' }}) |int|abs }}"
 
