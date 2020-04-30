@@ -4,12 +4,12 @@
       path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
       replace: '\g<1>{{ nodes_int }}'
       regexp: '(?<=f.\n)(\s*\w*:\s*).'
-      
+
 -  name: update all file
    include_tasks: update_all_file.yml
    vars:
      reg: "{{ item.regex }}"
-   when: item.condition
+   when: item.condition == 'true'
    loop:
       - { regex: '(?<=oozie.\n)(\s*\w*:\s*)false', condition: "{{ lookup('env', 'oozie_db') }}" }
       - { regex: '(?<=hive.\n)(\s*\w*:\s*)false', condition: "{{ lookup('env', 'hive_db') }}" }
