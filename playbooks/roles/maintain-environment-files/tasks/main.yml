@@ -1,6 +1,6 @@
 ---
 -  debug:
-      msg: {{ nodes_int }}
+      msg: "{{ replace }}"
 
 -  name: update noce count file
    include_tasks: update_node_count.yml
