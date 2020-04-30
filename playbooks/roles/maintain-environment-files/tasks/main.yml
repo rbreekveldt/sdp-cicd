@@ -1,6 +1,6 @@
 ---
 -  debug:
-      msg: "{{ nifi_nodes_count }}"
+      msg: "{{ nodes_int }}"
 
 -  name: update noce count file
    include_tasks: update_node_count.yml
