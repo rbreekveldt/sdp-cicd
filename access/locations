@@ -169,7 +169,7 @@ locations:
   - name: Anurag_Raut
     source:
       - 85.146.88.162
-      - 157.47.30.94
+      - 157.33.82.41
     ports:
       - 22
       - 443 
@@ -324,7 +324,7 @@ locations:
       - 443
   - name: Narasimha_Bokam
     source:	
-      - 77.162.104.139
+      - 62.179.123.10
     ports:
       - 22
       - 443    
