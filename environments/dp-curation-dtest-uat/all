@@ -46,7 +46,7 @@ cloud_config:
   nifi:
     provision: false
     functionality: nifi
-    nodes_count: 1
+    nodes_count: 2
     flavor: Standard_A5
     tags:
       role: nifi_worker
@@ -58,7 +58,7 @@ cloud_config:
   
   sql_db:
     - name: "oozie"
-      provision: false
+      provision: true
 
     - name: "hive"
       provision: false
