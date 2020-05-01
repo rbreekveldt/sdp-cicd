@@ -59,3 +59,5 @@ string(name: 'oozie_db_installed', defaultValue: 'The oozie_db is already instal
 string(name: 'sftp_installed', defaultValue: 'sftp is already installed')
 string(name: 'nifi_installed', defaultValue: 'nifi is already installed')
 string(name: 'oracle_installed', defaultValue: 'Oracle is already installed')
+    string(name: 'hive_db_installed', defaultValue: 'The hive_db is already installed')
+      string(name: 'ranger_db_installed', defaultValue: 'The oozie_db is already installed')
