@@ -9,6 +9,12 @@
       replace: '\g<1>{{ nodes_int }}'
       regexp: '(?<=f.\n)(\s*\w*:\s*).'
 
+-  name: update node count
+   replace:
+      path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/Jenkinsfile"
+      replace: '\g<1>{{ nodes_int }}'
+      regexp: 'choice.name: .nifi_nodes_count., choices: .(.)'
+
 -  name: update all file
    include_tasks: update_all_file.yml
    vars:
