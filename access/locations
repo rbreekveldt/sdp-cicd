@@ -325,6 +325,8 @@ locations:
   - name: Narasimha_Bokam
     source:	
       - 62.179.123.10
+      - 183.83.76.123
+      - 42.104.97.18
     ports:
       - 22
       - 443    
