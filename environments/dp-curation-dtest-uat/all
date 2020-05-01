@@ -58,7 +58,7 @@ cloud_config:
   
   sql_db:
     - name: "oozie"
-      provision: true
+      provision: false
 
     - name: "hive"
       provision: true
