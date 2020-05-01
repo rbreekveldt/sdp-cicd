@@ -56,3 +56,5 @@
   }
   }
 
+    string(name: 'hive_db_installed', defaultValue: 'The hive_db is already installed')
+      string(name: 'ranger_db_installed', defaultValue: 'The oozie_db is already installed')
