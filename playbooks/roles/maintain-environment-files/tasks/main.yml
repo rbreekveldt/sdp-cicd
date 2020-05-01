@@ -1,8 +1,5 @@
 ---
 
--  debug:
-     msg: "{{ cloud_config.sql_db[0].provision }}"
-
 -  name: update node count
    replace:
       path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
@@ -30,6 +27,9 @@
 
 -  include_role:
       name: push-files-to-repo
+
+-  debug:
+      msg: "{{ cloud_config.sql_db[0].provision }}"
 
 
 -  name: update jenkinsfile
