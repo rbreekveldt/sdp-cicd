@@ -7,10 +7,10 @@
 ######################################################
 
 
-[hdfmanagement]
+[hdf-management]
 master01 ansible_host={{ inventory_mgmt_ip }} ansible_user=sdp-admin ansible_ssh_private_key_file="~/.ssh/id_rsa" rack=/default-rack
 
-[hdfworker]
+[hdf-worker]
 {% set count = 1 %}
 {% for item in inventory_worker_ip %}
 slave0{{ count }} ansible_host={{ item }} ansible_user=sdp-admin ansible_ssh_private_key_file="~/.ssh/id_rsa" rack=/default-rack
