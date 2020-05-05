@@ -331,12 +331,6 @@ locations:
     ports:
       - 22
       - 443
-  - name: Chellappan_Chockalingam
-    source:
-      - 84.81.185.32
-    ports:
-      - 22
-      - 443    
   - name: Nayna_Choubey
     source:	
       - 49.33.186.233
