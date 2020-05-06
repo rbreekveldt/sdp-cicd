@@ -43,7 +43,7 @@
       - { regex: 'booleanParam.defaultValue. false, name. .hive_db., description. .Provision a Hive database..', condition: "{{ cloud_config.sql_db[1].provision }}", line: "    string(name: 'hive_db_installed', defaultValue: 'The hive_db is already installed')" }
       - { regex: 'booleanParam.defaultValue. false, name. .ranger_db., description. .Provision a Ranger database..', condition: "{{ cloud_config.sql_db[2].provision }}", line: "      string(name: 'ranger_db_installed', defaultValue: 'The oozie_db is already installed')" }
       - { regex: 'booleanParam.defaultValue. false, name. .sftp., description. .Provision a SFTP mockup server..', condition: "{{ cloud_config.mockup.sftp.provision }}", line: "      string(name: 'sftp_installed', defaultValue: 'sftp is already installed')" }
-      - { regex: 'booleanParam.defaultValue. false, name. .nifi., description. .Provision a NIFI cluster..', condition: "{{ cloud_config.nifi.provision }}", line: "string(name: '     nifi_installed', defaultValue: 'nifi is already installed')" }
+      - { regex: 'booleanParam.defaultValue. false, name. .nifi., description. .Provision a NIFI cluster..', condition: "{{ cloud_config.nifi.provision }}", line: "    string(name: '     nifi_installed', defaultValue: 'nifi is already installed')" }
       - { regex: 'booleanParam.defaultValue. false, name. .oracle., description. .Provision a oracle mockup db..', condition: "{{ cloud_config.mockup.oracle.provision }}", line: "    string(name: 'oracle_installed', defaultValue: 'Oracle is already installed')" }
 
 
