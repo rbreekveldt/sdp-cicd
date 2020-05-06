@@ -6,6 +6,7 @@
     pipeline {
     agent any
     parameters{
+    choice(name: 'INFO', choices: 'In order to update the jenkinsfile in jenkins you need to start and abort a build', description: 'update jenkinsfile')
     choice(name: 'Subscription', choices: 'SPAzureGovernanceTesting', description: 'Subscription to provision')
     choice(name: 'ResourceGroup', choices: 'dp-curation-dtest-uat', description: 'Subscription to provision')
     choice(name: 'data_domain', choices: 'dp', description: 'this is the Data Domain')
