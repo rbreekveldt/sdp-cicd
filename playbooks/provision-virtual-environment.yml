@@ -25,7 +25,6 @@
       loop:
         - provision-storageaccount
         - provision-vm
-        - create-static-inventory
       loop_control:
         loop_var: role        
       tags: dataproject
@@ -36,7 +35,7 @@
         - create-static-inventory
       loop_control:
         loop_var: role
-      when: cloud_config.mgmt.provision
+      when: cloud_config.nifi.provision
 
     - include_role:
         name: "{{ role }}"
