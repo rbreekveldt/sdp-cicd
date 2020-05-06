@@ -45,7 +45,7 @@ pipeline {
         
         stage ('Git checkout and switch to Master') {
             steps {
-                sh 'git checkout --track origin/rename_common'
+                sh 'git checkout --track origin/master'
             }
         }
         stage ('Create Dataproject') {
@@ -77,7 +77,7 @@ pipeline {
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
-                  ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/'${master_project_name}'/all", inventory: "environments/'${master_project_name}'/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi'
+                  ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/'${master_project_name}'/all", inventory: "environments/${master_project_name}/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi'
                   }
             }
         }

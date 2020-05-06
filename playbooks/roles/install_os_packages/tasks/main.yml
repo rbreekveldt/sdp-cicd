@@ -1,5 +1,5 @@
 ---
-# All common linux OS related tasks are goes heir
+# All install_os_packages linux OS related tasks are goes heir
 - block:
   - name: Load variables
     include_vars: "{{ item }}"
@@ -7,7 +7,7 @@
       - files:
           - "main.yml"
         paths:
-          - ../common/vars
+          - ../install_os_packages/vars
   
   - name: Install required packages
     package:
