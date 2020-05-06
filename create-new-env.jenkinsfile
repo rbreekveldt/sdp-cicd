@@ -22,7 +22,7 @@ pipeline {
      }
 
     environment {
-        master_project_name = "{{ lookup('env', 'data_domain') }}-{{ lookup('env', 'resource_group_phase') }}-{{ lookup('env', 'project_name') }}-{{ lookup('env', 'env_type') }}"
+        master_project_name = "${data_domain}-${resource_group_phase}-${project_name}-${env_type}"
     }
 
     stages {
@@ -66,18 +66,18 @@ pipeline {
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
-                 ansiblePlaybook extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.env_type}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'hdi'
+                 ansiblePlaybook extras: "-e @environments/'${master_project_name}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'hdi'
                  }
             }
         }
-        stage ('Install ambari cluster') {
+        stage ('Install mockups') {
             steps {
             withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
-                  ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/'${params.data_domain}'-'${params.resource_group_phase}'-'${params.project_name}'-'${params.env_type}'/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi'
+                  ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/'${master_project_name}'/all", inventory: "environments/'${master_project_name}'/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi'
                   }
             }
         }

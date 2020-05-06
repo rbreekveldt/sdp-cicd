@@ -1,4 +1,3 @@
 jenkins_token: 11a3395c5b38bcf13ec6e914a575bd7792
 jenkins_api: http://localhost:8080
 jenkins_user: jenkins
-#WORKSPACE: '/var/lib/jenkins/ansible-scripts/sdp-cicd-tools'
