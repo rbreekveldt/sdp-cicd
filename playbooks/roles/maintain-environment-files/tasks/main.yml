@@ -1,0 +1,52 @@
+---
+
+-  name: update node count
+   replace:
+      path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
+      replace: '\g<1>{{ nodes_int }}'
+      regexp: '(?<=f.\n)(\s*\w*:\s*).'
+
+-  name: update node count
+   replace:
+      path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/Jenkinsfile"
+      replace: '\g<1>{{ nodes_int }}'
+      regexp: '(choice.name: .nifi_nodes_count., choices: .).'
+
+-  name: update all file
+   include_tasks: update_all_file.yml
+   vars:
+     reg: "{{ item.regex }}"
+   when: item.condition == 'true'
+   loop:
+      - { regex: '(?<=oozie.\n)(\s*\w*:\s*)false', condition: "{{ lookup('env', 'oozie_db') }}" }
+      - { regex: '(?<=hive.\n)(\s*\w*:\s*)false', condition: "{{ lookup('env', 'hive_db') }}" }
+      - { regex: '(?<=ranger.\n)(\s*\w*:\s*)false', condition: "{{ lookup('env', 'ranger_db') }}" }
+      - { regex: '(?<=nifi.\n)(\s*\w*:\s)false', condition : "{{ lookup('env', 'nifi') }}" }
+      - { regex: '(?<=sftp.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'sftp') }}" }
+      - { regex: '(?<=oracle.\n)(\s*\w*:\s)false', condition: "{{ lookup('env', 'oracle') }}" }
+
+-  include_role:
+      name: push-files-to-repo
+
+-  debug:
+      msg: "{{ cloud_config.sql_db[0].provision }} {{ cloud_config.sql_db[1].provision }} {{ cloud_config.sql_db[2].provision }} "
+
+
+-  name: update jenkinsfile
+   include_tasks: update_jenkinsfile.yml
+   vars:
+      reg: "{{ item.regex }}"
+      line: "{{ item.line }}"
+   when: item.condition == True
+   loop:
+      - { regex: 'booleanParam.defaultValue. false. name. .oozie_db.. description. .Provision an Oozie database..', condition: "{{ cloud_config.sql_db[0].provision }}", line: "string(name: 'oozie_db_installed', defaultValue: 'The oozie_db is already installed')" }
+      - { regex: 'booleanParam.defaultValue. false, name. .hive_db., description. .Provision a Hive database..', condition: "{{ cloud_config.sql_db[1].provision }}", line: "string(name: 'hive_db_installed', defaultValue: 'The hive_db is already installed')" }
+      - { regex: 'booleanParam.defaultValue. false, name. .ranger_db., description. .Provision a Ranger database..', condition: "{{ cloud_config.sql_db[2].provision }}", line: "string(name: 'ranger_db_installed', defaultValue: 'The oozie_db is already installed')" }
+      - { regex: 'booleanParam.defaultValue. false, name. .sftp., description. .Provision a SFTP mockup server..', condition: "{{ cloud_config.mockup.sftp.provision }}", line: "string(name: 'sftp_installed', defaultValue: 'sftp is already installed')" }
+      - { regex: 'booleanParam.defaultValue. false, name. .nifi., description. .Provision a NIFI cluster..', condition: "{{ cloud_config.nifi.provision }}", line: "string(name: 'nifi_installed', defaultValue: 'nifi is already installed')" }
+      - { regex: 'booleanParam.defaultValue. false, name. .oracle., description. .Provision a oracle mockup db..', condition: "{{ cloud_config.mockup.oracle.provision }}", line: "string(name: 'oracle_installed', defaultValue: 'Oracle is already installed')" }
+
+
+
+
+

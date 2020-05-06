@@ -20,13 +20,13 @@ pipeline {
         booleanParam(defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server')
         booleanParam(defaultValue: false, name: 'oracle', description: 'Provision a oracle mockup db')
      }
-   
+
     environment {
         master_project_name = "${data_domain}-${resource_group_phase}-${project_name}-${env_type}"
     }
 
     stages {
-    
+
       stage('set subscription id') {
             steps {
                 script {
@@ -41,8 +41,8 @@ pipeline {
 
                 }
             }
-        }               
-        
+        }
+
         stage ('Git checkout and switch to Master') {
             steps {
                 sh 'git checkout --track origin/master'
@@ -55,7 +55,7 @@ pipeline {
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
-                 ansiblePlaybook playbook: 'playbooks/create-new-environment.yml', skippedTags: 'hdi'
+                 ansiblePlaybook playbook: 'playbooks/create-new-environment.yml', skippedTags: 'hdi,maintain'
                  }
             }
         }
@@ -68,9 +68,9 @@ pipeline {
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
                  ansiblePlaybook extras: "-e @environments/'${master_project_name}'/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'hdi'
                  }
-            }   
+            }
         }
-        stage ('Install ambari cluster') {
+        stage ('Install mockups') {
             steps {
             withCredentials([azureServicePrincipal(credentialsId: "${env.CREDENTIAL_ID}",
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
@@ -82,4 +82,4 @@ pipeline {
             }
         }
     }
-}    
+}

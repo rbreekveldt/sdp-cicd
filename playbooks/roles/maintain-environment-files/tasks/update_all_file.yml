@@ -1,0 +1,7 @@
+---
+
+-  name: update all file true false status of oracle kaftka etc
+   replace:
+     path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/all"
+     replace: '\g<1>true'
+     regexp: "{{ reg }}"

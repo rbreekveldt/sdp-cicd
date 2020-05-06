@@ -1,0 +1,7 @@
+---
+
+-  name: update all unnescescary lines in jenkinsfile
+   replace:
+     path: "{{ lookup('env', 'WORKSPACE') }}/environments/{{ master_project_name }}/Jenkinsfile"
+     replace: "{{ line }}"
+     regexp: "{{ reg }}"
