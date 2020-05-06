@@ -61,7 +61,7 @@ cloud_config:
       provision: false
 
     - name: "hive"
-      provision: true
+      provision: false
 
     - name: "ranger"
       provision: false
