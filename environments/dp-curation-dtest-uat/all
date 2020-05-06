@@ -46,7 +46,7 @@ cloud_config:
   nifi:
     provision: false
     functionality: nifi
-    nodes_count: 3
+    nodes_count: 4
     flavor: Standard_A5
     tags:
       role: nifi_worker
@@ -61,7 +61,7 @@ cloud_config:
       provision: false
 
     - name: "hive"
-      provision: false
+      provision: true
 
     - name: "ranger"
       provision: false
