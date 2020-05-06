@@ -1,0 +1,81 @@
+  //Jenkins pipeline to provision Hortonworks infrastructure
+    def azureSubscription = ""
+    def inputSubscription = ""
+    def skipRemainingStages = "true"
+
+    pipeline {
+    agent any
+    parameters{
+    choice(name: 'Subscription', choices: '{{ lookup( "env", 'Subscription') }}', description: 'Subscription to provision')
+    choice(name: 'ResourceGroup', choices: '{{ lookup( "env", 'data_domain') }}-{{ lookup( "env", 'resource_group_phase') }}-{{ lookup( "env", 'project_name') }}-{{ lookup( "env", 'env_type') }}', description: 'Subscription to provision')
+    choice(name: 'data_domain', choices: '{{ lookup( "env", 'data_domain') }}', description: 'this is the Data Domain')
+    choice(name: 'resource_group_phase', choices: '{{ lookup( "env", 'resource_group_phase') }}', description: 'Resourcegroup Phase')
+    choice(name: 'project_name', choices: '{{ lookup( "env", 'project_name') }}', description: 'Project Name')
+    choice(name: 'env_type', choices: '{{ lookup( "env", 'env_type') }}', description: 'Environment type to provision')
+    string(name: 'nifi_nodes_count', choices: '{{ lookup( "env", 'nifi_nodes_count') }}', description: 'Update the node count')
+    choice(name: 'add_nifi_nodes', choices: 'Please select\n1\n2\n3\n4', description: 'choose the amount of nodes to add to the existing for Nifi cluster')
+    {% if lookup('env', 'nifi') == 'false' %}
+    booleanParam(defaultValue: false, name: 'nifi', description: 'Provision a NIFI cluster')
+    {% else %}
+    string(name: 'nifi_installed', defaultValue: 'nifi is already installed' )
+    {% endif %}
+    {% if lookup('env', 'sftp') == 'false' %}
+    booleanParam(defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server')
+    {% else %}
+    string(name: 'sftp_installed', defaultValue: 'sftp is already installed' )
+    {% endif %}
+    {% if lookup('env', 'oracle') == 'false' %}
+    booleanParam(defaultValue: false, name: 'oracle', description: 'Provision a oracle mockup db')
+    {% else %}
+    string(name: 'oracle_installed', defaultValue: 'Oracle is already installed' )
+    {% endif %}
+    }
+
+
+    stages {
+
+    stage ('Git checkout and switch to Master') {
+    steps {
+    sh 'git checkout --track origin/master'
+    }
+    }
+
+    stage ('update all file') {
+    steps {
+
+  withCredentials([azureServicePrincipal(credentialsId: '{{ lookup('env', 'CREDENTIAL_ID') }}',
+                                                          subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                          clientIdVariable: 'AZURE_CLIENT_ID',
+                                                          clientSecretVariable: 'AZURE_SECRET',
+                                                          tenantIdVariable: 'AZURE_TENANT')]) {
+                                                          ansiblePlaybook extras: "-e @environments/{{ master_project_name }}/all", playbook: 'playbooks/create-new-environment.yml', skippedTags: 'create,hdi'
+  }
+  }
+  }
+
+    stage ('Provision HDI Infrastructure') {
+    steps {
+
+    withCredentials([azureServicePrincipal(credentialsId: '{{ lookup('env', 'CREDENTIAL_ID') }}' ,
+                                                            subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                            clientIdVariable: 'AZURE_CLIENT_ID',
+                                                            clientSecretVariable: 'AZURE_SECRET',
+                                                            tenantIdVariable: 'AZURE_TENANT')]) {
+                                                            ansiblePlaybook extras: "-e @environments/{{ master_project_name }}/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'hdi'
+  }
+  }
+  }
+
+    stage ('Install ambari cluster') {
+    steps {
+  withCredentials([azureServicePrincipal(credentialsId: '{{ lookup('env', 'CREDENTIAL_ID') }}',
+                                                          subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                          clientIdVariable: 'AZURE_CLIENT_ID',
+                                                          clientSecretVariable: 'AZURE_SECRET',
+                                                          tenantIdVariable: 'AZURE_TENANT')]) {
+                                                          ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/{{ master_project_name }}/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi,dataproject'
+  }
+  }
+  }
+  }
+  }

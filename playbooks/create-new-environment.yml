@@ -1,3 +1,4 @@
+---
 - name: Create new environment
   hosts: localhost
   gather_facts: false
@@ -8,8 +9,23 @@
       set_fact:
         master_project_name: "{{ lookup('env', 'master_project_name') }}"
 
-  roles:
-    - create-jenkins-project
-    - create-environment-configuration
-    - validation
-    - push-files-to-repo  
+  tasks:
+    - include_role:
+        name: "{{ role }}"
+      loop:
+        - create-jenkins-project
+        - create-environment-configuration
+        - validation
+        - push-files-to-repo
+      loop_control:
+        loop_var: role
+      tags: create
+
+    - include_role:
+        name: "{{ role }}"
+      loop:
+        - maintain-environment-files
+        - push-files-to-repo
+      loop_control:
+        loop_var: role
+      tags: maintain

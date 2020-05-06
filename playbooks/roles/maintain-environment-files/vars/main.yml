@@ -1,0 +1,5 @@
+---
+
+nifi_nodes_count: "{{ lookup('env', 'nifi_nodes_count') }}"
+add_nifi_nodes: "{{ lookup('env', 'add_nifi_nodes') }}"
+nodes_int: "{{ nifi_nodes_count|int + add_nifi_nodes|int }}"
