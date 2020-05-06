@@ -170,84 +170,85 @@ locations:
     source:
       - 85.146.88.162
       - 157.33.211.40
+      - 157.33.235.136
     ports:
       - 22
-      - 443 
+      - 443
   - name: Remco_Breekveldt
     source:
-      - 145.133.103.83  
+      - 145.133.103.83
     ports:
       - 22
-      - 443 
+      - 443
   - name: Petri_la_Grange
     source:
       - 213.127.38.93
     ports:
       - 22
-      - 443 
+      - 443
   - name: Luc_Ackermann
     source:
-      - 85.148.62.240  
+      - 85.148.62.240
     ports:
       - 22
-      - 443 
+      - 443
   - name: Hakan_Elgin
     source:
       - 83.85.64.159
     ports:
       - 22
-      - 443 
+      - 443
   - name: Gaurav_Gupta
     source:
-      - 83.84.230.175  
+      - 83.84.230.175
     ports:
       - 22
-      - 443 
+      - 443
   - name: Aleksandr_Bykov
     source:
-      - 195.240.178.170  
+      - 195.240.178.170
     ports:
       - 22
-      - 443 
+      - 443
   - name: Oguz_Eren
     source:
-      - 86.92.11.120  
+      - 86.92.11.120
     ports:
       - 22
-      - 443 
+      - 443
   - name: Mike_de_Kok
     source:
-      - 213.127.101.86 
+      - 213.127.101.86
       - 80.60.7.100
       - 213.127.101.44
     ports:
       - 22
-      - 443 
+      - 443
 
 #################################
 # Liberty Global home locations #
 #################################
   - name: Ben_Sutton
     source:
-      - 86.13.247.169  
+      - 86.13.247.169
     ports:
       - 22
-      - 443 
+      - 443
   - name: Rohit_Mattoo
     source:
-      - 82.44.113.143  
+      - 82.44.113.143
     ports:
       - 22
-      - 443 
+      - 443
   - name: Manu_Raja
     source:
-      - 80.114.94.45  
+      - 80.114.94.45
     ports:
       - 22
-      - 443 
+      - 443
   - name: Wang_Defu_Home
     source:
-      - 86.157.45.172
+      - 86.156.173.126
     ports:
       - 22
       - 443 
