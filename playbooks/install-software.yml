@@ -5,15 +5,12 @@
   any_errors_fatal: true
   become: yes
 
-# Execute common task on all vms
+# Execute install_os_packages task on all vms
 - hosts: all
   roles:
-  - common
+  - install_os_packages
 
 - import_playbook: set-host-groups.yml
-
-#- import_playbook: install-ambari-cluster.yml
-#  when: cloud_config.nifi.provision
 
 - import_playbook: sftp-mockup-server.yml
   when: cloud_config.mockup.sftp.provision
