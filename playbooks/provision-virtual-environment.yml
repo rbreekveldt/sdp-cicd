@@ -28,6 +28,14 @@
       loop_control:
         loop_var: role        
       tags: dataproject
+    
+    - include_role:
+        name: "{{ role }}"
+      loop:
+        - create-static-inventory
+      loop_control:
+        loop_var: role
+      when: cloud_config.nifi.provision
 
     - include_role:
         name: "{{ role }}"
