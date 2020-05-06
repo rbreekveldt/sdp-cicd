@@ -1,6 +1,5 @@
 ---
 #Start point of provisioning virtual environment
-#- import_playbook: "set-azure-credentials.yml"
 - name: Provision virtual environment
   hosts: localhost
   gather_facts: false
@@ -29,14 +28,6 @@
         loop_var: role        
       tags: dataproject
     
-    - include_role:
-        name: "{{ role }}"
-      loop:
-        - create-static-inventory
-      loop_control:
-        loop_var: role
-      when: cloud_config.nifi.provision
-
     - include_role:
         name: "{{ role }}"
       loop:
