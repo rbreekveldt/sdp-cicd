@@ -77,7 +77,7 @@ pipeline {
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
-                  ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/'${master_project_name}'/all", inventory: "environments/'${master_project_name}'/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi'
+                  ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/'${master_project_name}'/all", inventory: "environments/${master_project_name}/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi'
                   }
             }
         }
