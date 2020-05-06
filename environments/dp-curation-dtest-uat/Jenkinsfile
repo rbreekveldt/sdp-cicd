@@ -14,9 +14,9 @@
     choice(name: 'env_type', choices: 'uat', description: 'Environment type to provision')
     choice(name: 'nifi_nodes_count', choices: '4', description: 'the amount of current nifi nodes in the cluster')
     choice(name: 'add_nifi_nodes', choices: 'Please select\n1\n2\n3\n4', description: 'choose the amount of nodes to add to the existing for Nifi cluster')
-    booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
-    booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
-    booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
+    string(name: 'oozie_db_installed', defaultValue: 'The oozie_db is already installed')
+    string(name: 'hive_db_installed', defaultValue: 'The hive_db is already installed')
+    string(name: 'ranger_db_installed', defaultValue: 'The oozie_db is already installed')
         }
 
 
