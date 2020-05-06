@@ -29,7 +29,7 @@
       name: push-files-to-repo
 
 -  debug:
-      msg: "{{ cloud_config.sql_db[0].provision }}"
+      msg: "{{ cloud_config.sql_db[0].provision }} {{ cloud_config.sql_db[1].provision }} {{ cloud_config.sql_db[2].provision }} "
 
 
 -  name: update jenkinsfile
