@@ -48,6 +48,7 @@ security_groups:
       - Nayna_Choubey
       - Mike_de_Kok
       - Udit_Gupta
+      - Narasimha_Bokam
 
   - security_group: nsg-sdp-internal
     subscription_id: dd10eed9-865c-4bfa-a260-d3e8fe16b047
@@ -121,6 +122,7 @@ security_groups:
       - Nayna_Choubey
       - Remco_Breekveldt
       - Anurag_Raut
+      - Narasimha_Bokam
    
   - security_group: amdi-dev-nsg
     subscription_id: 4e0be25d-2501-46ce-b71b-36ad4d34c88e 
@@ -204,6 +206,7 @@ security_groups:
       - Nayna_Choubey
       - Mike_de_Kok
       - Udit_Gupta
+      - Narasimha_Bokam
 
   - security_group: am-sei0-nsg
     subscription_id: 4e0be25d-2501-46ce-b71b-36ad4d34c88e 
