@@ -314,7 +314,7 @@ locations:
       - 443 
   - name: Jigayasa_Golhani
     source:	
-      - 182.70.194.198
+      - 182.70.153.15
     ports:
       - 22
       - 443 
