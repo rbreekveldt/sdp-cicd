@@ -17,6 +17,11 @@
     {% else %}
     string(name: 'sftp_installed', defaultValue: 'sftp is already installed' )
     {% endif %}
+    {% if lookup('env', 'kafka ') == 'false' %}
+    booleanParam(defaultValue: false, name: 'kafka', description: 'Provision a kafka mockup server')
+    {% else %}
+    string(name: 'kafka_installed', defaultValue: 'kafka is already installed' )
+    {% endif %}
     {% if lookup('env', 'oracle') == 'false' %}
     booleanParam(defaultValue: false, name: 'oracle', description: 'Provision a oracle mockup db')
     {% else %}
