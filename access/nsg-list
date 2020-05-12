@@ -49,7 +49,6 @@ security_groups:
       - Mike_de_Kok
       - Udit_Gupta
       - Narasimha_Bokam
-      - Mahak_Rathore
 
   - security_group: nsg-sdp-internal
     subscription_id: dd10eed9-865c-4bfa-a260-d3e8fe16b047
