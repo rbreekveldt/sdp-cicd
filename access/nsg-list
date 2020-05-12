@@ -160,7 +160,6 @@ security_groups:
       - Nayna_Choubey
       - Chellappan_Chockalingam
       - Marco_Blanca
-      - Mahak_Rathore
 
   - security_group: nsg-cicd-prd
     subscription_id: fd478270-bd64-4cf3-bb8b-53016bb2ffd6
@@ -211,7 +210,6 @@ security_groups:
       - Mike_de_Kok
       - Udit_Gupta
       - Narasimha_Bokam
-      - Mahak_Rathore
 
   - security_group: am-sei0-nsg
     subscription_id: 4e0be25d-2501-46ce-b71b-36ad4d34c88e 
@@ -246,4 +244,3 @@ security_groups:
       - Nayna_Choubey
       - Chellappan_Chockalingam
       - Marco_Blanca
-      - Mahak_Rathore
