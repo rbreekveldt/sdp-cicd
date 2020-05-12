@@ -1,0 +1,69 @@
+  //Jenkins pipeline to provision Hortonworks infrastructure
+    def azureSubscription = ""
+    def inputSubscription = ""
+    def skipRemainingStages = "true"
+
+    pipeline {
+    agent any
+    parameters{
+    choice(name: 'Subscription', choices: '', description: 'Subscription to provision')
+    choice(name: 'ResourceGroup', choices: 'dp-ingestion-uhjk-dev', description: 'Subscription to provision')
+    choice(name: 'data_domain', choices: 'dp', description: 'this is the Data Domain')
+    choice(name: 'resource_group_phase', choices: 'ingestion', description: 'Resourcegroup Phase')
+    choice(name: 'project_name', choices: 'uhjk', description: 'Project Name')
+    choice(name: 'env_type', choices: 'dev', description: 'Environment type to provision')
+    string(name: 'nifi_nodes_count', choices: '3', description: 'Update the node count')
+    choice(name: 'add_nifi_nodes', choices: 'Please select\n1\n2\n3\n4', description: 'choose the amount of nodes to add to the existing for Nifi cluster')
+        string(name: 'nifi_installed', defaultValue: 'nifi is already installed' )
+            booleanParam(defaultValue: false, name: 'sftp', description: 'Provision a SFTP mockup server')
+            booleanParam(defaultValue: false, name: 'oracle', description: 'Provision a oracle mockup db')
+        }
+
+
+    stages {
+
+    stage ('Git checkout and switch to Master') {
+    steps {
+    sh 'git checkout --track origin/master'
+    }
+    }
+
+    stage ('update all file') {
+    steps {
+
+  withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting',
+                                                          subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                          clientIdVariable: 'AZURE_CLIENT_ID',
+                                                          clientSecretVariable: 'AZURE_SECRET',
+                                                          tenantIdVariable: 'AZURE_TENANT')]) {
+                                                          ansiblePlaybook extras: "-e @environments/dp-ingestion-uhjk-dev/all", playbook: 'playbooks/create-new-environment.yml', skippedTags: 'create,hdi'
+  }
+  }
+  }
+
+    stage ('Provision HDI Infrastructure') {
+    steps {
+
+    withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting' ,
+                                                            subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                            clientIdVariable: 'AZURE_CLIENT_ID',
+                                                            clientSecretVariable: 'AZURE_SECRET',
+                                                            tenantIdVariable: 'AZURE_TENANT')]) {
+                                                            ansiblePlaybook extras: "-e @environments/dp-ingestion-uhjk-dev/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'hdi'
+  }
+  }
+  }
+
+    stage ('Install ambari cluster') {
+    steps {
+  withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting',
+                                                          subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                          clientIdVariable: 'AZURE_CLIENT_ID',
+                                                          clientSecretVariable: 'AZURE_SECRET',
+                                                          tenantIdVariable: 'AZURE_TENANT')]) {
+                                                          ansiblePlaybook credentialsId: 'SDP-Admin', extras: "-e @environments/dp-ingestion-uhjk-dev/all", inventory: "environments/${params.data_domain}-${params.resource_group_phase}-${params.project_name}-${params.env_type}/azure_rm.yml", playbook: 'playbooks/install-software.yml' , skippedTags: 'hdi,dataproject'
+  }
+  }
+  }
+  }
+  }
