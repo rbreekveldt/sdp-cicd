@@ -331,6 +331,7 @@ locations:
       - 62.179.123.10
       - 183.83.76.123
       - 42.104.97.20
+      - 42.104.97.19
     ports:
       - 22
       - 443
@@ -346,4 +347,16 @@ locations:
       - 62.179.123.10
     ports:
       - 22
-      - 443 
+      - 443
+  - name: Jayasree_Meruga
+    source:	
+      - 42.104.97.20
+    ports:
+      - 22
+      - 443
+  - name: Narasimha_Darisa
+    source:	
+      - 183.83.175.157
+    ports:
+      - 22
+      - 443
