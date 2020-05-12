@@ -29,7 +29,10 @@
     {% endif %}
     }
 
-
+    environment {
+        master_project_name = "${data_domain}-${resource_group_phase}-${project_name}-${env_type}"
+        job_type = "jenkinsfile_mockups.j2"
+    }
     stages {
 
     stage ('Git checkout and switch to Master') {
