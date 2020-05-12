@@ -49,6 +49,9 @@ security_groups:
       - Mike_de_Kok
       - Udit_Gupta
       - Narasimha_Bokam
+      - Jayasree_Meruga
+      - Narasimha_Darisa
+      - Mahak
 
   - security_group: nsg-sdp-internal
     subscription_id: dd10eed9-865c-4bfa-a260-d3e8fe16b047
@@ -91,6 +94,8 @@ security_groups:
       - Mike_de_Kok
       - Udit_Gupta
       - Mahak_Rathore
+      - Jayasree_Meruga
+      - Narasimha_Darisa
   
   - security_group: nsg-sdp-external
     subscription_id: dd10eed9-865c-4bfa-a260-d3e8fe16b047
@@ -125,6 +130,8 @@ security_groups:
       - Anurag_Raut
       - Narasimha_Bokam
       - Mahak_Rathore
+      - Jayasree_Meruga
+      - Narasimha_Darisa
    
   - security_group: amdi-dev-nsg
     subscription_id: 4e0be25d-2501-46ce-b71b-36ad4d34c88e 
@@ -159,6 +166,9 @@ security_groups:
       - Nayna_Choubey
       - Chellappan_Chockalingam
       - Marco_Blanca
+      - Jayasree_Meruga
+      - Narasimha_Darisa
+      - Mahak_Rathore
 
   - security_group: nsg-cicd-prd
     subscription_id: fd478270-bd64-4cf3-bb8b-53016bb2ffd6
@@ -209,6 +219,9 @@ security_groups:
       - Mike_de_Kok
       - Udit_Gupta
       - Narasimha_Bokam
+      - Jayasree_Meruga
+      - Narasimha_Darisa
+      - Mahak_Rathore
 
   - security_group: am-sei0-nsg
     subscription_id: 4e0be25d-2501-46ce-b71b-36ad4d34c88e 
@@ -243,3 +256,6 @@ security_groups:
       - Nayna_Choubey
       - Chellappan_Chockalingam
       - Marco_Blanca
+      - Jayasree_Meruga
+      - Narasimha_Darisa
+      - Mahak_Rathore
