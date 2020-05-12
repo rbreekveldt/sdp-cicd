@@ -1,2 +1,5 @@
 ---
 # vars file for create-jenkins-project
+jenkins_token: 11a3395c5b38bcf13ec6e914a575bd7792
+jenkins_api: http://localhost:8080
+jenkins_user: jenkins
