@@ -309,6 +309,8 @@ locations:
     source:	
       - 117.224.255.3
       - 117.224.163.189
+      - 117.224.24.11
+      - 117.224.255.3
     ports:
       - 22
       - 443 
@@ -335,6 +337,13 @@ locations:
   - name: Nayna_Choubey
     source:	
       - 49.32.20.33
+      - 49.33.154.92
+    ports:
+      - 22
+      - 443
+  - name: Mahak_Rathore
+    source:	
+      - 62.179.123.10
     ports:
       - 22
       - 443 
