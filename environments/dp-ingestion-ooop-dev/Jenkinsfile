@@ -16,7 +16,10 @@
             booleanParam(defaultValue: false, name: 'kafka', description: 'Provision a kafka mockup server')
             booleanParam(defaultValue: false, name: 'oracle', description: 'Provision a oracle mockup db')
         }
-
+    environment {
+        master_project_name = "${data_domain}-${resource_group_phase}-${project_name}-${env_type}"
+        job_type = "jenkinsfile_mockups.j2"
+    }
 
     stages {
 

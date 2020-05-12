@@ -17,6 +17,10 @@
         string(name: 'nifi_installed', defaultValue: 'nifi is already installed' )
         }
 
+    environment {
+        master_project_name = "${data_domain}-${resource_group_phase}-${project_name}-${env_type}"
+        job_type = "jenkinsfile_data.j2"
+    }
 
     stages {
 
