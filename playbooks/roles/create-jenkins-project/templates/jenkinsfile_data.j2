@@ -22,7 +22,7 @@
     }
 
     environment {
-        master_project_name = "${data_domain}-${resource_group_phase}-${project_name}-${env_type}"
+        master_project_name = "{{ lookup( "env", 'master_project_name') }}"
         job_type = "jenkinsfile_data.j2"
     }
 
