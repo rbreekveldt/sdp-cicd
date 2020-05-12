@@ -6,7 +6,7 @@
     pipeline {
     agent any
     parameters{
-    choice(name: 'Subscription', choices: '{{ lookup( "env", 'Subscription') }}', description: 'Subscription to provision')
+    choice(name: 'subscription', choices: '{{ lookup( "env", 'Subscription') }}', description: 'Subscription to provision')
     choice(name: 'ResourceGroup', choices: '{{ lookup( "env", 'data_domain') }}-{{ lookup( "env", 'resource_group_phase') }}-{{ lookup( "env", 'project_name') }}-{{ lookup( "env", 'env_type') }}', description: 'Subscription to provision')
     choice(name: 'data_domain', choices: '{{ lookup( "env", 'data_domain') }}', description: 'this is the Data Domain')
     choice(name: 'resource_group_phase', choices: '{{ lookup( "env", 'resource_group_phase') }}', description: 'Resourcegroup Phase')
