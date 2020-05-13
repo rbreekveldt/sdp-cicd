@@ -1,9 +1,0 @@
- ---
-
- internal:
-   hosts:
-     52.174.30.137:
-
- external:
-   hosts:
-     51.136.52.125:
