@@ -1,7 +1,7 @@
 ---
 
 - name : List system keys (provision only our ansible user)
-  local_action: "command find {{ directory }} -type f -path \"*/system/*\""
+  command: "find {{ directory }} -type f -path \"*/system/*\""
   register: system_keys
   become: false
   check_mode: no
