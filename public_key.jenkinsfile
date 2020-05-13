@@ -16,7 +16,7 @@ pipeline {
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
-                ansiblePlaybook extras: "-e @access/nsg-list -e @access/locations", playbook: 'playbooks/add_public_keys.yml'
+                ansiblePlaybook inventory: "/var/lib/jenkins/workspace/public_keys/azure_rm.yml" playbook: 'playbooks/add_public_keys.yml'
                 }
             }
         }
