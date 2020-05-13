@@ -316,6 +316,7 @@ locations:
   - name: Jigayasa_Golhani
     source:	
       - 182.70.153.15
+      - 182.70.143.117
       - 122.168.168.144
     ports:
       - 22
