@@ -1,0 +1,19 @@
+//Jenkins pipeline to whitelist IP's
+
+pipeline {
+    agent any
+    stages {
+        stage ("Whitelist IP's") {
+            steps {
+            withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting',
+                                                  subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                  clientIdVariable: 'AZURE_CLIENT_ID',
+                                                  clientSecretVariable: 'AZURE_SECRET',
+                                                  tenantIdVariable: 'AZURE_TENANT')]) {
+                ansiblePlaybook extras: "-e @access/nsg-list -e @access/locations", playbook: 'playbooks/add_public_keys.yml'
+                }
+            }
+        }
+
+    }
+}
