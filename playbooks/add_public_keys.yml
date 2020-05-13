@@ -1,6 +1,41 @@
-- name: update public keys
-  hosts: localhost
-  gather_facts: false
-  connection: local
-  roles:
-    - add-public-keys
+- hosts: role_jumpbox-devoteam
+  become: true
+
+  tasks:
+    - name: Add all admin's public keys to the sdp-admin login
+      include_role:
+        name: add-public-keys
+      vars:
+        public_key_path: "admins"
+        public_key_user: "sdp-admin"
+
+
+    - name: Add all user's public keys to the sdp-user login
+      include_role:
+        name: add-public-keys
+      vars:
+        public_key_path: "devoteam-ca_uk"
+        public_key_user: "sdp-user"
+
+
+
+- hosts: role_jumpbox-infosys
+  become: true
+
+  tasks:
+    - name: Add all user's public keys to the sdp-user login
+      include_role:
+        name: add-public-keys
+      vars:
+        public_key_path: "infosys"
+        public_key_user: "sdp-user"
+
+
+    - name: Add all user's public keys to the sdp-sshuser login
+      include_role:
+        name: add-public-keys
+      vars:
+        public_key_path: "infosys-ca_uk"
+        public_key_user: "sdp-sshuser"
+      tags:
+        - publickeys
