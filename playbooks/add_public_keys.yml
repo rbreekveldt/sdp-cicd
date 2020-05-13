@@ -1,4 +1,4 @@
-- name: Whitelist IP's
+- name: update public keys
   hosts: localhost
   gather_facts: false
   connection: local
