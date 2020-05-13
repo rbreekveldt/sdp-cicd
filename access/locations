@@ -356,6 +356,7 @@ locations:
   - name: Jayasree_Meruga
     source:	
       - 115.98.54.66
+      - 10.173.37.81
     ports:
       - 22
       - 443
