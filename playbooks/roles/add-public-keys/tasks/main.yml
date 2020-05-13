@@ -3,58 +3,58 @@
     msg: "{{ playbook_dir }}"
 
 
-- name : List system keys (provision only our ansible user)
-  local_action: "command find {{ directory }} -type f -path \"*/system/*\""
-  register: system_keys
-  become: false
-  check_mode: no
-  changed_when: false
+#- name : List system keys (provision only our ansible user)
+#  local_action: "command find {{ directory }} -type f -path \"*/system/*\""
+#  register: system_keys
+#  become: false
+#  check_mode: no
+#  changed_when: false
 
 
-- name: Add system keys for {{ public_key_user }} (provision only our ansible user)
-  authorized_key:
-    user: "{{ public_key_user }}"
-    state: present
-    key: "{{ lookup('file', item) }}"
-  with_items: "{{ system_keys.stdout_lines|list }}"
-  when: "public_key_user == ansible_user"
+#- name: Add system keys for {{ public_key_user }} (provision only our ansible user)
+#  authorized_key:
+#    user: "{{ public_key_user }}"
+#    state: present
+#    key: "{{ lookup('file', item) }}"
+#  with_items: "{{ system_keys.stdout_lines|list }}"
+#  when: "public_key_user == ansible_user"
 
 
-- name: List unmatched keys (excluding system and admin accounts)
-  local_action: "command find {{ directory }} -type f -name \"*.pub\" ! -path \"*/{{ public_key_path }}/*\" ! -path \"*/system/*\" ! -path \"*/admins/*\""
-  register: unmatched_keys
-  become: false
-  check_mode: no
-  changed_when: false
+#- name: List unmatched keys (excluding system and admin accounts)
+#  local_action: "command find {{ directory }} -type f -name \"*.pub\" ! -path \"*/{{ public_key_path }}/*\" ! -path \"*/system/*\" ! -path \"*/admins/*\""
+#  register: unmatched_keys
+#  become: false
+#  check_mode: no
+#  changed_when: false
 
 
-- name: Delete unmatched keys for {{ public_key_user }}
-  authorized_key:
-    user: "{{ public_key_user }}"
-    state: absent
-    key: "{{ lookup('file', item) }}"
-  with_items: "{{ unmatched_keys.stdout_lines|list }}"
+#- name: Delete unmatched keys for {{ public_key_user }}
+#  authorized_key:
+#    user: "{{ public_key_user }}"
+#    state: absent
+#    key: "{{ lookup('file', item) }}"
+#  with_items: "{{ unmatched_keys.stdout_lines|list }}"
 
 
-- name : List matched keys
-  local_action: "command find {{ directory }} -type f -path \"*/{{ public_key_path }}/*\""
-  register: matched_keys
-  become: false
-  check_mode: no
-  changed_when: false
+#- name : List matched keys
+#  local_action: "command find {{ directory }} -type f -path \"*/{{ public_key_path }}/*\""
+#  register: matched_keys
+#  become: false
+#  check_mode: no
+#  changed_when: false
 
 
-- name: Add matched keys for {{ public_key_user }}
-  authorized_key:
-    user: "{{ public_key_user }}"
-    state: present
-    key: "{{ lookup('file', item) }}"
-  with_items: "{{ matched_keys.stdout_lines|list }}"
+#- name: Add matched keys for {{ public_key_user }}
+#  authorized_key:
+#    user: "{{ public_key_user }}"
+#    state: present
+#    key: "{{ lookup('file', item) }}"
+#  with_items: "{{ matched_keys.stdout_lines|list }}"
 
 
-- name: Add system keys for {{ public_key_user }} (provision only our ansible user, and ensure we can log in next time too)
-  authorized_key:
-    user: "{{ public_key_user }}"
-    state: present
-    key: "{{ lookup('file', item) }}"
-  with_items: "{{ system_keys.stdout_lines|list }}"
+#- name: Add system keys for {{ public_key_user }} (provision only our ansible user, and ensure we can log in next time too)
+#  authorized_key:
+#    user: "{{ public_key_user }}"
+#    state: present
+#    key: "{{ lookup('file', item) }}"
+#  with_items: "{{ system_keys.stdout_lines|list }}"
