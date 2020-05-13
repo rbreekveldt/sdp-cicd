@@ -371,6 +371,7 @@ locations:
   - name: Akbar_BashaShaik
     source:	
       - 42.104.97.19
+      - 157.38.219.100
     ports:
       - 22
       - 443
