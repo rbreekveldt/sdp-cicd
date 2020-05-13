@@ -3,10 +3,10 @@
 pipeline {
     agent any
     stages {
-    
+
         stage ('Git checkout and switch to Master') {
             steps {
-                sh 'git checkout --track origin/master'
+                sh 'git checkout --track origin/keys'
             }
         }
         stage ("Whitelist IP's") {
