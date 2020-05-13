@@ -1,6 +1,6 @@
+ ---
+ internal:
+ sdpjumpboxint.westeurope.cloudapp.azure.com
 
-[internal]
-sdpjumpboxint.westeurope.cloudapp.azure.com
-
-[external]
-sdpjumpboxext.westeurope.cloudapp.azure.com
+ external:
+ sdpjumpboxext.westeurope.cloudapp.azure.com
