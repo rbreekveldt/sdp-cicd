@@ -1,6 +1,9 @@
  ---
+
  internal:
- sdpjumpboxint.westeurope.cloudapp.azure.com
+   hosts:
+     52.174.30.137
 
  external:
- sdpjumpboxext.westeurope.cloudapp.azure.com
+   hosts:
+     51.136.52.125
