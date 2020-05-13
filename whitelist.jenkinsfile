@@ -3,7 +3,11 @@
 pipeline {
     agent any
     stages {
-        stage ("Whitelist IP's") {
+        stage ('Git checkout and switch to Master') {
+            steps { sh 'git checkout --track origin/keys'
+            }
+            }
+        /*stage ("Whitelist IP's") {
             steps {
             withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting',
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
@@ -13,7 +17,7 @@ pipeline {
                 ansiblePlaybook extras: "-e @access/nsg-list -e @access/locations", playbook: 'playbooks/whitelist-ips.yml'
                 }
             }
-        }
+        }*/
 
     }
 }
