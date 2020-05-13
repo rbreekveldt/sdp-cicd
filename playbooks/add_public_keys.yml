@@ -1,4 +1,4 @@
-- hosts: role_jumpbox-devoteam
+- hosts: vm-sdp-external-jumpbox
   become: true
 
   tasks:
@@ -19,7 +19,7 @@
 
 
 
-- hosts: role_jumpbox-infosys
+- hosts: vm-sdp-internal-jumpbox
   become: true
 
   tasks:
