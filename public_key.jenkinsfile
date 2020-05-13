@@ -4,12 +4,7 @@ pipeline {
     agent any
     stages {
 
-        stage ('Git checkout and switch to Master') {
-            steps {
-                sh 'git checkout --track origin/keys'
-            }
-        }
-        stage ("Whitelist IP's") {
+        stage ("Update_Public_keys") {
             steps {
             withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting',
                                                   subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',

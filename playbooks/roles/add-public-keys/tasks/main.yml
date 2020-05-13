@@ -1,4 +1,7 @@
 ---
+- debug:
+    msg: "{{ playbook_dir }}"
+
 
 - name : List system keys (provision only our ansible user)
   local_action: "command find {{ directory }} -type f -path \"*/system/*\""

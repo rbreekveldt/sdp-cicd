@@ -1,41 +1,27 @@
-- hosts: vm-sdp-external-jumpbox
+- hosts: localhost
   become: true
 
   tasks:
-    - name: Add all admin's public keys to the sdp-admin login
+    - name: Add all admin's public keys to the external jumpbox
       include_role:
         name: add-public-keys
       vars:
-        public_key_path: "admins"
-        public_key_user: "sdp-admin"
-
-
-    - name: Add all user's public keys to the sdp-user login
-      include_role:
-        name: add-public-keys
-      vars:
-        public_key_path: "devoteam-ca_uk"
-        public_key_user: "sdp-user"
-
-
+        public_key_path: "{{ path }}"
+        public_key_user: "{{ user }}"
+      loop:
+        - { path: 'admins', user: 'sdp-admin' }
+        - { path: 'devoteam-ca_uk', user: 'sdp-user' }
 
 - hosts: vm-sdp-internal-jumpbox
   become: true
 
   tasks:
-    - name: Add all user's public keys to the sdp-user login
+    - name: Add all admin's public keys to the internal jumpbox
       include_role:
         name: add-public-keys
       vars:
-        public_key_path: "infosys"
-        public_key_user: "sdp-user"
-
-
-    - name: Add all user's public keys to the sdp-sshuser login
-      include_role:
-        name: add-public-keys
-      vars:
-        public_key_path: "infosys-ca_uk"
-        public_key_user: "sdp-sshuser"
-      tags:
-        - publickeys
+        public_key_path: "{{ path }}"
+        public_key_user: "{{ user }}"
+      loop:
+        - { path: 'infosys', user: 'sdp-user' }
+        - { path: 'infosys-ca_uk', user: 'sdp-sshuser' }
