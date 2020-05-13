@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: external
   become: true
 
   tasks:
@@ -12,7 +12,7 @@
         - { path: 'admins', user: 'sdp-admin' }
         - { path: 'devoteam-ca_uk', user: 'sdp-user' }
 
-- hosts: vm-sdp-internal-jumpbox
+- hosts: internal
   become: true
 
   tasks:
