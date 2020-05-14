@@ -1,0 +1,24 @@
+---
+- hosts: hdf-worker
+  become: true
+  tasks:
+    - name: Copy the nar file to nifi
+      copy:
+         src: "{{ item }}"
+         dest: /usr/hdf/current/nifi/lib
+         owner: nifi
+         group: nifi
+         mode: 0755
+      with_items:
+         - /var/lib/jenkins/nifi_dependency/azure-datalake-1.0-SNAPSHOT.nar
+         - /var/lib/jenkins/nifi_dependency/nifi-hash-nar-1.0.nar
+
+    - name: Copy the ojdbc jar to nifi
+      copy:
+         src: "{{ item }}"
+         dest: /var/tmp
+         owner: nifi
+         group: wheel
+         mode: 0755
+      with_items:
+         - /var/lib/jenkins/nifi_dependency/ojdbc6.jar
