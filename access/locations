@@ -324,7 +324,7 @@ locations:
     ports:
       - 22
       - 443 
-  - name: Rahul_Akulla
+  - name: Rahul_Akkula
     source:	
       - 77.162.104.139
     ports:
