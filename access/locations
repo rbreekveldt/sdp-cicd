@@ -353,7 +353,7 @@ locations:
     ports:
       - 22
       - 443
-    - name: Jayasree_Meruga
+  - name: Jayasree_Meruga
     source:	
       - 115.98.54.66
       - 10.173.37.81
