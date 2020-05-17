@@ -6,7 +6,7 @@ def skipRemainingStages = "true"
 pipeline {
     agent any
     parameters{
-        choice(name: 'subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProd Data and Processing\nProject CPD\nProject UPC Cablecom - Digital Roadmap', description: 'Subscription to provision')
+        choice(name: 'subscription', choices: 'Project Azure governance testing\nNon-Prod Data and Processing\nProd Data and Processing\nProject CPD\nProject UPC Cablecom - Digital Roadmap\nProject VMIE - Digital Roadmap', description: 'Subscription to provision')
         choice(name: 'data_domain', choices: 'Please select\ndp\nautomation\naccess\nmonitoring', description: 'Data Domain')
         choice(name: 'resource_group_phase', choices: 'Please select\npiimgmt\ncuration\ndatalake\nintegration\ningestion\nshared', description: 'Resourcegroup Phase')
         string(name: 'project_name', defaultValue:'', description: 'Specify project name')
@@ -41,7 +41,10 @@ pipeline {
                     {env.CREDENTIAL_ID = 'SPProdDataAndProcessing'}
                     else if (subscription.toString()=='Project UPC Cablecom - Digital Roadmap')
                     {env.CREDENTIAL_ID = 'SPUPCCablecom'}
+                    else if (subscription.toString()=='Project VMIE - Digital Roadmap')
+                    {env.CREDENTIAL_ID = 'SPIEDigitalRoadmap'}
                     else {env.CREDENTIAL_ID = 'SPCpd'}
+                    
 
                 }
             }
