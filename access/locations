@@ -291,7 +291,8 @@ locations:
       - 443 
   - name: Smiksha_Singh	
     source:	
-      - 94.14.190.82
+      - 94.10.128.197
+    
     ports:
       - 22
       - 443 
