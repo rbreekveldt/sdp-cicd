@@ -100,6 +100,7 @@ security_groups:
       - Rahul_Akkula
       - Smiksha_Singh
       - Nayna_Choubey
+      - Jigayasa_Golhani
   
   - security_group: nsg-sdp-external
     subscription_id: dd10eed9-865c-4bfa-a260-d3e8fe16b047
