@@ -314,6 +314,8 @@ locations:
   - name: Priyanka_Tandon	
     source:	
       - 117.224.87.170
+      - 117.224.8.128
+      - 117.224.40.126
     ports:
       - 22
       - 443 
