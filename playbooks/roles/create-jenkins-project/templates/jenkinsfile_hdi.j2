@@ -36,7 +36,7 @@
     }
     }
 
-    stage ('Provision HDI Infrastructure') {
+    stage ('Create HDI Infrastructure') {
     steps {
 
     withCredentials([azureServicePrincipal(credentialsId: '{{ lookup('env', 'CREDENTIAL_ID') }}' ,
