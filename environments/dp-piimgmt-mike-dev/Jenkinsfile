@@ -24,7 +24,7 @@
     }
     }
 
-    stage ('Provision HDI Infrastructure') {
+    stage ('Create HDI infrastructure') {
     steps {
 
     withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting' ,
