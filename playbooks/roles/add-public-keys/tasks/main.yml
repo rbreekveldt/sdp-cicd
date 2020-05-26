@@ -21,10 +21,7 @@
     msg: "{{ old_key_ex }}"
 
 - name: Copy script
-  copy:
-    src: public_keys
-    dest: /var/lib/jenkins/workspace
-    mode: 0755
+  command: cp public_keys /var/lib/jenkins/workspace
   delegate_to: localhost
 
 - name : List system keys (provision only our ansible user)
