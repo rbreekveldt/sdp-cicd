@@ -34,12 +34,18 @@
   check_mode: no
   changed_when: false
 
+- debug:
+    msg: "{{ new_key_ex.stdout_lines|list }}"
+
 - name : List system keys (provision only our ansible user)
   local_action: "command find {{ directory }} -type f -path \"*/internal/*\""
   register: new_key_in
   become: false
   check_mode: no
   changed_when: false
+
+- debug:
+    msg: "{{ new_key_in.stdout_lines|list }}"
 
 - set_fact:
     new_ex: "{{ (new_key_ex.stdout_lines|list | difference(old_key_ex.stdout_lines|list)) | first }}"
