@@ -41,7 +41,7 @@
   check_mode: no
   changed_when: false
 
-- name: create matched and unmatched lists
+- set_facts:
     new_ex: "{{ new_key_ex.stdout_lines|list | difference(old_key_ex.stdout_lines|list)) | first }}"
     new_in: "{{ new_key_in.stdout_lines|list | difference(old_key_in.stdout_lines|list)) | first }}"
     old_in: "{{ old_key_in.stdout_lines|list | difference(new_key_in.stdout_lines|list)) | first }}"
