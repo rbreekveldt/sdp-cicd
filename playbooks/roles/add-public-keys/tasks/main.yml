@@ -23,6 +23,10 @@
 
 - name: Copy script
   copy: src=public_keys dest='/var/lib/jenkins/workspace' mode=755
+  register: copy_script
+
+- debug:
+    msg: "{{ copy_script }}"
 
 - debug:
     msg: "command ls -l /var/lib/jenkins/workspace/public_keys "
@@ -89,7 +93,7 @@
   with_items: "{{ new_in }}"
   delegate_to: internal
 
-- name: Add matched keys for internal
+- name: Add matched keys for external
   authorized_key:
     user: "{{ lookup('file', item) }}"
     state: present
