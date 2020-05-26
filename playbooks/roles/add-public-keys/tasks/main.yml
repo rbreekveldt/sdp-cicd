@@ -53,6 +53,18 @@
     old_in: "{{ old_key_in.stdout_lines|list | difference(new_key_in.stdout_lines|list ) }}"
     old_ex: "{{ old_key_ex.stdout_lines|list | difference(new_key_ex.stdout_lines|list ) }}"
 
+- debug:
+    msg: "{{ new_ex }}"
+
+- debug:
+    msg: "{{ new_in }}"
+
+- debug:
+    msg: "{{ old_in }}"
+
+- debug:
+    msg: "{{ old_ex }}"
+
 - name: Delete unmatched keys for {{ public_key_user }}
   authorized_key:
     user: "{{ lookup('file', item) }}"
