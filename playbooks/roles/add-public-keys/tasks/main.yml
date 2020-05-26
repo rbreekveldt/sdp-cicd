@@ -49,7 +49,7 @@
 
 - name: Delete unmatched keys for {{ public_key_user }}
   authorized_key:
-    user: "{{ public_key_user }}"
+    user: "{{ lookup('file', item) }}"
     state: absent
     key: "{{ lookup('file', item) }}"
   with_items: "{{ old_ex }}"
@@ -57,7 +57,7 @@
 
 - name: Delete unmatched keys for {{ public_key_user }}
   authorized_key:
-    user: "{{ public_key_user }}"
+    user: "{{ lookup('file', item) }}"
     state: absent
     key: "{{ lookup('file', item) }}"
   with_items: "{{ old_in }}"
@@ -65,7 +65,7 @@
 
 - name: Add matched keys for internal
   authorized_key:
-    user: "{{ public_key_user }}"
+    user: "{{ lookup('file', item) }}"
     state: present
     key: "{{ lookup('file', item) }}"
   with_items: "{{ new_in }}"
@@ -73,7 +73,7 @@
 
 - name: Add matched keys for internal
   authorized_key:
-    user: "{{ public_key_user }}"
+    user: "{{ lookup('file', item) }}"
     state: present
     key: "{{ lookup('file', item) }}"
   with_items: "{{ new_ex }}"
