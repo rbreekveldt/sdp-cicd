@@ -11,7 +11,7 @@ pipeline {
                                                   clientIdVariable: 'AZURE_CLIENT_ID',
                                                   clientSecretVariable: 'AZURE_SECRET',
                                                   tenantIdVariable: 'AZURE_TENANT')]) {
-                ansiblePlaybook inventory: "inventory/public-key-inventory.yml", playbook: 'playbooks/add_public_keys.yml'
+                ansiblePlaybook -vvvv inventory: "inventory/public-key-inventory.yml", playbook: 'playbooks/add_public_keys.yml'
                 }
             }
         }
