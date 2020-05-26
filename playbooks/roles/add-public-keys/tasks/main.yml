@@ -23,7 +23,7 @@
 - name: Copy script
   copy:
     src: public_keys
-    dest: /var/lib/jenkins/workspace/public_keys
+    dest: /var/lib/jenkins/workspace
     mode: 0755
   delegate_to: localhost
 
