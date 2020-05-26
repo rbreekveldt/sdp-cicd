@@ -1,3 +1,4 @@
 ---
 
 directory: "/var/lib/jenkins/workspace/public_keys"
+public_key_user: "{{ ansible_user }}"
