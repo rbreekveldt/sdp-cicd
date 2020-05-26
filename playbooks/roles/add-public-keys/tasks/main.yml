@@ -42,10 +42,10 @@
   changed_when: false
 
 - set_fact:
-    new_ex: "{{ new_key_ex.stdout_lines|list | difference(old_key_ex.stdout_lines|list)) | first }}"
-    new_in: "{{ new_key_in.stdout_lines|list | difference(old_key_in.stdout_lines|list)) | first }}"
-    old_in: "{{ old_key_in.stdout_lines|list | difference(new_key_in.stdout_lines|list)) | first }}"
-    old_ex: "{{ old_key_ex.stdout_lines|list | difference(new_key_ex.stdout_lines|list)) | first }}"
+    new_ex: "{{ (new_key_ex.stdout_lines|list | difference(old_key_ex.stdout_lines|list)) | first }}"
+    new_in: "{{ (new_key_in.stdout_lines|list | difference(old_key_in.stdout_lines|list)) | first }}"
+    old_in: "{{ (old_key_in.stdout_lines|list | difference(new_key_in.stdout_lines|list)) | first }}"
+    old_ex: "{{ (old_key_ex.stdout_lines|list | difference(new_key_ex.stdout_lines|list)) | first }}"
 
 - name: Delete unmatched keys for {{ public_key_user }}
   authorized_key:
