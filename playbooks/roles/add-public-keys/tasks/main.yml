@@ -21,8 +21,10 @@
     msg: "{{ old_key_ex }}"
 
 - name: Copy script
-  command: cp public_keys /var/lib/jenkins/workspace
-  delegate_to: localhost
+  file:
+    src: public_keys
+    dest: /var/lib/jenkins/workspace
+    mode: '0755'
 
 - name : List system keys (provision only our ansible user)
   local_action: "command find {{ directory }} -type f -path \"*/external/*\""
