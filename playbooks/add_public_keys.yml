@@ -1,27 +1,7 @@
-- hosts: external
-  become: true
+- hosts: localhost
 
   tasks:
     - name: Add all admin's public keys to the external jumpbox
       include_role:
         name: add-public-keys
-      vars:
-        public_key_path: "{{ path }}"
-        public_key_user: "{{ user }}"
-      loop:
-        - { path: 'admins', user: 'sdp-admin' }
-        - { path: 'devoteam-ca_uk', user: 'sdp-user' }
 
-- hosts: internal
-  become: true
-
-  tasks:
-    - name: Add all admin's public keys to the internal jumpbox
-      include_role:
-        name: add-public-keys
-      vars:
-        public_key_path: "{{ path }}"
-        public_key_user: "{{ user }}"
-      loop:
-        - { path: 'infosys', user: 'sdp-user' }
-        - { path: 'infosys-ca_uk', user: 'sdp-sshuser' }
