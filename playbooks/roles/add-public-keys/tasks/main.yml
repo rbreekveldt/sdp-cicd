@@ -1,10 +1,4 @@
 ---
-- name: Copy script
-  copy:
-    src: public_keys
-    dest: /var/lib/jenkins/workspace/public_keys
-    mode: 0755
-  delegate_to: localhost
 
 - name : List system keys (provision only our ansible user)
   local_action: "command find {{ directory }} -type f -path \"*/internal/*\""
@@ -13,12 +7,18 @@
   check_mode: no
   changed_when: false
 
+- debug:
+    msg: {{ old_key_in }}
+
 - name : List system keys (provision only our ansible user)
   local_action: "command find {{ directory }} -type f -path \"*/external/*\""
   register: old_key_ex
   become: false
   check_mode: no
   changed_when: false
+
+- debug:
+    msg: {{ old_key_ex }}
 
 - name: Copy script
   copy:
