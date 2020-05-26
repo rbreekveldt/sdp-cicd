@@ -6,12 +6,8 @@ pipeline {
 
         stage ("Update_Public_keys") {
             steps {
-            withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting',
-                                                  subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
-                                                  clientIdVariable: 'AZURE_CLIENT_ID',
-                                                  clientSecretVariable: 'AZURE_SECRET',
-                                                  tenantIdVariable: 'AZURE_TENANT')]) {
-                ansiblePlaybook inventory: "inventory/public-key-inventory.yml", playbook: 'ANSIBLE_DEBUG=true ANSIBLE_VERBOSITY=4 playbooks/add_public_keys.yml', -vvv
+                {
+                ansiblePlaybook inventory: "inventory/public-key-inventory.yml", playbook: 'playbooks/add_public_keys.yml'
                 }
             }
         }
