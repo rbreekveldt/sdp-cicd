@@ -6,7 +6,6 @@ pipeline {
 
         stage ("Update_Public_keys") {
             steps {
-                {
                 ansiblePlaybook inventory: "inventory/public-key-inventory.yml", playbook: 'playbooks/add_public_keys.yml'
                 }
             }
