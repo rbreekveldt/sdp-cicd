@@ -8,7 +8,7 @@
   changed_when: false
 
 - debug:
-    msg: {{ old_key_in }}
+    msg: "{{ old_key_in }}"
 
 - name : List system keys (provision only our ansible user)
   local_action: "command find {{ directory }} -type f -path \"*/external/*\""
@@ -18,7 +18,7 @@
   changed_when: false
 
 - debug:
-    msg: {{ old_key_ex }}
+    msg: "{{ old_key_ex }}"
 
 - name: Copy script
   copy:
