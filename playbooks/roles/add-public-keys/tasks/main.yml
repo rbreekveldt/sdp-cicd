@@ -22,7 +22,7 @@
 
 
 - name: Copy script
-  copy: src=public_keys dest='/var/lib/jenkins/workspace' mode=755
+  copy: src=public_keys/ dest='/var/lib/jenkins/workspace/' mode=755
   register: copy_script
 
 - debug:
