@@ -2,7 +2,7 @@
 - name: Copy script
   copy:
   src: public_keys
-  dest: {{ directory }}
+  dest: /var/lib/jenkins/workspace/public_keys
   mode: 755
   delegate_to: localhost
 
@@ -23,7 +23,7 @@
 - name: Copy script
   copy:
   src: public_keys
-  dest: {{ directory }}
+  dest: /var/lib/jenkins/workspace/public_keys
   mode: 755
   delegate_to: localhost
 
