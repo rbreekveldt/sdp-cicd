@@ -1,0 +1,5 @@
+{% for item in authorized_keys %}
+{% if  item == location.name %}
+     {{ item.internal_jumpbox_admin }}
+{% endif %}
+{% endfor %}
