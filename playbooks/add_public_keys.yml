@@ -1,5 +1,5 @@
 - name: Add public keys
-  hosts: localhost
+  hosts: jumphosts
   gather_facts: false
   connection: local
   roles:
