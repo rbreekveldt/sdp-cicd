@@ -6,7 +6,7 @@ pipeline {
 
         stage ("Update_Public_keys") {
             steps {
-                ansiblePlaybook extras: "-e @access/public_keys -e @access/authorized_people", inventory: "inventory/public-key-inventory.yml", playbook: 'playbooks/add_public_keys.yml'
+                ansiblePlaybook extras: "-e @access/public_keys -e @access/authorized_people", playbook: 'playbooks/add_public_keys.yml'
                 }
             }
         }
