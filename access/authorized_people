@@ -4,9 +4,14 @@ authorized_people:
     - Remco_Breekveldt
     - Mike_de_Kok
 
+  internal_jumpbox_user:
+    - Remco_Breekveldt
+    - Mike_de_Kok
 
-#  - internal_jumpbox_user:
+  external_jumpbox_admin:
+    - Remco_Breekveldt
+    - Mike_de_Kok
 
-#  - external_jumpbox_admin:
-
-#  - external_jumpbox_user:
+  external_jumpbox_user:
+    - Remco_Breekveldt
+    - Mike_de_Kok
