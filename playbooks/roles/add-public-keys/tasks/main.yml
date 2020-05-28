@@ -4,7 +4,7 @@
    vars:
      user_env: "{{ item.user_env }}"
      user: "{{ item.user }}"
-     host_location: "{{ host_location }}"
+     host_location: "{{ item.host_location }}"
    loop:
      - { user_env: "internal_jumpbox_admin", user: "sdp_admin", host_location: "internal" }
      - { user_env: "internal_jumpbox_user" , user: "sdp_user", host_location: "internal" }
