@@ -1,7 +1,6 @@
-- hosts: localhost
-
-  tasks:
-    - name: Add all admin's public keys to the external jumpbox
-      include_role:
-        name: add-public-keys
-
+- name: Add public keys
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  roles:
+    - add-public-keys
