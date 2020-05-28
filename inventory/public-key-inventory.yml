@@ -1,8 +1,5 @@
 ---
 hosts:
-  internal:
-    ansible_host: 10.0.1.5
-
-  external:
-    ansible_host: 10.0.1.4
+  internal: 10.0.1.5
+  external: 10.0.1.4
 
