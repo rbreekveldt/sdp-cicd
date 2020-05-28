@@ -1,5 +1,6 @@
 - name: Add public keys
   hosts: jumphosts
   gather_facts: false
+  remote_user: sdp
   roles:
     - add-public-keys
