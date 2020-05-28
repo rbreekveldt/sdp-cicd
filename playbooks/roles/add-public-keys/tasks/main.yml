@@ -1,5 +1,5 @@
 ---
-- name: creating rules file
+- name: creating public keys file
   template:
     src: sdp-admin-internal.j2
     dest: "{{ role_path }}/vars/main.yml"
