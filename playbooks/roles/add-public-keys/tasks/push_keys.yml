@@ -2,7 +2,7 @@
 
 - name: creating rules file
   template:
-    src: sdp-admin-internal.j2
+    src: whitelist.j2
     dest: "{{ role_path }}/vars/main.yml"
     force: yes
     output_encoding: utf-8
