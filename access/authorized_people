@@ -1,11 +1,11 @@
 ---
 authorized_people:
-  internal_jumpbox_admin:
+  - internal_jumpbox_admin:
     - Remco_Breekveldt
 
 
-  internal_jumpbox_user:
+#  - internal_jumpbox_user:
 
-  external_jumpbox_admin:
+#  - external_jumpbox_admin:
 
-  external_jumpbox_user:
+#  - external_jumpbox_user:
