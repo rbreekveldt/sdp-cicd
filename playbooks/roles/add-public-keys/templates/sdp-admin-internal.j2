@@ -2,6 +2,6 @@
 {% for people in authorized_people %}
 #{% if  public_key.name == people.internal_jumpbox_admin %}
 {{ public_key.ssh }}
-{% endif %}
+#{% endif %}
 {% endfor %}
 {% endfor %}
