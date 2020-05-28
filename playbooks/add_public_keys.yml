@@ -1,6 +1,6 @@
 - name: Add public keys
   hosts: jumphosts
   gather_facts: false
-  connection: local
+  connection: ssh
   roles:
     - add-public-keys
