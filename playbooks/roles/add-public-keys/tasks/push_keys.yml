@@ -7,5 +7,3 @@
     output_encoding: utf-8
     mode: 0644
   delegate_to: "{{ host_location }}"
-  become: yes
-  become_user: "{{ user }}"
