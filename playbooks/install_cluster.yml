@@ -13,3 +13,5 @@
 
 - import_playbook: "post_install.yml"
   tags: post_install
+
+- import_playbook: "copy_nifi_nar.yml"

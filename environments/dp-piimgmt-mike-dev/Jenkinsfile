@@ -1,0 +1,54 @@
+  //Jenkins pipeline to provision HDInsight infrastructure
+    def azureSubscription = ""
+    def inputSubscription = ""
+    def skipRemainingStages = "true"
+
+    pipeline {
+    agent any
+    parameters{
+    choice(name: 'Subscription', choices: '', description: 'Subscription to provision')
+    choice(name: 'ResourceGroup', choices: 'dp-piimgmt-mike-dev', description: 'Subscription to provision')
+    choice(name: 'data_domain', choices: 'dp', description: 'Data Domain')
+    choice(name: 'resource_group_phase', choices: 'piimgmt', description: 'Resourcegroup Phase')
+    choice(name: 'project_name', choices: 'mike', description: 'Project Name')
+    choice(name: 'env_type', choices: 'dev', description: 'Environment type to provision')
+        booleanParam(defaultValue: false, name: 'oozie_db', description: 'Provision an Oozie database')
+            booleanParam(defaultValue: false, name: 'hive_db', description: 'Provision a Hive database')
+            booleanParam(defaultValue: false, name: 'ranger_db', description: 'Provision a Ranger database')
+        }
+
+    stages {
+    stage ('Git checkout and switch to Master') {
+    steps {
+    sh 'git checkout --track origin/mike'
+    }
+    }
+
+    stage ('Create HDI infrastructure') {
+    steps {
+
+    withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting' ,
+                                                            subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                            clientIdVariable: 'AZURE_CLIENT_ID',
+                                                            clientSecretVariable: 'AZURE_SECRET',
+                                                            tenantIdVariable: 'AZURE_TENANT')]) {
+                                                            ansiblePlaybook extras: "-e @environments/dp-piimgmt-mike-dev/all",  playbook: 'playbooks/create-new-environment.yml', skippedTags: 'dataproject,maintain'
+  }
+  }
+  }
+
+    stage ('Provision HDI Infrastructure') {
+    steps {
+
+  withCredentials([azureServicePrincipal(credentialsId: 'SPAzureGovernanceTesting' ,
+                                                          subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                                                          clientIdVariable: 'AZURE_CLIENT_ID',
+                                                          clientSecretVariable: 'AZURE_SECRET',
+                                                          tenantIdVariable: 'AZURE_TENANT')]) {
+                                                          ansiblePlaybook extras: "-e @environments/dp-piimgmt-mike-dev/all", playbook: 'playbooks/provision-virtual-environment.yml', skippedTags: 'dataproject'
+  }
+  }
+  }
+
+  }
+  }
