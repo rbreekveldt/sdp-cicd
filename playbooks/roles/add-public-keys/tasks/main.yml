@@ -1,0 +1,10 @@
+---
+- name: Update Authorized Keyfile
+  template:
+    src: "{{ user_env }}.j2"
+    dest: "~/.ssh/authorized_keys"
+    force: yes
+    output_encoding: utf-8
+    mode: 0644
+  become: yes  
+  become_user: "{{ user }}"

@@ -1,4 +1,22 @@
 ---
-authorized_keys:
+authorized_people:
   internal_jumpbox_admin:
     - Remco_Breekveldt
+    - Mike_de_Kok
+    - Mahak_Rathore
+    - Jenkins
+
+  internal_jumpbox_user:
+    - Remco_Breekveldt
+    - Mike_de_Kok
+    - Jenkins
+
+  external_jumpbox_admin:
+    - Remco_Breekveldt
+    - Mike_de_Kok
+    - Jenkins 
+
+  external_jumpbox_user:
+    - Remco_Breekveldt
+    - Mike_de_Kok
+    - Jenkins
