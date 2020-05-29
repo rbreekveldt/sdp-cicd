@@ -2,7 +2,7 @@
 authorized_people:
   internal_jumpbox_admin:
     - Remco_Breekveldt
-#    - Mike_de_Kok
+    - Mike_de_Kok
     - Jenkins
 
   internal_jumpbox_user:

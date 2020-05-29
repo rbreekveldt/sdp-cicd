@@ -1,15 +1,30 @@
 ---
-- name: Add public keys
+- name: Add public keys Internal Jumpbox
   hosts: internal
+  remote_user: sdp-admin
   connection: ssh
   gather_facts: false
+  tasks:
+    - include_role: 
+        name: add-public-keys
+      vars:
+        user: "{{ item.user }}"        
+        user_env: "{{ item.user_env }}" 
+      loop:
+        - { user_env: "internal_jumpbox_admin", user: "sdp-admin" }
+        - { user_env: "internal_jumpbox_user" , user: "sdp-user" }
+
+- name: Add public keys Internal Jumpbox
+  hosts: external
   remote_user: sdp-admin
-  roles:
-    - add-public-keys
-#  loop:
-#    - { user_env: "internal_jumpbox_admin", user: "sdp_admin", host_location: "internal" }
-#    - { user_env: "internal_jumpbox_user" , user: "sdp_user", host_location: "internal" }
-#    - { user_env: "external_jumpbox_admin", user: "sdp_admin", host_location: "10.0.1.4 " }
-#    - { user_env: "external_jumpbox_user" , user: "sdp_user", host_location: "10.0.1.4 " }
-#  hosts: "{{ item.host_location }}"
-#  remote_user: "{{ item.user }}"
+  connection: ssh
+  gather_facts: false
+  tasks:
+    - include_role: 
+        name: add-public-keys
+      vars:
+        user: "{{ item.user }}"        
+        user_env: "{{ item.user_env }}"
+      loop:
+        - { user_env: "external_jumpbox_admin", user: "sdp-admin" }
+        - { user_env: "external_jumpbox_user" , user: "sdp-user" }

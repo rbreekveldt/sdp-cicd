@@ -1,15 +1,10 @@
 ---
-- name: Update ssh
-#  hosts: "{{ item.host_location }}"
-#  remote_user: "{{ item.user }}"
-  include_tasks: push_keys.yml
-  vars:
-    user_env: "{{ item.user_env }}"
-#    user: "{{ item.user }}"
-#    host_location: "{{ item.host_location }}"
-  loop:
-    - { user_env: "internal_jumpbox_admin", user: "sdp_admin", host_location: "10.0.1.5" }
-#    - { user_env: "internal_jumpbox_user" , user: "sdp_user", host_location: "10.0.1.5" }
-#    - { user_env: "external_jumpbox_admin", user: "sdp_admin", host_location: "10.0.1.4 " }
-#    - { user_env: "external_jumpbox_user" , user: "sdp_user", host_location: "10.0.1.4 " }
-
+- name: Update Authorized Keyfile
+  template:
+    src: "{{ user_env }}.j2"
+    dest: "~/.ssh/authorized_keys"
+    force: yes
+    output_encoding: utf-8
+    mode: 0644
+  become: yes  
+  become_user: "{{ user }}"
