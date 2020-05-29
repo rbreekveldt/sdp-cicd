@@ -1,7 +1,9 @@
 {% for public_key in public_keys %}
 {% for people in authorized_people.external_jumpbox_user %}
 {% if people == public_key.name %}
-{{ public_key.ssh }}
+{% for ssh in public_key.ssh %}
+{{ ssh }}
+{% endfor %}
 {% endif %}
 {% endfor %}
 {% endfor %}
