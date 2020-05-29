@@ -14,7 +14,7 @@
         - { user_env: "internal_jumpbox_admin", user: "sdp-admin" }
         - { user_env: "internal_jumpbox_user" , user: "sdp-user" }
 
-- name: Add public keys Internal Jumpbox
+- name: Add public keys External Jumpbox
   hosts: external
   remote_user: sdp-admin
   connection: ssh
